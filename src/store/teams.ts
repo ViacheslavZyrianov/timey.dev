@@ -10,9 +10,9 @@ export default defineStore('teams', () => {
     return await fetchCollection<TeamType>('teams')
   }
 
-  async function fetchTeam(id: string): Promise<TeamType> {
-    return await fetchDocById<TeamType>('teams', id)
+  async function postTeam(data: TypeTeamCreate): Promise<string> {
+    return await postDoc<TypeTeamCreate>('teams', data)
   }
 
-  return { teams, fetchTeams, fetchTeam }
+  return { teams, fetchTeams, fetchTeam, postTeam }
 })
