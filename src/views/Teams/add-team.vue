@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const onRedirectToTeamNew = () => {
+  router.push({
+    name: 'team-new'
+  })
+}
 </script>
 
 
@@ -12,5 +21,6 @@
     color="support-1"
     height="200px"
     class="d-flex justify-center flex-column"
+    @click="onRedirectToTeamNew"
   />
 </template>
