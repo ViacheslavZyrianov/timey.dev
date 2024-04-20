@@ -51,7 +51,7 @@ const icon = computed(() => props.icon || null)
 
 <template>
   <button
-    class="s-button d-flex align-center"
+    class="s-button d-flex align-center justify-center"
     :class="classList"
     :style="style"
   >
