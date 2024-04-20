@@ -56,8 +56,8 @@ const style = computed(() => ([
   border-radius: 8px;
 
   .title {
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     margin-bottom: 16px;
   }
 
