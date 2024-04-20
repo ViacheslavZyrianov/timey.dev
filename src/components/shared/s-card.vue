@@ -9,6 +9,10 @@ const props = defineProps({
   to: {
     type: String,
     default: ''
+  },
+  width: {
+    type: String,
+    default: ''
   }
 })
 
@@ -19,6 +23,10 @@ const tag = props.to ? 'router-link' : 'div'
 const classList = computed(() => ([
   { hover: props.hover }
 ]))
+
+const style = computed(() => ([
+  { width: props.width }
+]))
 </script>
 
 <template>
@@ -27,6 +35,7 @@ const classList = computed(() => ([
     :to="props.to"
     class="s-card"
     :class="classList"
+    :style="style"
   >
     <div
       v-if="slots.title"
