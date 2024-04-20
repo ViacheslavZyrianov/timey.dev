@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import type { TeamType } from '@/types/teams'
-import { fetchCollection, fetchDocById } from '@/utils/firebaseRequestor'
+import { TypeTeamRead, TypeTeamCreate } from '@/types/teams'
+import { fetchCollection, fetchDocById, postDoc } from '@/utils/firebaseRequestor'
 
 export default defineStore('teams', () => {
   const teams = reactive([])
 
-  async function fetchTeams(): Promise<TeamType[]> {
-    return await fetchCollection<TeamType>('teams')
+  async function fetchTeams(): Promise<TypeTeamRead[]> {
+    return await fetchCollection<TypeTeamRead>('teams')
+  }
+
+  async function fetchTeam(id: string): Promise<TypeTeamRead> {
+    return await fetchDocById<TypeTeamRead>('teams', id)
   }
 
   async function postTeam(data: TypeTeamCreate): Promise<string> {
