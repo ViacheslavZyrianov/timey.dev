@@ -29,9 +29,10 @@ const placeholder: Ref<string> = computed(() => $attrs?.placeholder as string);
   }
 
   input {
+    width: 100%;
     border: 1px solid #b3b3b3;
     border-radius: 8px;
-    padding: 16px 24px;
+    padding: 16px;
     transition: border-color 0.2s;
     will-change: border-color;
 
