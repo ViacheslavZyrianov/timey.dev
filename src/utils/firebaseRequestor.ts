@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, WithFieldValue } from 'firebase/firestore'
 import firebase from '@/plugins/firebase'
 import { getAuth } from 'firebase/auth'
 
@@ -24,4 +24,13 @@ export const fetchDocById = async <T>(collectionName: string, id: string):Promis
     id: querySnapshot.id,
     ...querySnapshot.data()
   } as unknown as T
+}
+
+export const postDoc = async <K>(collectionName: string, data: WithFieldValue<K>) => {
+  const auth = getAuth()
+  const db = getFirestore(firebase)
+  const collectionUID = `${collectionName}-${auth.currentUser?.uid}`
+  const querySnapshot = await addDoc(collection(db, collectionUID), data)
+
+  return querySnapshot.id
 }
