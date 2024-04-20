@@ -31,7 +31,7 @@
 
   @for $i from 1 through 16 {
     .flex-gap-#{$i} {
-      gap: $i * 2;
+      gap: $i * 2px;
     }
   }
 }
