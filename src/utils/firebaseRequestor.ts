@@ -1,24 +1,22 @@
-import { getFirestore, collection, getDocs, doc, getDoc, addDoc, WithFieldValue } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, where, query } from 'firebase/firestore'
 import firebase from '@/plugins/firebase'
 import { getAuth } from 'firebase/auth'
 
-export const fetchCollection = async <T>(collectionName: string):Promise<T[]> => {
-  const auth = getAuth()
-  const db = getFirestore(firebase)
-  const collectionUID = `${collectionName}-${auth.currentUser?.uid}`
-  const querySnapshot = await getDocs(collection(db, collectionUID))
+const db = getFirestore(firebase)
+const auth = getAuth()
 
+export const fetchItems = async <T>(collectionName: string): Promise<T[]> => {
+  const collectionFunction = collection(db, collectionName)
+  const whereFunction = where('uid', '==', auth.currentUser?.uid)
+  const querySnapshot = await getDocs(query(collectionFunction, whereFunction))
   return querySnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data()
-  })) as unknown as T[]
+  })) as T[]
 }
 
-export const fetchDocById = async <T>(collectionName: string, id: string):Promise<T>=> {
-  const auth = getAuth()
-  const db = getFirestore(firebase)
-  const collectionUID = `${collectionName}-${auth.currentUser?.uid}`
-  const querySnapshot = await getDoc(doc(db, collectionUID, id))
+export const fetchItemById = async <T>(collectionName: string, id: string):Promise<T>=> {
+  const querySnapshot = await getDoc(doc(db, collectionName, id))
 
   return {
     id: querySnapshot.id,
@@ -26,11 +24,15 @@ export const fetchDocById = async <T>(collectionName: string, id: string):Promis
   } as unknown as T
 }
 
-export const postDoc = async <K>(collectionName: string, data: WithFieldValue<K>) => {
-  const auth = getAuth()
-  const db = getFirestore(firebase)
-  const collectionUID = `${collectionName}-${auth.currentUser?.uid}`
-  const querySnapshot = await addDoc(collection(db, collectionUID), data)
+export const postItem = async <T>(collectionName: string, data: T): Promise<string> => {
+  const querySnapshot = await addDoc(collection(db, collectionName), {
+    ...data,
+    uid: auth.currentUser?.uid,
+  })
 
   return querySnapshot.id
+}
+
+export const createUser = async (collectionName: string, userId: string, data: unknown) => {
+  return await setDoc(doc(db, collectionName, userId), data)
 }
