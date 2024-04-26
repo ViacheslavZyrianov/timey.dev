@@ -1,7 +1,13 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import { TypeTeamRead, TypeTeamCreate } from '@/types/teams'
-import { fetchItems, fetchItemById, postItem} from '@/utils/firebaseRequestor'
+import { TypeTeamRead, TypeTeamCreate, TypeTeamMemberRead } from '@/types/teams'
+import {
+  fetchItems,
+  fetchItemById,
+  postItem,
+  updateItem,
+  checkIsItemExists
+} from '@/utils/firebaseRequestor'
 
 export default defineStore('teams', () => {
   const teams = reactive([])
@@ -21,4 +27,12 @@ export default defineStore('teams', () => {
   async function fetchTeamMemberById(teamMemberId: string): Promise<TypeTeamMemberRead> {
     return await fetchItemById<TypeTeamMemberRead>('users', teamMemberId)
   }
+
+  async function postTeamMember(teamId: string, teamMemberId: string): Promise<void> {
+    const isUserExists = await checkIsItemExists('users', teamMemberId)
+    if (isUserExists) await updateItem.arrayUnion('teams', teamId, 'members', [teamMemberId])
+    else throw new Error(`${teamMemberId} is not exist`)
+  }
+
+  return { teams, fetchTeams, fetchTeam, postTeam, fetchTeamMemberById, postTeamMember }
 })
