@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, where, query } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, where, query, arrayUnion } from 'firebase/firestore'
 import firebase from '@/plugins/firebase'
 import { getAuth } from 'firebase/auth'
 
