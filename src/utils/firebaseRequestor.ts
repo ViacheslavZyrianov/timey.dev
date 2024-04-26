@@ -21,7 +21,7 @@ export const fetchItemById = async <T>(collectionName: string, id: string):Promi
   return {
     id: querySnapshot.id,
     ...querySnapshot.data()
-  } as unknown as T
+  } as T
 }
 
 export const postItem = async <T>(collectionName: string, data: T): Promise<string> => {
