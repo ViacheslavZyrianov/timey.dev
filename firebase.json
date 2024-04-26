@@ -1,9 +1,0 @@
-{
-  "hosting": {
-    "site": "timey",
-    "public": "public"
-  },
-  "database": {
-    "rules": "database.rules.json"
-  }
-}
