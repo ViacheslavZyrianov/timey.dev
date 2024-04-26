@@ -15,6 +15,11 @@ const navList = [
     title: 'Teams',
     to: '/teams',
     icon: 'mdiAccountGroupOutline'
+  },
+  {
+    title: 'Settings',
+    to: '/settings',
+    icon: 'mdiCogOutline'
   }
 ]
 
