@@ -41,6 +41,10 @@ export const updateItem  = {
   }
 }
 
+export const checkIsItemExists = async (collectionName: string, documentId: string) => {
+  const querySnapshot = await getDoc(doc(db, collectionName, documentId))
+  return querySnapshot.exists()
+}
 
 export const createUser = async (collectionName: string, userId: string, data: unknown) => {
   return await setDoc(doc(db, collectionName, userId), data)
