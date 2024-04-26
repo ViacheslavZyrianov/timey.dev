@@ -62,7 +62,7 @@ async function onLogout() {
         icon="mdiLogout"
         size="small"
         title="Logout"
-        type="outlined"
+        variant="outlined"
         @click="onLogout"
       />
     </nav>

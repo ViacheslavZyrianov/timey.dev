@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import {computed, PropType} from 'vue'
 
 const props = defineProps({
   title: {
     type: String,
     default: 'button'
   },
-  type: {
+  variant: {
     type: String,
     default: 'default'
+  },
+  type: {
+    type: String as PropType<'button' | 'reset' | 'submit'>,
+    default: 'button'
   },
   color: {
     type: String,
@@ -36,7 +40,7 @@ const props = defineProps({
 })
 
 const classList = computed(() => ([
-  `type-${props.type}`,
+  `variant-${props.variant}`,
   `color-${props.color}`,
   `size-${props.size}`,
   { block: props.block }
@@ -109,7 +113,7 @@ const icon = computed(() => props.icon || null)
     }
   }
 
-  &.type {
+  &.variant {
     &-outlined {
       border-width: 1px;
       border-style: solid;
@@ -129,7 +133,7 @@ const icon = computed(() => props.icon || null)
 
     @each $color, $colorVariable in $colors {
       &-#{$color} {
-        &.type {
+        &.variant {
           &-default {
             background-color: $colorVariable;
 

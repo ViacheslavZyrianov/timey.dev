@@ -16,7 +16,7 @@ const onRedirectToTeamNew = () => {
     title="Add team"
     icon="mdiAccountMultiplePlusOutline"
     :icon-size="64"
-    type="outlined"
+    variant="outlined"
     size="large"
     color="support-1"
     height="200px"
