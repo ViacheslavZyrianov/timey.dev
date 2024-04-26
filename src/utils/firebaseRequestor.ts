@@ -33,6 +33,15 @@ export const postItem = async <T>(collectionName: string, data: T): Promise<stri
   return querySnapshot.id
 }
 
+export const updateItem  = {
+  arrayUnion: async (collectionName: string, documentId: string, field: string, values: unknown[]) => {
+     await updateDoc(doc(db, collectionName, documentId), {
+      [field]: arrayUnion(...values)
+    })
+  }
+}
+
+
 export const createUser = async (collectionName: string, userId: string, data: unknown) => {
   return await setDoc(doc(db, collectionName, userId), data)
 }
