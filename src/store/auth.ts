@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, type User } from 'firebase/auth'
+import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, type UserInfo } from 'firebase/auth'
 import { UserType } from '@/types/user'
 import pick from '@/utils/pick'
 import { createUser } from "@/utils/firebaseRequestor";
@@ -20,8 +20,8 @@ export default defineStore('auth', () => {
       auth.useDeviceLanguage()
       const provider = new GoogleAuthProvider()
       const signInResult = await signInWithPopup(auth, provider)
-      const user: User = signInResult.user
-      const userData = pick<User, UserType>(signInResult.user, ['uid', 'displayName', 'email', 'photoURL'])
+      const user: UserInfo = signInResult.user
+      const userData = pick<UserInfo, UserType>(signInResult.user, ['uid', 'displayName', 'email', 'photoURL'])
       await createUser('users', user.uid, userData)
       setUser(userData)
     } catch (err: unknown) {
