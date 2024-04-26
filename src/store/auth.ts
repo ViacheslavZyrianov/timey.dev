@@ -19,9 +19,6 @@ export default defineStore('auth', () => {
       const auth = getAuth()
       auth.useDeviceLanguage()
       const provider = new GoogleAuthProvider()
-      // provider.addScope('https://www.googleapis.com/auth/userinfo.email')
-      // provider.addScope('https://www.googleapis.com/auth/datastore')
-      // provider.addScope('https://www.googleapis.com/auth/firebase.database')
       const signInResult = await signInWithPopup(auth, provider)
       const user: User = signInResult.user
       const userData = pick<User, UserType>(signInResult.user, ['uid', 'displayName', 'email', 'photoURL'])
