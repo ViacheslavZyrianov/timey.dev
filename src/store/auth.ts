@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, type User } from 'firebase/auth'
 import { UserType } from '@/types/user'
 import pick from '@/utils/pick'
+import { createUser } from "@/utils/firebaseRequestor";
 
 export default defineStore('auth', () => {
   const isUserLoggedIn = ref(false)
@@ -23,9 +24,9 @@ export default defineStore('auth', () => {
       // provider.addScope('https://www.googleapis.com/auth/firebase.database')
       const signInResult = await signInWithPopup(auth, provider)
       const user: User = signInResult.user
-      if (user) {
-        setUser(pick<User, UserType>(signInResult.user, ['uid', 'displayName', 'email', 'photoURL']))
-      }
+      const userData = pick<User, UserType>(signInResult.user, ['uid', 'displayName', 'email', 'photoURL'])
+      await createUser('users', user.uid, userData)
+      setUser(userData)
     } catch (err: unknown) {
       console.error('googleAuth error', err)
     }
