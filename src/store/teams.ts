@@ -18,5 +18,7 @@ export default defineStore('teams', () => {
     return await postItem<TypeTeamCreate>('teams', data)
   }
 
-  return { teams, fetchTeams, fetchTeam, postTeam }
+  async function fetchTeamMemberById(teamMemberId: string): Promise<TypeTeamMemberRead> {
+    return await fetchItemById<TypeTeamMemberRead>('users', teamMemberId)
+  }
 })
