@@ -1,16 +1,43 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import useTeamsStore from "@/store/teams";
+import { useRoute } from "vue-router"
+import useTeamsStore from "@/store/teams"
+import tableHeaders from "./tableHeaders";
+import { computed, ComputedRef, ref, Ref } from "vue";
 
-const route = useRoute();
-const teamsStore = useTeamsStore();
+const route = useRoute()
+const teamsStore = useTeamsStore()
 
-const team = await teamsStore.fetchTeam(`${route.params.id}`);
+const uid: Ref<string> = ref('')
+
+const teamId: ComputedRef<string> = computed(() => route.params.id.toString())
+
+const onSubmitAddTeamMember = async () => {
+  await teamsStore.postTeamMember(teamId.value, uid.value)
+}
+
+const team = await teamsStore.fetchTeam(teamId.value)
+
+const teamMemberFields = ['id', 'displayName', 'photoURL']
+const teamMembers = await Promise.all(team.members.map((member) => teamsStore.fetchTeamMemberById(member, teamMemberFields)))
 </script>
 
 <template>
   <div class="d-flex direction-column">
     <h1>{{ team.name }}</h1>
     <p>{{ team.description }}</p>
+    <form @submit.prevent="onSubmitAddTeamMember">
+      <s-input
+        v-model="uid"
+      />
+      <s-button
+        type="submit"
+        icon="mdiAccountPlusOutline"
+        title="Add team member"
+      />
+    </form>
+    <s-table
+      :headers="tableHeaders"
+      :rows="teamMembers"
+    />
   </div>
 </template>
