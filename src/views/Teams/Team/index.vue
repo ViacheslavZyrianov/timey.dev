@@ -17,8 +17,7 @@ const onSubmitAddTeamMember = async () => {
 
 const team = await teamsStore.fetchTeam(teamId.value)
 
-const teamMemberFields = ['id', 'displayName', 'photoURL']
-const teamMembers = await Promise.all(team.members.map((member) => teamsStore.fetchTeamMemberById(member, teamMemberFields)))
+const teamMembers = await Promise.all(team.members.map((member) => teamsStore.fetchTeamMemberById(member)))
 </script>
 
 <template>
