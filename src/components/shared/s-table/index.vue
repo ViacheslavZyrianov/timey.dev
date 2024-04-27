@@ -7,7 +7,8 @@ defineProps({
     default: () => []
   },
   rows: {
-    type: Array as () => TypeTableRow[]
+    type: Array as () => TypeTableRow[],
+    default: () => []
   }
 })
 </script>
@@ -31,10 +32,10 @@ defineProps({
         :key="row.id"
       >
         <td
-          v-for="cell in Object.entries(row)"
-          :key="`${row.id}-${cell[0]}`"
+          v-for="cell in headers"
+          :key="`${row.id}-cell`"
         >
-          {{ cell[1] }}
+          {{ row[cell.key] }}
         </td>
       </tr>
     </tbody>
