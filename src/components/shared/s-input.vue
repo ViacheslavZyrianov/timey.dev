@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { computed, Ref, useAttrs, defineModel } from "vue";
+import { computed, Ref, useAttrs, defineModel, StyleValue } from "vue";
 
 const $attrs = useAttrs();
-defineProps({
-  label: {
+const props = defineProps({
+  width: {
     type: String,
-    default: null
+    default: 'auto'
   }
 })
 const model = defineModel();
 
 const placeholder: Ref<string> = computed(() => $attrs?.placeholder as string);
+
+const sInputStyle: Ref<StyleValue> = computed(() => ({
+  width: props.width,
+}))
 </script>
 
 <template>
-  <div class="s-input">
-    <div v-if="label" class="s-input__label">{{ label }}</div>
+  <div class="s-input" :style="sInputStyle">
+    <div v-if="$attrs.label" class="s-input__label">{{ $attrs.label }}</div>
     <input v-model="model" type="text" :placeholder="placeholder" />
   </div>
 </template>
