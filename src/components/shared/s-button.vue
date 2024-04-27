@@ -90,6 +90,10 @@ const icon = computed(() => props.icon || null)
     margin-right: 8px;
   }
 
+  &-title {
+    white-space: nowrap;
+  }
+
   &.size {
     &-small {
       padding-top: 8px;
