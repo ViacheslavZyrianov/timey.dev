@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineSlots, computed } from 'vue'
+import { defineSlots, computed } from 'vue'
 
 const props = defineProps({
   hover: {

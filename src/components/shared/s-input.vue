@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, Ref, useAttrs, defineModel, defineProps } from "vue";
+import { computed, Ref, useAttrs, defineModel } from "vue";
 
 const $attrs = useAttrs();
-const props = defineProps({
+defineProps({
   label: {
     type: String,
     default: null
