@@ -7,7 +7,7 @@ export default {
       component: () => import('@/views/Teams/index.vue'),
     },
     {
-      path: ':id',
+      path: ':team_id',
       name: 'team',
       component: () => import('@/views/Teams/Team/index.vue')
     },

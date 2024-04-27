@@ -9,7 +9,7 @@ const teamsStore = useTeamsStore()
 
 const uid: Ref<string> = ref('')
 
-const teamId: ComputedRef<string> = computed(() => route.params.id.toString())
+const teamId: ComputedRef<string> = computed(() => route.params.team_id.toString())
 
 const onSubmitAddTeamMember = async () => {
   await teamsStore.postTeamMember(teamId.value, uid.value)
