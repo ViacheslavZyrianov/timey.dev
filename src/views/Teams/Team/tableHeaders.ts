@@ -4,7 +4,7 @@ export default [
     label: 'ID',
   },
   {
-    key: 'name',
+    key: 'displayName',
     label: 'Name',
   }
 ]
