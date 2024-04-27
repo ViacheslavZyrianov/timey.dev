@@ -1,0 +1,76 @@
+$coefficient: 2px;
+$iterations: 32;
+
+@for $i from 1 through $iterations {
+  $value: $coefficient * $i;
+
+  .mt-n#{$i} {
+    margin-top: $value;
+  }
+  .mb-n#{$i} {
+    margin-bottom: $value;
+  }
+  .mr-n#{$i} {
+    margin-right: $value;
+  }
+  .ml-n#{$i} {
+    margin-left: $value;
+  }
+
+  .mt-#{$i} {
+    margin-top: $value;
+  }
+  .mb-#{$i} {
+    margin-bottom: $value;
+  }
+  .mr-#{$i} {
+    margin-right: $value;
+  }
+  .ml-#{$i} {
+    margin-left: $value;
+  }
+
+  .mx-#{$i} {
+    margin-right: $value;
+    margin-left: $value;
+  }
+  .my-#{$i} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+  .ma-#{$i} {
+    margin: $value;
+  }
+}
+
+$properties: (
+  'mt': 'top',
+  'mb': 'bottom',
+  'mr': 'right',
+  'ml': 'left',
+);
+
+// Loop through the properties and generate the styles
+@each $property, $direction in $properties {
+  .#{$property}-auto {
+    margin-#{$direction}: auto;
+  }
+}
+
+.mx-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.ma-auto {
+  margin: auto;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.ml-auto {
+  margin-left: auto;
+}
