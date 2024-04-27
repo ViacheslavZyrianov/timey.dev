@@ -1,0 +1,31 @@
+$coefficient: 2px;
+$iterations: 16;
+
+@for $i from 1 through $iterations {
+  $value: $coefficient * $i;
+
+  .pt-#{$i} {
+    padding-top: $value;
+  }
+  .pb-#{$i} {
+    padding-bottom: $value;
+  }
+  .pr-#{$i} {
+    padding-right: $value;
+  }
+  .pl-#{$i} {
+    padding-left: $value;
+  }
+
+  .px-#{$i} {
+    padding-right: $value;
+    padding-left: $value;
+  }
+  .py-#{$i} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+  .pa-#{$i} {
+    padding: $value;
+  }
+}
