@@ -1,6 +1,7 @@
 export type TypeTableHeader = {
   key: string
   label?: string
+  width?: string
 }
 
 export type TypeTableRow = {
