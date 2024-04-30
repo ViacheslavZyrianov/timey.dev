@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { TypeTableHeader, TypeTableRow } from "@/components/shared/s-table/types";
 
-defineProps({
+const props = defineProps({
   headers: {
     type: Array as () => TypeTableHeader[],
     default: () => []
@@ -13,7 +13,22 @@ defineProps({
   }
 })
 
-const headerStyle = computed(() => (style) => ({
+const mergedCells = computed(() => {
+  const mergedCellsMap = new Map<string, number>();
+
+  props.rows.forEach(row => {
+    const key: string = row[props.headers[0].key] as string; // Get the content of the first column
+    if (!mergedCellsMap.has(key)) {
+      mergedCellsMap.set(key, 1); // Initialize count for the content
+    } else {
+      mergedCellsMap.set(key, mergedCellsMap.get(key)! + 1); // Increment count for the content
+    }
+  });
+
+  return mergedCellsMap;
+});
+
+const headerStyle = computed(() => (style: Record<string, string>) => ({
   width: style.width
 }))
 </script>
@@ -33,27 +48,28 @@ const headerStyle = computed(() => (style) => ({
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="row in rows"
-        :key="row.id"
-      >
-        <td
-          v-for="header in headers"
-          :key="`${row.id}-cell`"
-        >
+    <template v-for="(row, index) in rows" :key="index">
+      <tr>
+        <template v-if="index === 0 || row[headers[0].key] !== rows[index - 1][headers[0].key]">
+          <td :rowspan="mergedCells.get(row[headers[0].key] as string)">{{ row[headers[0].key] }}</td>
+        </template>
+        <td v-for="header in headers.slice(1)" :key="`${row.id}-${header.key}`">
           <slot :name="header.key" :row="row" />
-          <template v-if="!$slots[header.key]">
-            {{ row[header.key] }}
-          </template>
+          <template v-if="!$slots[header.key]">{{ row[header.key] }}</template>
         </td>
       </tr>
+    </template>
     </tbody>
+
+
   </table>
 </div>
 </template>
 
 <style scoped lang="scss">
 .s-table {
+  width: 100%;
+
   table {
     width: 100%;
     border-collapse: separate;
@@ -69,11 +85,11 @@ const headerStyle = computed(() => (style) => ({
           background-color: $c-primary;
 
           &:first-child {
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px 0 0 0;
           }
 
           &:last-child {
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 8px 0 0;
           }
         }
       }
@@ -84,6 +100,11 @@ const headerStyle = computed(() => (style) => ({
         td {
           padding: 16px;
           border-bottom: 1px solid #d6d6d6;
+          border-left: 1px solid #d6d6d6;
+
+          &:last-child {
+            border-right: 1px solid #d6d6d6;
+          }
         }
       }
     }
