@@ -76,6 +76,25 @@ async function onLogout() {
 
   .profile {
     margin-bottom: 16px;
+    border-radius: 8px;
+    transition: background-color .2s;
+    will-change: background-color;
+
+    &:hover {
+      background-color: lighten($c-primary, 45%);
+    }
+
+    &.router-link-active {
+      background-color: $c-primary;
+
+      &:hover {
+        background-color: $c-primary;
+      }
+
+      .display-name {
+        color: #ffffff;
+      }
+    }
 
     .avatar {
       margin-right: 16px;
@@ -87,6 +106,9 @@ async function onLogout() {
       overflow: hidden;
       text-wrap: nowrap;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color .2s;
+      will-change: color;
     }
   }
 
