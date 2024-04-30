@@ -86,18 +86,14 @@ const icon = computed(() => props.icon || null)
     outline: none;
   }
 
-  .icon {
-    margin-right: 8px;
-  }
-
   &-title {
     white-space: nowrap;
+    margin-left: 8px;
   }
 
   &.size {
     &-small {
-      padding-top: 8px;
-      padding-bottom: 8px;
+      padding: 8px;
       font-size: 12px;
 
       .icon {
