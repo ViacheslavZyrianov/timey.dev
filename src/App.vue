@@ -12,15 +12,15 @@ const mainClassList = computed(() => ({
 
 <template>
   <div class="d-flex">
-        <sider v-if="authStore.isUserLoggedIn" />
-        <main
-          class="main d-flex flex-grow-1"
-          :class="mainClassList"
-        >
-          <Suspense>
-            <router-view />
-          </Suspense>
-        </main>
+    <sider v-if="authStore.isUserLoggedIn" />
+    <main
+      class="main d-flex flex-grow-1"
+      :class="mainClassList"
+    >
+      <Suspense>
+        <router-view />
+      </Suspense>
+    </main>
   </div>
 </template>
 
