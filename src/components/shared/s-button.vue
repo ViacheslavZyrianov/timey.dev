@@ -4,7 +4,7 @@ import {computed, PropType} from 'vue'
 const props = defineProps({
   title: {
     type: String,
-    default: 'button'
+    default: ''
   },
   variant: {
     type: String,
