@@ -47,7 +47,7 @@ const classList = computed(() => ({
     object-fit: cover;
   }
   &.rounded {
-    border-radius: 25%;
+    border-radius: 8px;
   }
 }
 </style>
