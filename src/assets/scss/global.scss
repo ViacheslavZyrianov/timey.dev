@@ -13,6 +13,13 @@ body {
   font-size: 14px;
 }
 
+@for $i from 1 through 6 {
+  h#{$i} {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 a {
   text-decoration: none;
   color: inherit;
