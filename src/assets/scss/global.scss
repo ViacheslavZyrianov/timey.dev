@@ -22,10 +22,19 @@ body {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: $c-info;
+  font-weight: 500;
+
+  &:hover {
+    color: darken($c-info, 20%);
+  }
 
   &:visited {
-    color: inherit;
+    color: $c-info;
+
+    &:hover {
+      color: darken($c-info, 20%);
+    }
   }
 }
 
