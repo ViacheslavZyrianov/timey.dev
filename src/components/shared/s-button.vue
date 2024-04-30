@@ -66,7 +66,7 @@ const icon = computed(() => props.icon || null)
       class="icon"
       :size="iconSize"
     />
-    <span class="s-button-title">
+    <span v-if="props.title" class="s-button-title">
       {{ props.title }}
     </span>
   </button>
