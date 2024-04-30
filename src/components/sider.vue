@@ -31,7 +31,7 @@ async function onLogout() {
 
 <template>
   <div class="sider d-flex flex-column">
-    <div class="profile d-flex align-center">
+    <router-link to="/profile" class="profile d-flex align-center">
       <s-avatar
         :src="authStore.user.photoURL"
         :size="48"
