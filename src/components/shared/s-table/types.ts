@@ -5,7 +5,7 @@ export type TypeTableHeader = {
 }
 
 export type TypeTableRow = {
-  id: string;
+  id?: string;
 } & {
   [key: string]: string | number | boolean | string[] | null;
 };
