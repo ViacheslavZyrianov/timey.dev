@@ -28,18 +28,18 @@ body {
 
 a {
   text-decoration: none;
-  color: $c-info;
+  color: $c-primary;
   font-weight: 500;
 
   &:hover {
-    color: darken($c-info, 20%);
+    color: darken($c-primary, 20%);
   }
 
   &:visited {
-    color: $c-info;
+    color: $c-primary;
 
     &:hover {
-      color: darken($c-info, 20%);
+      color: darken($c-primary, 20%);
     }
   }
 }
