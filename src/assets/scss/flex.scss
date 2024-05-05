@@ -38,8 +38,12 @@
   }
 
   @for $i from 1 through 16 {
-    .flex-gap-#{$i} {
-      gap: $i * 2px;
+    .flex-row-gap-#{$i} {
+      row-gap: $i * 2px;
+    }
+
+    .flex-column-gap-#{$i} {
+      column-gap: $i * 2px;
     }
   }
 }
