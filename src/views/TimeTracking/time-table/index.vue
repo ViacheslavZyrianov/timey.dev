@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { computed, ComputedRef } from "vue";
+import {computed, ComputedRef, PropType} from "vue";
 import headers from "./headers";
 import checkIsLink from "@/utils/checkIsLink";
-import useTimeTrackingStore from '@/store/timeTracking';
 import { TypeTimeTrackingItemRead } from "@/types/time-tracking";
 import { TypeTableRow } from "@/components/shared/s-table/types";
 import dayjs from "dayjs";
 
-const timeTrackingStore = useTimeTrackingStore();
+const props = defineProps({
+  data: {
+    type: Array as PropType<TypeTimeTrackingItemRead[]>,
+    default: [],
+  }
+})
 
-const timeTracking: TypeTimeTrackingItemRead[] = await timeTrackingStore.fetchTimeTracking()
-
-const rows: ComputedRef<TypeTableRow[]> = computed(() => timeTracking.map((timeTrackingItem: TypeTimeTrackingItemRead) => ({
+const rows: ComputedRef<TypeTableRow[]> = computed(() => props.data.map((timeTrackingItem: TypeTimeTrackingItemRead) => ({
   id: timeTrackingItem.id,
   date: dayjs(timeTrackingItem.date.seconds * 1000).format("DD.MM.YYYY"),
   task: timeTrackingItem.task,
