@@ -59,7 +59,7 @@ const style = computed(() => ([
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 16px;
-    color: $c-primary;
+    color: #252525;
   }
 
   &.hover {
