@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useAuthStore from '@/store/auth'
 import { useRouter } from 'vue-router'
+import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -10,6 +11,11 @@ const navList = [
     title: 'Dashboard',
     to: '/dashboard',
     icon: 'mdiViewDashboardOutline'
+  },
+  {
+    title: 'Time Tracking',
+    to: '/time-tracking',
+    icon: `mdiClockTime${getCurrentHourInWords()}Outline`
   },
   {
     title: 'Teams',
@@ -40,7 +46,7 @@ async function onLogout() {
       <div class="display-name">
         {{ authStore.user.displayName }}
       </div>
-    </div>
+    </router-link>
     <nav class="d-flex flex-column flex-grow-1">
       <router-link
         v-for="{ title, icon, to } in navList"
