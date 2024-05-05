@@ -54,12 +54,24 @@ const style = computed(() => ([
   background-color: #fff;
   box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
+  transition: color .2s, background .2s;
+  will-change: color, background;
 
   .title {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 16px;
     color: #252525;
+  }
+
+  &.router-link-active {
+    color: #fff;
+    background-color: $c-primary;
+
+    &:hover {
+      color: #fff;
+      background-color: $c-primary;
+    }
   }
 
   &.hover {
@@ -69,6 +81,13 @@ const style = computed(() => ([
     &:hover {
       box-shadow: 0 0 8px 0 #aeaeae;
     }
+  }
+}
+
+a.s-card {
+  &:hover {
+    color: $c-primary;
+    background-color: lighten($c-primary, 45%);
   }
 }
 </style>
