@@ -6,6 +6,7 @@ const authStore = useAuthStore()
 
 <template>
   <div class="app-bar d-flex justify-end align-items-center pa-8">
+    <img src="@/assets/img/logo.svg" alt="Logo" class="mr-auto" />
     <router-link to="/profile" class="profile d-flex align-center">
       <div class="display-name mr-8">
         {{ authStore.user.displayName }}
@@ -25,6 +26,7 @@ const authStore = useAuthStore()
   background-color: #fff;
   box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
+  height: 80px;
 }
 
 .profile {
