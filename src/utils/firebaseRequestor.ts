@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, where, query, arrayUnion } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, where, query, arrayUnion, and } from 'firebase/firestore'
 import firebase from '@/plugins/firebase'
 import { getAuth } from 'firebase/auth'
 
@@ -15,9 +15,13 @@ export const fetchItems = async <T>(collectionName: string): Promise<T[]> => {
   })) as T[]
 }
 
-export const fetchSubCollectionItems = async <T>(collectionName: string, documentId: string, subCollectionName: string): Promise<T[]> => {
-  const collectionFunction = query(collection(db, collectionName, documentId, subCollectionName))
-  const querySnapshot = await getDocs(query(collectionFunction))
+export const fetchTimeTrackingByMonth = async <T>(month: number, year: number): Promise<T[]> => {
+  if (!auth.currentUser?.uid) return []
+  const lastDay = new Date(new Date(year, month, 1).getTime() - 1).getDate();
+  const collectionFunction = query(collection(db, 'users', auth.currentUser.uid, 'time-tracking'))
+  const whereFromFunction = where('date', '>=', new Date(year, month - 1, 1))
+  const whereToFunction = where('date', '<=', new Date(year, month - 1, lastDay))
+  const querySnapshot = await getDocs(query(collectionFunction, and(whereFromFunction, whereToFunction)))
   return querySnapshot.docs.map((queryDoc) => ({
     id: queryDoc.id,
     ...queryDoc.data()
