@@ -7,11 +7,16 @@
 }
 
 body {
+  height: 100vh;
   margin: 0;
   font-family: 'Inter', sans-serif;
   color: #393939;
   font-size: 14px;
-  line-height: 14px;
+  background-color: #f5f7ff;
+}
+
+#app {
+  height: 100vh;
 }
 
 @for $i from 1 through 6 {
@@ -37,17 +42,6 @@ a {
       color: darken($c-info, 20%);
     }
   }
-}
-
-.main {
-  min-height: 100vh;
-  background-color: #f5f7ff;
-  padding: 16px;
-}
-
-.d-grid {
-  display: grid;
-  gap: 16px 16px;
 }
 
 .full-width {

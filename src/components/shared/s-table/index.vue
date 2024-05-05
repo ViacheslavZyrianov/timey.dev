@@ -74,6 +74,8 @@ const headerStyle = computed(() => (style: Record<string, string>) => ({
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    background-color: #fff;
+    box-shadow: 0 0 16px 0 #d9d9d9;
 
     thead {
       tr {

@@ -8,7 +8,7 @@ const teams = await teamsStore.fetchTeams()
 </script>
 
 <template>
-  <div class="teams d-grid full-width height-fit-content">
+  <div class="teams full-width height-fit-content">
     <s-card
       v-for="team in teams"
       :key="team.id"
@@ -29,6 +29,8 @@ const teams = await teamsStore.fetchTeams()
 
 <style lang="scss" scoped>
 .teams {
+  display: grid;
+  gap: 16px 16px;
   grid-template-columns: repeat(3, 1fr);
 
   .team {

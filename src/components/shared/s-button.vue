@@ -79,7 +79,7 @@ const icon = computed(() => props.icon || null)
   color: #fff;
   padding: 0 16px;
   cursor: pointer;
-  transition: background .3s;
+  transition: background .2s;
   will-change: background;
 
   &:focus {

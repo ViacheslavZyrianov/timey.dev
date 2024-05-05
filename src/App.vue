@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import sider from '@/components/sider.vue'
+import appNav from '@/components/app-nav.vue'
+import appBar from '@/components/app-bar.vue'
 import useAuthStore from '@/store/auth'
 
 const authStore = useAuthStore()
@@ -11,10 +12,11 @@ const mainClassList = computed(() => ({
 </script>
 
 <template>
-  <div class="d-flex">
-    <sider v-if="authStore.isUserLoggedIn" />
+  <div class="grid-container pa-8">
+    <app-bar />
+    <app-nav v-if="authStore.isUserLoggedIn" />
     <main
-      class="main d-flex flex-grow-1"
+      class="d-flex flex-grow-1"
       :class="mainClassList"
     >
       <Suspense>
@@ -25,5 +27,17 @@ const mainClassList = computed(() => ({
 </template>
 
 <style lang="scss">
-@import url('./assets/scss/global.scss');
+.grid-container {
+  display: grid;
+  grid-template-columns: 256px 16px auto;
+  grid-template-rows: auto 16px 1fr;
+  grid-template-areas:
+    "app-bar app-bar app-bar"
+    ". . ."
+    "app-nav . main";
+  height: 100%;
+}
+main {
+  grid-area: main;
+}
 </style>

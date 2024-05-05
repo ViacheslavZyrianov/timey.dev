@@ -52,21 +52,22 @@ const style = computed(() => ([
 .s-card {
   padding: 16px;
   background-color: #fff;
-  border: 1px solid #ededed;
+  box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
 
   .title {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 16px;
+    color: $c-primary;
   }
 
   &.hover {
-    transition: border-color .3s;
-    will-change: border-color;
+    transition: box-shadow .2s;
+    will-change: box-shadow;
 
     &:hover {
-      border-color: $c-primary;
+      box-shadow: 0 0 8px 0 #aeaeae;
     }
   }
 }
