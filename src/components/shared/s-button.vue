@@ -33,6 +33,10 @@ const props = defineProps({
     type: String,
     default: 'medium'
   },
+  width: {
+    type: String,
+    default: null
+  },
   height: {
     type: String,
     default: null
@@ -43,11 +47,11 @@ const classList = computed(() => ([
   `variant-${props.variant}`,
   `color-${props.color}`,
   `size-${props.size}`,
-  { block: props.block }
 ]))
 
 const style = computed(() => ({
-  height: props.height
+  height: props.height,
+  width: props.width
 }))
 
 const icon = computed(() => props.icon || null)
@@ -63,7 +67,7 @@ const icon = computed(() => props.icon || null)
       v-if="icon"
       type="mdi"
       :icon="icon"
-      class="icon"
+      class="icon mr-4"
       :size="iconSize"
     />
     <span v-if="props.title" class="s-button-title">
@@ -88,7 +92,6 @@ const icon = computed(() => props.icon || null)
 
   &-title {
     white-space: nowrap;
-    margin-left: 8px;
   }
 
   &.size {
