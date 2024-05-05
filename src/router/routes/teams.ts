@@ -4,6 +4,9 @@ export default {
     {
       path: '',
       name: 'teams',
+      meta: {
+        name: 'Teams'
+      },
       component: () => import('@/views/Teams/index.vue'),
     },
     {
@@ -19,6 +22,9 @@ export default {
     {
       path: 'new',
       name: 'team-new',
+      meta: {
+        name: 'New Team'
+      },
       component: () => import('@/views/Teams/New/index.vue')
     }
   ]

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { computed, ComputedRef, ref, Ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import useTeamsStore from "@/store/teams"
 import tableHeaders from "./tableHeaders";
-import { computed, ComputedRef, ref, Ref } from "vue";
+import { useTitle } from "@vueuse/core";
 
 const route = useRoute()
 const router = useRouter()
@@ -17,6 +18,8 @@ const onSubmitAddTeamMember = async () => {
 }
 
 const team = await teamsStore.fetchTeam(teamId.value)
+
+useTitle(team.name)
 
 const teamMembersRequests = team.members ? team.members.map((member) => teamsStore.fetchTeamMemberById(member)) : null
 const teamMembers = teamMembersRequests ? await Promise.all(teamMembersRequests) : []
