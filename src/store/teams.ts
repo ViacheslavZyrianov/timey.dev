@@ -31,7 +31,7 @@ export default defineStore('teams', () => {
   async function postTeamMember(teamId: string, teamMemberId: string): Promise<void> {
     const isUserExists = await checkIsItemExists('users', teamMemberId)
     if (isUserExists) await updateItem.arrayUnion('teams', teamId, 'members', [teamMemberId])
-    else throw new Error(`${teamMemberId} is not exist`)
+    else throw new Error(`${teamMemberId} does not exist`)
   }
 
   return { teams, fetchTeams, fetchTeam, postTeam, fetchTeamMemberById, postTeamMember }
