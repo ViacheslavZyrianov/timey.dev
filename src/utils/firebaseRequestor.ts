@@ -15,6 +15,15 @@ export const fetchItems = async <T>(collectionName: string): Promise<T[]> => {
   })) as T[]
 }
 
+export const fetchSubCollectionItems = async <T>(collectionName: string, documentId: string, subCollectionName: string): Promise<T[]> => {
+  const collectionFunction = query(collection(db, collectionName, documentId, subCollectionName))
+  const querySnapshot = await getDocs(query(collectionFunction))
+  return querySnapshot.docs.map((queryDoc) => ({
+    id: queryDoc.id,
+    ...queryDoc.data()
+  })) as T[]
+}
+
 export const fetchItemById = async <T>(collectionName: string, id: string):Promise<T>=> {
   const querySnapshot = await getDoc(doc(db, collectionName, id))
 
