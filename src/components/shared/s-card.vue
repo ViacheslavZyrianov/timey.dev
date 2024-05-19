@@ -13,6 +13,10 @@ const props = defineProps({
   width: {
     type: String,
     default: ''
+  },
+  padding: {
+    type: String,
+    default: '16px'
   }
 })
 
@@ -25,7 +29,8 @@ const classList = computed(() => ([
 ]))
 
 const style = computed(() => ([
-  { width: props.width }
+  { width: props.width },
+  { padding: props.padding }
 ]))
 </script>
 
@@ -50,7 +55,6 @@ const style = computed(() => ([
 
 <style lang="scss" scoped>
 .s-card {
-  padding: 16px;
   background-color: #fff;
   box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
