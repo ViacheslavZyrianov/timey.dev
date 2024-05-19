@@ -67,7 +67,7 @@ const icon = computed(() => props.icon || null)
       v-if="icon"
       type="mdi"
       :icon="icon"
-      class="icon mr-4"
+      class="s-button-icon"
       :size="iconSize"
     />
     <span v-if="props.title" class="s-button-title">
@@ -77,6 +77,7 @@ const icon = computed(() => props.icon || null)
 </template>
 
 <style lang="scss" scoped>
+
 .s-button {
   border: none;
   border-radius: 8px;
@@ -92,6 +93,10 @@ const icon = computed(() => props.icon || null)
 
   &-title {
     white-space: nowrap;
+  }
+
+  &-icon + &-title {
+    margin-left: 4px;
   }
 
   &.size {
