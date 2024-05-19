@@ -39,7 +39,7 @@ const onDelete = (id: string) => {
       </template>
     </template>
     <template #actions>
-      <div class="d-flex align-center flex-gap-6">
+      <div class="d-flex align-center flex-column-gap-4">
         <s-button
           color="info"
           icon="mdiPencil"
