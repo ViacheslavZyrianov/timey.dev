@@ -14,6 +14,7 @@ declare module 'vue' {
     SCard: typeof import('./src/components/shared/s-card.vue')['default']
     SIcon: typeof import('./src/components/shared/s-icon.vue')['default']
     SInput: typeof import('./src/components/shared/s-input.vue')['default']
+    SSelect: typeof import('./src/components/shared/s-select.vue')['default']
     STable: typeof import('./src/components/shared/s-table/index.vue')['default']
   }
 }
