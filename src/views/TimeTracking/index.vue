@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { Ref, ref, watch } from "vue";
-import { useRoute } from 'vue-router'
-import dayjs from "dayjs";
+import {onMounted, Ref, ref, watch} from "vue"
+import { useRoute, useRouter } from 'vue-router'
+import dayjs from "dayjs"
 import useTimeTrackingStore from '@/store/timeTracking'
 import timeTable from './time-table/index.vue'
-import { TypeTimeTrackingItemRead } from "@/types/time-tracking";
+import { TypeTimeTrackingItemRead } from "@/types/time-tracking"
+import { months, years } from "./dates";
 
 const route = useRoute()
+const router = useRouter()
 const timeTrackingStore = useTimeTrackingStore()
 
-const years = [2023, 2024]
+const month: Ref<string> = ref('')
+const year: Ref<string> = ref('')
+
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
 
 watch(() => route.params, async () => {
@@ -18,35 +22,36 @@ watch(() => route.params, async () => {
   immediate: true,
 })
 
-const toYear = (year: number) => `/time-tracking/${year}/${route.params.month}`
-const toMonth = (month: number) => `/time-tracking/${route.params.year}/${month}`
+const goToMonth = (month: string) => {
+  router.push(`/time-tracking/${route.params.year}/${month}`)
+}
+
+const goToYear = (year: string) => {
+  router.push(`/time-tracking/${year}/${route.params.month}`)
+}
+
+onMounted(() => {
+  month.value = route.params.month.toString() || dayjs().format('M')
+  year.value = route.params.year.toString() || dayjs().format('YYYY')
+})
 </script>
 
 <template>
-  <div class="d-flex full-width">
-    <div class="years d-flex direction-column flex-row-gap-8 mb-8 mr-8 pr-8">
-      <s-card
-        v-for="year in years"
-        :key="year"
-        :to="toYear(year)"
-        width="180px"
-      >
-        <template #content>
-          {{ year }}
-        </template>
-      </s-card>
-    </div>
-    <div class="row mb-8 full-width">
-      <s-card
-        v-for="month in 12"
-        :key="month"
-        :to="toMonth(month)"
-      >
-        <template #content>
-          {{ dayjs().month(month - 1).format('MMMM') }}
-        </template>
-      </s-card>
-    </div>
+  <div class="d-flex full-width mb-6">
+    <s-select
+      v-if="year"
+      v-model="year"
+      :items="years"
+      class="mr-6"
+      @update:model-value="goToYear"
+    />
+    <s-select
+      v-if="month"
+      v-model="month"
+      :items="months"
+      width="160px"
+      @update:model-value="goToMonth"
+    />
   </div>
   <time-table :data="timeTrackingData" />
 </template>
