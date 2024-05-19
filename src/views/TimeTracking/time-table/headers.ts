@@ -11,6 +11,7 @@ export default [
   {
     key: 'duration',
     label: 'Duration',
+    width: '0'
   },
   {
     key: 'actions',
