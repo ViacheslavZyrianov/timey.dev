@@ -3,7 +3,6 @@ import {onMounted, Ref, ref, watch} from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import dayjs from "dayjs"
 import useTimeTrackingStore from '@/store/timeTracking'
-import timeTable from './time-table/index.vue'
 import { TypeTimeTrackingItemRead } from "@/types/time-tracking"
 import { months, years } from "./dates";
 
@@ -53,7 +52,7 @@ onMounted(() => {
       @update:model-value="goToMonth"
     />
   </div>
-  <time-table :data="timeTrackingData" />
+  <s-calendar-month />
 </template>
 
 <style scoped lang="scss">
