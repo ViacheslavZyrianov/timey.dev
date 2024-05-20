@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, Ref, ref, watch} from "vue"
+import {computed, onMounted, Ref, ref, watch} from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import dayjs from "dayjs"
 import useTimeTrackingStore from '@/store/timeTracking'
@@ -14,6 +14,28 @@ const month: Ref<string> = ref('')
 const year: Ref<string> = ref('')
 
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
+
+const tasks = computed(() => timeTrackingData.value.reduce((acc, val) => {
+  const key = dayjs(val.date.seconds * 1000).format('YYYY-MM-DD')
+  if (!acc[key]) {
+    acc[key] = {
+      id: val.id,
+      tasks: [
+        {
+          hours: val.hours,
+          task: val.task,
+        }
+      ]
+    }
+  } else {
+    acc[key].tasks.push({
+      hours: val.hours,
+      task: val.task,
+    })
+  }
+
+  return acc
+}, {}))
 
 watch(() => route.params, async () => {
   timeTrackingData.value = await timeTrackingStore.fetchTimeTracking(Number(route.params.month), Number(route.params.year))
@@ -52,7 +74,7 @@ onMounted(() => {
       @update:model-value="goToMonth"
     />
   </div>
-  <s-calendar-month />
+  <s-calendar-month :tasks="tasks" />
 </template>
 
 <style scoped lang="scss">
