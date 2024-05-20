@@ -58,6 +58,7 @@ const style = computed(() => ([
   background-color: #fff;
   box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
+  overflow: hidden;
   transition: color .2s, background .2s;
   will-change: color, background;
 
