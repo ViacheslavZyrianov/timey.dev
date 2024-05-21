@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineSlots, computed } from 'vue'
+import {defineSlots, computed, PropType} from 'vue'
 
 const props = defineProps({
   hover: {
@@ -17,6 +17,10 @@ const props = defineProps({
   padding: {
     type: String,
     default: '16px'
+  },
+  variant: {
+    type: String as PropType<'shadow' | 'border'>,
+    default: 'shadow'
   }
 })
 
@@ -25,7 +29,8 @@ const slots = defineSlots()
 const tag = props.to ? 'router-link' : 'div'
 
 const classList = computed(() => ([
-  { hover: props.hover }
+  { hover: props.hover },
+  `s-card--variant-${props.variant}`
 ]))
 
 const style = computed(() => ([
@@ -56,7 +61,6 @@ const style = computed(() => ([
 <style lang="scss" scoped>
 .s-card {
   background-color: #fff;
-  box-shadow: 0 0 16px 0 #d9d9d9;
   border-radius: 8px;
   overflow: hidden;
   transition: color .2s, background .2s;
@@ -85,6 +89,16 @@ const style = computed(() => ([
 
     &:hover {
       box-shadow: 0 0 8px 0 #aeaeae;
+    }
+  }
+
+  &--variant {
+    &-shadow {
+      box-shadow: 0 0 16px 0 #d9d9d9;
+    }
+
+    &-border {
+      border: 1px solid #ececec;
     }
   }
 }
