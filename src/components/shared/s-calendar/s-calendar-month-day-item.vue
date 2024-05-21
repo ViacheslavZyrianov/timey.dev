@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import {computed} from "vue";
+import {computed, ref, Ref} from "vue";
 
 const props = defineProps({
   day: {
@@ -21,12 +21,17 @@ const props = defineProps({
   },
 })
 
+const isDialogOpened: Ref<boolean> = ref(false)
+
 const label = computed(() => dayjs(props.day.date).format("D"))
+
+const tasksCount = computed(() => props.task?.tasks?.length)
 
 const calendarDayClassList = computed(() => ({
   'calendar-day d-flex flex-column': true,
   'calendar-day--not-current': !props.isCurrentMonth,
-  'calendar-day--today': props.isToday
+  'calendar-day--today': props.isToday,
+  'calendar-day--has-tasks': !!tasksCount.value
 }))
 
 const isTasksExist = computed(() => !!props.task?.tasks)
@@ -35,13 +40,18 @@ const minTasks = computed(() => {
   return props.task?.tasks?.slice(0, 2)
 })
 
-const moreTasksText = computed(() => `${props.task?.tasks?.length - 2} tasks more...` || 'Loading...')
+const moreTasksText = computed(() => `${tasksCount.value - 2} tasks more...` || 'Loading...')
 
-const isLessThenMinTasks = computed(() => props.task?.tasks?.length < 4)
+const isLessThenMinTasks = computed(() => tasksCount.value < 4)
+
+const onSelectDay = () => {
+  if (!tasksCount.value) return
+  isDialogOpened.value = true;
+}
 </script>
 
 <template>
-  <li :class="calendarDayClassList">
+  <li :class="calendarDayClassList" @click="onSelectDay">
     <div class="calendar-day-label">
       {{ label }}
     </div>
@@ -67,6 +77,26 @@ const isLessThenMinTasks = computed(() => props.task?.tasks?.length < 4)
       </div>
     </template>
   </li>
+
+  <s-dialog v-model="isDialogOpened">
+    <template #title>
+      {{ dayjs(day.date).format('DD MMMM YYYY') }}
+    </template>
+    <template #content>
+      <div
+        v-for="taskItem in task.tasks"
+        :key="taskItem.id"
+        class="task mb-4"
+      >
+        <div class="d-flex align-center">
+          Hours: {{taskItem.hours}}
+        </div>
+        <div class="d-flex align-center">
+          Task: {{ taskItem.task }}
+        </div>
+      </div>
+    </template>
+  </s-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -77,7 +107,6 @@ const isLessThenMinTasks = computed(() => props.task?.tasks?.length < 4)
   min-width: 96px;
   padding: 16px;
   border: 1px solid #e6e6e6;
-  cursor: pointer;
   transition: background-color .2s;
   will-change: background-color;
 
@@ -95,8 +124,20 @@ const isLessThenMinTasks = computed(() => props.task?.tasks?.length < 4)
     font-weight: 600;
   }
 
-  &:hover {
+  &--has-tasks {
+    cursor: pointer;
+  }
+
+  &:hover{
     background-color: #f4f4f4;
+  }
+
+  &:hover:not(.calendar-day--has-tasks) {
+    background-color: #ffffff;
+  }
+
+  &:not(.calendar-day--has-tasks) {
+    cursor: default;
   }
 
   &-task {
