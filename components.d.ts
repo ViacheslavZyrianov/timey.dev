@@ -17,6 +17,7 @@ declare module 'vue' {
     SCalendarMonthDayItem: typeof import('./src/components/shared/s-calendar/s-calendar-month-day-item.vue')['default']
     SCalendarWeekdays: typeof import('./src/components/shared/s-calendar/s-calendar-weekdays.vue')['default']
     SCard: typeof import('./src/components/shared/s-card.vue')['default']
+    SDialog: typeof import('./src/components/shared/s-dialog.vue')['default']
     SIcon: typeof import('./src/components/shared/s-icon.vue')['default']
     SInput: typeof import('./src/components/shared/s-input.vue')['default']
     SSelect: typeof import('./src/components/shared/s-select.vue')['default']
