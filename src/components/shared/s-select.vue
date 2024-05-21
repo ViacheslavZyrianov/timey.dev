@@ -75,7 +75,7 @@ onClickOutside(target, event => closeItems())
   position: relative;
   cursor: pointer;
   user-select: none;
-  z-index: 9999;
+  z-index: 10;
 
   &-input-label {
     font-weight: 600;
