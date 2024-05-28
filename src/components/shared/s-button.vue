@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, PropType} from 'vue'
+import {computed, ComputedRef, PropType} from 'vue'
 
 const props = defineProps({
   title: {
@@ -15,7 +15,7 @@ const props = defineProps({
     default: 'button'
   },
   color: {
-    type: String,
+    type: String as PropType<'primary' | 'support-1' | 'success' | 'info' | 'warning' | 'error'>,
     default: 'primary'
   },
   icon: {
@@ -23,7 +23,7 @@ const props = defineProps({
   },
   iconSize: {
     type: Number,
-    default: 16
+    default: null
   },
   block: {
     type: Boolean,
@@ -55,6 +55,20 @@ const style = computed(() => ({
 }))
 
 const icon = computed(() => props.icon || null)
+
+const iconSizeComputed: ComputedRef<number> = computed(() => {
+  if (props.iconSize) return props.iconSize
+  else {
+    switch (props.size) {
+      case "large":
+        return 24
+      case "medium":
+        return 20
+      case "small":
+        return 16
+    }
+  }
+})
 </script>
 
 <template>
@@ -67,8 +81,8 @@ const icon = computed(() => props.icon || null)
       v-if="icon"
       type="mdi"
       :icon="icon"
+      :size="iconSizeComputed"
       class="s-button-icon"
-      :size="iconSize"
     />
     <span v-if="props.title" class="s-button-title">
       {{ props.title }}
@@ -101,26 +115,16 @@ const icon = computed(() => props.icon || null)
 
   &.size {
     &-small {
-      padding: 8px;
+      padding: 12px;
       font-size: 12px;
-
-      .icon {
-        width: 16px;
-        height: 16px;
-      }
     }
 
     &-medium {
-      padding: 12px 8px;
+      padding: 12px 16px;
     }
 
     &-large {
-      padding: 16px 8px;
-
-      .icon {
-        width: 20px;
-        height: 20px;
-      }
+      padding: 16px 24px;
     }
   }
 
