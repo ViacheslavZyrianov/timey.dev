@@ -40,6 +40,10 @@ const props = defineProps({
   height: {
     type: String,
     default: null
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -47,6 +51,7 @@ const classList = computed(() => ([
   `variant-${props.variant}`,
   `color-${props.color}`,
   `size-${props.size}`,
+  props.disabled && 'disabled',
 ]))
 
 const style = computed(() => ({
@@ -98,6 +103,7 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
   color: #fff;
   cursor: pointer;
   font-size: 14px;
+  user-select: none;
   transition: background .2s;
   will-change: background;
 
@@ -111,6 +117,11 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
 
   &-icon + &-title {
     margin-left: 8px;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   &.size {
@@ -152,6 +163,10 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
           &-default {
             background-color: $colorVariable;
 
+            &.disabled {
+              background-color: $c-disabled;
+            }
+
             &:hover {
               background-color: lighten($colorVariable, 5%);
             }
@@ -159,6 +174,10 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
           &-outlined {
             border-color: $colorVariable;
             color: $colorVariable;
+
+            &.disabled {
+              border-color: $c-disabled;
+            }
 
             &:hover {
               background-color: rgba($colorVariable, 0.15)
