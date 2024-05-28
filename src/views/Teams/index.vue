@@ -1,30 +1,84 @@
 <script setup lang="ts">
-import AddTeam from './add-team.vue'
 import useTeamsStore from '@/store/teams'
+import {TypeTableHeader, TypeTableRow} from "@/components/shared/s-table/types";
+import {computed, ComputedRef} from "vue";
+import {TypeTeamRead} from "@/types/teams";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const teamsStore = useTeamsStore()
 
+const tableHeaders: TypeTableHeader[] = [
+  {
+    key: 'name',
+    label: 'Name'
+  },
+  {
+    key: 'description',
+    label: 'Description'
+  },
+  {
+    key: 'members',
+    label: 'Members',
+    width: '0',
+  },
+  {
+    key: 'actions',
+    label: '',
+    width: '0'
+  }
+]
+
+const tableRows: ComputedRef<TypeTableRow[]> = computed(() => teams.map((team: TypeTeamRead) => ({
+  id: team.id,
+  name: team.name,
+  description: team.description,
+  members: team.members?.length || 0
+})))
+
 const teams = await teamsStore.fetchTeams()
+
+const onRedirectToTeam = (id: string) => {
+  router.push({
+    name: 'team',
+    params: {
+      team_id: id
+    }
+  })
+}
+
+const onRedirectToNewTeam = (id: string) => {
+  router.push({
+    name: 'team-new'
+  })
+}
 </script>
 
 <template>
-  <div class="teams full-width height-fit-content">
-    <s-card
-      v-for="team in teams"
-      :key="team.id"
-      class="team"
-      hover
-      :to="`/teams/${team.id}`"
-    >
-      <template #title>
-        {{ team.name }}
-      </template>
-      <template #content>
-        {{ team.description }}
-      </template>
-    </s-card>
-    <add-team />
+  <div class="d-flex mb-8">
+    <s-button
+      title="Add Team"
+      icon="mdiAccountMultiplePlusOutline"
+      color="success"
+      class="ml-auto"
+      @click="onRedirectToNewTeam"
+    />
   </div>
+  <s-table
+    :headers="tableHeaders"
+    :rows="tableRows"
+  >
+    <template #actions="{ row }">
+      <s-button
+        size="small"
+        title="View Team"
+        icon="mdiEyeOutline"
+        color="info"
+        @click="onRedirectToTeam(row.id)"
+      />
+    </template>
+  </s-table>
 </template>
 
 <style lang="scss" scoped>
