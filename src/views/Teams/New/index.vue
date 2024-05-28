@@ -24,9 +24,9 @@ const onAddNewTeam = async () => {
     Add Team
   </template>
   <template #content>
-    <s-input v-model="form.name" label="Name" placeholder="Enter name" />
-    <s-input v-model="form.description" label="Description" placeholder="Enter description" />
-    <s-button title="Create new team" @click="onAddNewTeam" />
+    <s-input v-model="form.name" label="Name" placeholder="Enter name" class="mb-8" />
+    <s-input v-model="form.description" label="Description" placeholder="Enter description" class="mb-8" />
+    <s-button title="Create new team" size="large" @click="onAddNewTeam" />
   </template>
 </s-card>
 </template>
