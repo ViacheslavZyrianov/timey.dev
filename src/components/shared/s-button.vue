@@ -30,7 +30,7 @@ const props = defineProps({
     default: false
   },
   size: {
-    type: String,
+    type: String as PropType<'small' | 'medium' | 'large'>,
     default: 'medium'
   },
   width: {
@@ -82,8 +82,8 @@ const icon = computed(() => props.icon || null)
   border: none;
   border-radius: 8px;
   color: #fff;
-  padding: 0 16px;
   cursor: pointer;
+  font-size: 14px;
   transition: background .2s;
   will-change: background;
 
@@ -96,7 +96,7 @@ const icon = computed(() => props.icon || null)
   }
 
   &-icon + &-title {
-    margin-left: 4px;
+    margin-left: 8px;
   }
 
   &.size {
@@ -109,15 +109,18 @@ const icon = computed(() => props.icon || null)
         height: 16px;
       }
     }
+
     &-medium {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      font-size: 14px;
+      padding: 12px 8px;
     }
+
     &-large {
-      padding-top: 16px;
-      padding-bottom: 16px;
-      font-size: 16px;
+      padding: 16px 8px;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 
