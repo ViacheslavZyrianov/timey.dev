@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import {reactive, ref, Ref, watch} from 'vue'
 import { useRouter } from 'vue-router'
 import useTeamsStore from '@/store/teams'
 import { TypeTeamCreate } from '@/types/teams'
@@ -7,9 +7,15 @@ import { TypeTeamCreate } from '@/types/teams'
 const router = useRouter()
 const teamsStore = useTeamsStore()
 
+const isSubmitButtonDisabled: Ref<boolean> = ref(true)
+
 const form: TypeTeamCreate = reactive({
   name: '',
   description: '',
+})
+
+watch(() => form.name, () => {
+  isSubmitButtonDisabled.value = form.name.length < 2
 })
 
 const onAddNewTeam = async () => {
@@ -26,7 +32,7 @@ const onAddNewTeam = async () => {
   <template #content>
     <s-input v-model="form.name" label="Name" placeholder="Enter name" class="mb-8" />
     <s-input v-model="form.description" label="Description" placeholder="Enter description" class="mb-8" />
-    <s-button title="Create new team" size="large" @click="onAddNewTeam" />
+    <s-button title="Create new team" size="large" :disabled="isSubmitButtonDisabled" @click="onAddNewTeam" />
   </template>
 </s-card>
 </template>
