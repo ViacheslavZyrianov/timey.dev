@@ -48,7 +48,7 @@ const props = defineProps({
   },
   to: {
     type: Object as PropType<RouteLocationRaw>,
-    default: ""
+    default: null
   }
 })
 
