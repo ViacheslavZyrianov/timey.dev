@@ -7,10 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Day: typeof import('./src/components/shared/s-calendar/day.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SAvatar: typeof import('./src/components/shared/s-avatar.vue')['default']
     SButton: typeof import('./src/components/shared/s-button.vue')['default']
+    SCalendar: typeof import('./src/components/shared/s-calendar/index.vue')['default']
     SCalendarDateIndicator: typeof import('./src/components/shared/s-calendar/s-calendar-date-indicator.vue')['default']
     SCalendarDateSelector: typeof import('./src/components/shared/s-calendar/s-calendar-date-selector.vue')['default']
     SCalendarMonth: typeof import('./src/components/shared/s-calendar/s-calendar-month.vue')['default']
@@ -22,5 +24,6 @@ declare module 'vue' {
     SInput: typeof import('./src/components/shared/s-input.vue')['default']
     SSelect: typeof import('./src/components/shared/s-select.vue')['default']
     STable: typeof import('./src/components/shared/s-table/index.vue')['default']
+    Weekdays: typeof import('./src/components/shared/s-calendar/weekdays.vue')['default']
   }
 }
