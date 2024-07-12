@@ -22,7 +22,7 @@ const close = () => {
   model.value = false
 }
 
-onClickOutside(target, event => close())
+onClickOutside(target, () => close())
 </script>
 
 <template>
