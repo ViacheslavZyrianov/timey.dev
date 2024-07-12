@@ -7,3 +7,9 @@ export type TypeTimeTrackingItemRead = {
   }
   task: string
 }
+
+export type TypeTimeTrackingItemAdd = {
+  task: string
+  hours: number | null
+  date: string | Date | null
+}
