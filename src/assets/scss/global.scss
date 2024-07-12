@@ -34,20 +34,6 @@ ul, ol {
 
 a {
   text-decoration: none;
-  color: $c-primary;
-  font-weight: 500;
-
-  &:hover {
-    color: darken($c-primary, 20%);
-  }
-
-  &:visited {
-    color: $c-primary;
-
-    &:hover {
-      color: darken($c-primary, 20%);
-    }
-  }
 }
 
 .full-width {
