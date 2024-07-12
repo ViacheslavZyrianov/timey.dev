@@ -103,6 +103,20 @@ const headerStyle = computed(() => (style: Record<string, string>) => ({
           padding: 16px;
           border-bottom: 1px solid #d6d6d6;
         }
+
+        &:last-child {
+          td {
+            border: none;
+
+            &:first-child {
+              border-radius: 0 0 0 8px;
+            }
+
+            &:last-child {
+              border-radius: 0 0 8px 0;
+            }
+          }
+        }
       }
     }
   }
