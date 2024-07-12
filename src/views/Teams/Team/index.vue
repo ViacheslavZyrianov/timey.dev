@@ -49,6 +49,7 @@ const onRedirectToTeamMemberDetails = (member_id: string) => {
         type="submit"
         icon="mdiAccountPlusOutline"
         title="Add team member"
+        color="success"
         class="ml-8"
       />
     </form>
