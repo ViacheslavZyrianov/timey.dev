@@ -20,7 +20,7 @@ watch(() => form.name, () => {
 
 const onAddNewTeam = async () => {
   const id = await teamsStore.postTeam(form)
-  router.push({ name: 'team', params: { id } })
+  await router.push({ name: 'team', params: { id } })
 }
 </script>
 

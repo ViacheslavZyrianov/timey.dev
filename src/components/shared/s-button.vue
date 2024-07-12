@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed, ComputedRef, PropType} from 'vue'
+import {RouteLocationRaw} from "vue-router";
 
 const props = defineProps({
   title: {
@@ -44,6 +45,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  to: {
+    type: Object as PropType<RouteLocationRaw>,
+    default: ""
   }
 })
 
@@ -74,10 +79,17 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
     }
   }
 })
+
+const buttonComponent: ComputedRef<'button' | 'router-link'> = computed(() => {
+  if (props.to) return 'router-link'
+  return 'button'
+})
 </script>
 
 <template>
-  <button
+  <component
+    :is="buttonComponent"
+    :to="to"
     class="s-button d-flex align-center justify-center"
     :class="classList"
     :style="style"
@@ -92,11 +104,10 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
     <span class="s-button-title">
       <slot />
     </span>
-  </button>
+  </component>
 </template>
 
 <style lang="scss" scoped>
-
 .s-button {
   border: none;
   border-radius: 8px;

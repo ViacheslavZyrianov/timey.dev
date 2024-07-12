@@ -47,12 +47,6 @@ const onRedirectToTeam = (id: string) => {
     }
   })
 }
-
-const onRedirectToNewTeam = (id: string) => {
-  router.push({
-    name: 'team-new'
-  })
-}
 </script>
 
 <template>
@@ -61,7 +55,9 @@ const onRedirectToNewTeam = (id: string) => {
       icon="mdiAccountMultiplePlusOutline"
       color="success"
       class="ml-auto"
-      @click="onRedirectToNewTeam"
+      :to="{
+        name: 'team-new'
+      }"
     >
       Add Team
     </s-button>
