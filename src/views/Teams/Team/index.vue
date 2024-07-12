@@ -48,10 +48,11 @@ const onRedirectToTeamMemberDetails = (member_id: string) => {
       <s-button
         type="submit"
         icon="mdiAccountPlusOutline"
-        title="Add team member"
         color="success"
         class="ml-8"
-      />
+      >
+        Add team member
+      </s-button>
     </form>
     <s-table
       :headers="tableHeaders"
@@ -60,10 +61,11 @@ const onRedirectToTeamMemberDetails = (member_id: string) => {
       <template #actions="{ row }">
         <s-button
           size="small"
-          title="View Member"
           icon="mdiEyeOutline"
           @click="onRedirectToTeamMemberDetails(row.id)"
-        />
+        >
+          View Member
+        </s-button>
       </template>
     </s-table>
   </div>

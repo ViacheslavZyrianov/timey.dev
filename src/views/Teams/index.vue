@@ -58,12 +58,13 @@ const onRedirectToNewTeam = (id: string) => {
 <template>
   <div class="d-flex mb-8">
     <s-button
-      title="Add Team"
       icon="mdiAccountMultiplePlusOutline"
       color="success"
       class="ml-auto"
       @click="onRedirectToNewTeam"
-    />
+    >
+      Add Team
+    </s-button>
   </div>
   <s-table
     :headers="tableHeaders"
@@ -72,11 +73,12 @@ const onRedirectToNewTeam = (id: string) => {
     <template #actions="{ row }">
       <s-button
         size="small"
-        title="View Team"
         icon="mdiEyeOutline"
         color="info"
         @click="onRedirectToTeam(row.id)"
-      />
+      >
+        View Team
+      </s-button>
     </template>
   </s-table>
 </template>

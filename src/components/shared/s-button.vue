@@ -89,8 +89,8 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
       :size="iconSizeComputed"
       class="s-button-icon"
     />
-    <span v-if="props.title" class="s-button-title">
-      {{ props.title }}
+    <span class="s-button-title">
+      <slot />
     </span>
   </button>
 </template>

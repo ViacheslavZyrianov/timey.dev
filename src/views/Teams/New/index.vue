@@ -32,7 +32,9 @@ const onAddNewTeam = async () => {
   <template #content>
     <s-input v-model="form.name" label="Name" placeholder="Enter name" class="mb-8" />
     <s-input v-model="form.description" label="Description" placeholder="Enter description" class="mb-8" />
-    <s-button title="Create new team" size="large" :disabled="isSubmitButtonDisabled" @click="onAddNewTeam" />
+    <s-button size="large" :disabled="isSubmitButtonDisabled" @click="onAddNewTeam">
+      Create new team
+    </s-button>
   </template>
 </s-card>
 </template>

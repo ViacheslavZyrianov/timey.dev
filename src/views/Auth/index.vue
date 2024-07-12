@@ -19,9 +19,10 @@ async function onAuthClick() {
         <s-button
           icon="mdiGoogle"
           width="100%"
-          title="Sign in with Google"
           @click="onAuthClick"
-        />
+        >
+          Sign in with Google
+        </s-button>
       </template>
     </s-card>
   </div>

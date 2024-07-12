@@ -56,10 +56,11 @@ async function onLogout() {
       color="error"
       icon="mdiLogout"
       size="small"
-      title="Logout"
       variant="outlined"
       @click="onLogout"
-    />
+    >
+      Logout
+    </s-button>
   </nav>
 </template>
 
