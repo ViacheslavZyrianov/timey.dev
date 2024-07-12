@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import {computed, onMounted, Ref, ref, watch} from "vue"
-import { useRoute, useRouter } from 'vue-router'
+import {computed, ComputedRef, onMounted, Ref, ref, watch} from "vue"
+import {useRoute, useRouter} from 'vue-router'
 import dayjs from "dayjs"
-import { months, years } from "./dates";
-import { TypeTimeTrackingItemRead } from "@/types/time-tracking"
+import {months, years} from "./dates";
+import {TypeTimeTrackingItemRead} from "@/types/time-tracking"
 import useTimeTrackingStore from '@/store/timeTracking'
 import DialogAddTask from "./Dialogs/dialogAddTask.vue";
+import SSelect from "@/components/shared/s-select.vue";
+import {TypeCalendarVariant} from "@/components/shared/s-calendar/types";
+import DialogShowTasksPerDay from "@/views/TimeTracking/Dialogs/dialogShowTasksPerDay.vue";
+import {TypeDayData, TypeTaskInDayData} from "@/views/TimeTracking/types";
 
 const route = useRoute()
 const router = useRouter()
@@ -13,11 +17,14 @@ const timeTrackingStore = useTimeTrackingStore()
 
 const month: Ref<string> = ref('')
 const year: Ref<string> = ref('')
-const isAddTaskDialogVisible: Ref<boolean> = ref(false)
+const isDialogAddTaskVisible: Ref<boolean> = ref(false)
+const isDialogShowTaskPerDayVisible: Ref<boolean> = ref(false)
+const selectedDate: Ref<Object> = ref(dayjs())
+const selectedDay: Ref<string> = ref('')
 
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
 
-const tasks = computed(() => timeTrackingData.value.reduce((acc, val) => {
+const tasks: ComputedRef<{ [key: string]: TypeDayData }> = computed(() => timeTrackingData.value.reduce((acc, val) => {
   const key = dayjs(val.date.seconds * 1000).format('YYYY-MM-DD')
   if (!acc[key]) {
     acc[key] = {
@@ -39,6 +46,8 @@ const tasks = computed(() => timeTrackingData.value.reduce((acc, val) => {
   return acc
 }, {}))
 
+const tasksPerDay: ComputedRef<TypeTaskInDayData[]> = computed(() => tasks.value[selectedDay.value]?.tasks || [])
+
 const goToMonth = (month: string) => {
   router.push(`/time-tracking/${route.params.year}/${month}`)
 }
@@ -52,11 +61,17 @@ const fetchTimeTrackingForCurrentMonthAndYear = async () => {
 }
 
 const onAddTask = () => {
-  isAddTaskDialogVisible.value = true;
+  isDialogAddTaskVisible.value = true;
+}
+
+const onShowDayWithTimeTracking = (day: string) => {
+  selectedDay.value = day
+  isDialogShowTaskPerDayVisible.value = true
 }
 
 watch(() => route.params, async () => {
   await fetchTimeTrackingForCurrentMonthAndYear()
+  selectedDate.value = dayjs(`${route.params.year}-${route.params.month}-01`, 'YYYY-M-D')
 }, {
   immediate: true,
 })
@@ -85,8 +100,17 @@ onMounted(() => {
     />
     <s-button icon="mdiPlus" class="ml-auto" @click="onAddTask">Add task</s-button>
   </div>
-  <s-calendar-month :tasks="tasks" />
-  <dialog-add-task v-model="isAddTaskDialogVisible" @submit="fetchTimeTrackingForCurrentMonthAndYear" />
+  <s-calendar
+    :selected-date="selectedDate"
+    :dataset="tasks"
+    dataset-items-name="tasks"
+    is-weekdays-visible
+    format-dataset-item-element="{hours}h – {task}"
+    @select-day="onShowDayWithTimeTracking"
+  />
+
+  <dialog-add-task v-model="isDialogAddTaskVisible" @submit="fetchTimeTrackingForCurrentMonthAndYear" />
+  <dialog-show-tasks-per-day v-model="isDialogShowTaskPerDayVisible" :day="selectedDay" :tasks="tasksPerDay" />
 </template>
 
 <style scoped lang="scss">

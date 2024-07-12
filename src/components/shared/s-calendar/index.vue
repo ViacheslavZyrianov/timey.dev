@@ -1,32 +1,57 @@
 <script setup lang="ts">
-import {ref, computed, watch} from 'vue'
-import { useRoute } from 'vue-router'
+import {ref, computed, PropType} from 'vue'
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
+import weekdays from './weekdays.vue';
+import day from './day.vue';
+import {TypeCalendarVariant} from "@/components/shared/s-calendar/types";
 
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 dayjs.extend(customParseFormat)
 
 const props = defineProps({
-  tasks: {
+  selectedDate: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => dayjs()
+  },
+  dataset: {
+    type: Object,
+    default: null
+  },
+  datasetItemsName: {
+    type: String,
+    default: 'datasetItems'
+  },
+  formatDatasetItemElement: {
+    type: String,
+    default: ''
+  },
+  variant: {
+    type: String as PropType<TypeCalendarVariant>,
+    default: TypeCalendarVariant.Default
+  },
+  isDaySelectable: {
+    type: Boolean,
+    default: false
+  },
+  isWeekdaysVisible: {
+    type: Boolean,
+    default: false
+  },
 })
 
-const route = useRoute()
+const emit = defineEmits(['select-day'])
 
-const selectedDate = ref(dayjs())
 const today = ref(dayjs().format("YYYY-MM-DD"))
 
-const month = computed(() => Number(selectedDate.value.format("M")))
+const month = computed(() => Number(props.selectedDate.format("M")))
 
-const year = computed(() => Number(selectedDate.value.format("YYYY")))
+const year = computed(() => Number(props.selectedDate.format("YYYY")))
 
-const numberOfDaysInMonth = computed(() => dayjs(selectedDate.value).daysInMonth())
+const numberOfDaysInMonth = computed(() => dayjs(props.selectedDate.toString()).daysInMonth())
 
 const previousMonthDays = computed(() => {
   const firstDayOfTheMonthWeekday = getWeekday.value(
@@ -49,7 +74,7 @@ const previousMonthDays = computed(() => {
     .date();
 
   return [...Array(visibleNumberOfDaysFromPreviousMonth)].map(
-    (day, index) => {
+    (_, index) => {
       return {
         date: dayjs(
           `${previousMonth.year()}-${previousMonth.month() +
@@ -95,29 +120,38 @@ const days = computed(() => [
   ...nextMonthDays.value,
 ])
 
-const isToday = computed(() => (date) => date === today.value)
+const isToday = computed(() => (date: string) => date === today.value)
 
-const getWeekday = computed(() => (date) => dayjs(date).weekday())
+const getWeekday = computed(() => (date: string) => dayjs(date).weekday())
 
-watch(() => route.params, async () => {
-  selectedDate.value = dayjs(`${route.params.year}-${route.params.month}-01`, 'YYYY-M-D')
-}, {
-  immediate: true,
+const sCalendarClassList = computed(() => {
+  const classList = []
+
+  if (props.variant === TypeCalendarVariant.Default) classList.push('full-width')
+  if (props.variant === TypeCalendarVariant.Compact) classList.push('width-fit-content')
+
+  return classList
 })
+
+const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[date] ? props.dataset[date][props.datasetItemsName] : null
 </script>
 
 <template>
-  <s-card class="calendar-month" padding="0">
+  <s-card :class="sCalendarClassList" padding="0">
       <template #content>
-        <s-calendar-weekdays />
+        <weekdays v-if="isWeekdaysVisible" />
         <ol class="days-grid">
-          <s-calendar-month-day-item
+          <day
             v-for="day in days"
             :key="day.date"
             :day="day"
             :is-today="isToday(day.date)"
             :is-current-month="day.isCurrentMonth"
-            :task="tasks[day.date]"
+            :dataset="generateDatasetPerDay(day.date)"
+            :variant="variant"
+            :is-day-selectable="isDaySelectable"
+            :format-dataset-item-element="formatDatasetItemElement"
+            @select-day="emit('select-day', day.date)"
           />
         </ol>
       </template>
