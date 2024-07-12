@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ComputedRef, ref, Ref } from "vue";
-import {RouteLocationRaw, useRoute, useRouter} from "vue-router"
+import {RouteLocationRaw, useRoute} from "vue-router"
 import useTeamsStore from "@/store/teams"
 import tableHeaders from "./tableHeaders";
 import { useTitle } from "@vueuse/core";
