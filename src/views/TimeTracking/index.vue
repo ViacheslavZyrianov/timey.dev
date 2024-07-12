@@ -2,9 +2,10 @@
 import {computed, onMounted, Ref, ref, watch} from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import dayjs from "dayjs"
-import useTimeTrackingStore from '@/store/timeTracking'
-import { TypeTimeTrackingItemRead } from "@/types/time-tracking"
 import { months, years } from "./dates";
+import { TypeTimeTrackingItemRead } from "@/types/time-tracking"
+import useTimeTrackingStore from '@/store/timeTracking'
+import DialogAddTask from "./Dialogs/dialogAddTask.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -12,6 +13,7 @@ const timeTrackingStore = useTimeTrackingStore()
 
 const month: Ref<string> = ref('')
 const year: Ref<string> = ref('')
+const isAddTaskDialogVisible: Ref<boolean> = ref(false)
 
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
 
@@ -37,12 +39,6 @@ const tasks = computed(() => timeTrackingData.value.reduce((acc, val) => {
   return acc
 }, {}))
 
-watch(() => route.params, async () => {
-  timeTrackingData.value = await timeTrackingStore.fetchTimeTracking(Number(route.params.month), Number(route.params.year))
-}, {
-  immediate: true,
-})
-
 const goToMonth = (month: string) => {
   router.push(`/time-tracking/${route.params.year}/${month}`)
 }
@@ -50,6 +46,20 @@ const goToMonth = (month: string) => {
 const goToYear = (year: string) => {
   router.push(`/time-tracking/${year}/${route.params.month}`)
 }
+
+const fetchTimeTrackingForCurrentMonthAndYear = async () => {
+  timeTrackingData.value = await timeTrackingStore.fetchTimeTracking(Number(route.params.month), Number(route.params.year))
+}
+
+const onAddTask = () => {
+  isAddTaskDialogVisible.value = true;
+}
+
+watch(() => route.params, async () => {
+  await fetchTimeTrackingForCurrentMonthAndYear()
+}, {
+  immediate: true,
+})
 
 onMounted(() => {
   month.value = route.params.month.toString() || dayjs().format('M')
@@ -73,8 +83,10 @@ onMounted(() => {
       width="160px"
       @update:model-value="goToMonth"
     />
+    <s-button icon="mdiPlus" class="ml-auto" @click="onAddTask">Add task</s-button>
   </div>
   <s-calendar-month :tasks="tasks" />
+  <dialog-add-task v-model="isAddTaskDialogVisible" @submit="fetchTimeTrackingForCurrentMonthAndYear" />
 </template>
 
 <style scoped lang="scss">
