@@ -8,7 +8,7 @@ const props = defineProps({
     default: ''
   },
   variant: {
-    type: String,
+    type: String as PropType<'default' | 'outlined' | 'text'>,
     default: 'default'
   },
   type: {
@@ -49,7 +49,15 @@ const props = defineProps({
   to: {
     type: Object as PropType<RouteLocationRaw>,
     default: null
-  }
+  },
+  href: {
+    type: String,
+    default: ''
+  },
+  target: {
+    type: String as PropType<'_blank' | '_self'>,
+    default: '_blank'
+  },
 })
 
 const classList = computed(() => ([
@@ -80,8 +88,9 @@ const iconSizeComputed: ComputedRef<number> = computed(() => {
   }
 })
 
-const buttonComponent: ComputedRef<'button' | 'router-link'> = computed(() => {
+const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(() => {
   if (props.to) return 'router-link'
+  else if (props.href) return 'a'
   return 'button'
 })
 </script>
@@ -90,6 +99,8 @@ const buttonComponent: ComputedRef<'button' | 'router-link'> = computed(() => {
   <component
     :is="buttonComponent"
     :to="to"
+    :href="href"
+    :target="target"
     class="s-button d-flex align-center justify-center"
     :class="classList"
     :style="style"
@@ -182,6 +193,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link'> = computed(() => {
               background-color: lighten($colorVariable, 5%);
             }
           }
+
           &-outlined {
             border-color: $colorVariable;
             color: $colorVariable;
@@ -192,6 +204,19 @@ const buttonComponent: ComputedRef<'button' | 'router-link'> = computed(() => {
 
             &:hover {
               background-color: rgba($colorVariable, 0.15)
+            }
+          }
+
+          &-text {
+            border: none;
+            color: $colorVariable;
+
+            &.disabled {
+              color: $c-disabled;
+            }
+
+            &:hover {
+              color: rgba($colorVariable, 0.15)
             }
           }
         }
