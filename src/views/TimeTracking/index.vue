@@ -7,7 +7,6 @@ import {TypeTimeTrackingItemRead} from "@/types/time-tracking"
 import useTimeTrackingStore from '@/store/timeTracking'
 import DialogAddTask from "./Dialogs/dialogAddTask.vue";
 import SSelect from "@/components/shared/s-select.vue";
-import {TypeCalendarVariant} from "@/components/shared/s-calendar/types";
 import DialogShowTasksPerDay from "@/views/TimeTracking/Dialogs/dialogShowTasksPerDay.vue";
 import {TypeDayData, TypeTaskInDayData} from "@/views/TimeTracking/types";
 
