@@ -28,9 +28,9 @@ onClickOutside(target, event => close())
 <template>
 <div v-if="model" class="s-dialog">
   <div class="s-dialog-body" :style="style" ref="target">
-    <s-icon icon="mdiClose" color="#ffffff" :size="24" class="s-dialog-close-icon" @click="close" />
-    <div class="s-dialog-title">
+    <div class="s-dialog-title d-flex justify-space-between">
       <slot name="title" />
+      <s-icon icon="mdiClose" color="#ffffff" :size="24" class="s-dialog-close-icon" @click="close" />
     </div>
     <div class="s-dialog-content">
       <slot name="content" />
@@ -62,7 +62,7 @@ onClickOutside(target, event => close())
   &-title {
     padding: 16px;
     margin-bottom: 0;
-    background-color: $c-support-1;
+    background-color: $c-primary;
     color: #ffffff;
     font-weight: 600;
     border-radius: 8px 8px 0 0;
@@ -73,17 +73,8 @@ onClickOutside(target, event => close())
   }
 
   &-close-icon {
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    transition: transform .2s;
-    will-change: transform;
     cursor: pointer;
     z-index: 9999;
-
-    &:hover {
-      transform: rotate(180deg) scale(1.1);
-    }
   }
 }
 </style>
