@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import useAuthStore from '@/store/auth'
-import { fetchTimeTrackingByMonth } from "@/utils/firebaseRequestor";
-import { TypeTimeTrackingItemRead } from "@/types/time-tracking";
+import {fetchTimeTrackingByMonth, postItem} from "@/utils/firebaseRequestor";
+import {TypeTimeTrackingItemAdd, TypeTimeTrackingItemRead} from "@/types/time-tracking";
 
 const authStore = useAuthStore();
 
@@ -10,5 +10,9 @@ export default defineStore('timeTracking', () => {
     return await fetchTimeTrackingByMonth<TypeTimeTrackingItemRead>(month, year)
   }
 
-  return { fetchTimeTracking }
+  async function postTimeTracking(payload: TypeTimeTrackingItemAdd):Promise<string> {
+    return await postItem<TypeTimeTrackingItemAdd>(`users/${authStore.user.uid}/time-tracking`, payload)
+  }
+
+  return { fetchTimeTracking, postTimeTracking }
 })
