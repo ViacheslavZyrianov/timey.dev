@@ -24,7 +24,7 @@ const props = defineProps({
   },
   iconSize: {
     type: Number,
-    default: null
+    default: 18
   },
   block: {
     type: Boolean,
@@ -52,11 +52,11 @@ const props = defineProps({
   },
   href: {
     type: String,
-    default: ''
+    default:  null
   },
   target: {
     type: String as PropType<'_blank' | '_self'>,
-    default: '_blank'
+    default: null
   },
 })
 
@@ -73,20 +73,6 @@ const style = computed(() => ({
 }))
 
 const icon = computed(() => props.icon || null)
-
-const iconSizeComputed: ComputedRef<number> = computed(() => {
-  if (props.iconSize) return props.iconSize
-  else {
-    switch (props.size) {
-      case "large":
-        return 24
-      case "medium":
-        return 20
-      case "small":
-        return 16
-    }
-  }
-})
 
 const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(() => {
   if (props.to) return 'router-link'
@@ -109,7 +95,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
       v-if="icon"
       type="mdi"
       :icon="icon"
-      :size="iconSizeComputed"
+      :size="iconSize"
       class="s-button-icon"
     />
     <span class="s-button-title">
@@ -148,8 +134,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
 
   &.size {
     &-small {
-      padding: 12px;
-      font-size: 12px;
+      padding: 8px 12px;
     }
 
     &-medium {
@@ -158,6 +143,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
 
     &-large {
       padding: 16px 24px;
+      font-size: 18px;
     }
   }
 
@@ -165,7 +151,11 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
     &-outlined {
       border-width: 1px;
       border-style: solid;
-      background-color: transparent;;
+      background-color: transparent;
+    }
+
+    &-text {
+      padding: 0;
     }
   }
 
@@ -210,13 +200,14 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
           &-text {
             border: none;
             color: $colorVariable;
+            background-color: transparent;
 
             &.disabled {
               color: $c-disabled;
             }
 
             &:hover {
-              color: rgba($colorVariable, 0.15)
+              color: $colorVariable;
             }
           }
         }
