@@ -21,10 +21,6 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  datasetItemsName: {
-    type: String,
-    default: 'datasetItems'
-  },
   formatDatasetItemElement: {
     type: String,
     default: ''
@@ -133,7 +129,7 @@ const sCalendarClassList = computed(() => {
   return classList
 })
 
-const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[date] ? props.dataset[date][props.datasetItemsName] : null
+const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[date] ? props.dataset[date] : null
 </script>
 
 <template>

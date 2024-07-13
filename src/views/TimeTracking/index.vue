@@ -102,7 +102,6 @@ onMounted(() => {
   <s-calendar
     :selected-date="selectedDate"
     :dataset="tasks"
-    dataset-items-name="tasks"
     is-weekdays-visible
     format-dataset-item-element="{hours}h – {task}"
     @select-day="onShowDayWithTimeTracking"
