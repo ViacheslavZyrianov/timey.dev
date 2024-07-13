@@ -2,8 +2,16 @@
 import appNav from '@/components/app-nav.vue'
 import appBar from '@/components/app-bar.vue'
 import useAuthStore from '@/store/auth'
+import {computed, ComputedRef} from "vue";
+import {RouteLocationRaw} from "vue-router";
 
 const authStore = useAuthStore()
+
+const backLink: ComputedRef<RouteLocationRaw> = computed(() => {
+  return {
+    path: window.history.state.back
+  }
+})
 </script>
 
 <template>
@@ -15,7 +23,18 @@ const authStore = useAuthStore()
     <app-nav />
     <main>
       <Suspense>
-        <router-view />
+        <div class="d-flex flex-column">
+          <s-button
+            icon="mdiArrowLeft"
+            variant="text"
+            size="small"
+            class="mr-auto mb-16"
+            :to="backLink"
+          >
+            Back
+          </s-button>
+          <router-view />
+        </div>
       </Suspense>
     </main>
   </div>
