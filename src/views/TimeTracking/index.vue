@@ -38,7 +38,7 @@ const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(() =
     return acc
   }, {}))
 
-const tasksPerDay: ComputedRef<TypeTaskInDayData[]> = computed(() => tasks.value[selectedDay.value]?.tasks || [])
+const tasksPerDay: ComputedRef<TypeTaskInDayData[]> = computed(() => tasks.value[selectedDay.value] || [])
 
 const goToMonth = (month: string) => {
   router.push(`/time-tracking/${route.params.year}/${month}`)
