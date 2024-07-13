@@ -19,8 +19,13 @@ const props = defineProps({
     type: String as PropType<'primary' | 'support-1' | 'success' | 'info' | 'warning' | 'error'>,
     default: 'primary'
   },
+  isOnlyIcon: {
+    type: Boolean,
+    default: false
+  },
   icon: {
-    type: String
+    type: String,
+    default: null
   },
   iconSize: {
     type: Number,
@@ -72,6 +77,10 @@ const style = computed(() => ({
   width: props.width
 }))
 
+const iconClassList = computed(() => ({
+  'mr-4': !props.isOnlyIcon
+}))
+
 const icon = computed(() => props.icon || null)
 
 const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(() => {
@@ -96,7 +105,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
       type="mdi"
       :icon="icon"
       :size="iconSize"
-      class="s-button-icon"
+      :class="iconClassList"
     />
     <span class="s-button-title">
       <slot />
@@ -121,10 +130,6 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
 
   &-title {
     white-space: nowrap;
-  }
-
-  &-icon + &-title {
-    margin-left: 8px;
   }
 
   &.disabled {
