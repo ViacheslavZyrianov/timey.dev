@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { computed, Ref, useAttrs, defineModel, StyleValue } from "vue";
+import {computed, Ref, useAttrs, defineModel, StyleValue, PropType} from "vue";
 
 const $attrs = useAttrs();
 const props = defineProps({
   width: {
     type: String,
     default: 'auto'
-  }
+  },
+  textAlign: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left'
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false
+  },
 })
 const model = defineModel();
 
@@ -15,12 +23,23 @@ const placeholder: Ref<string> = computed(() => $attrs?.placeholder as string);
 const sInputStyle: Ref<StyleValue> = computed(() => ({
   width: props.width,
 }))
+
+const sInputClassList: Ref<string[]> = computed(() => [
+  's-input',
+  `s-input_text-align-${props.textAlign}`,
+  {'s-input_disabled': props.isDisabled}
+])
 </script>
 
 <template>
-  <div class="s-input" :style="sInputStyle">
+  <div :class="sInputClassList" :style="sInputStyle">
     <div v-if="$attrs.label" class="s-input__label">{{ $attrs.label }}</div>
-    <input v-model="model" type="text" :placeholder="placeholder" />
+    <input
+      v-model="model"
+      type="text"
+      :placeholder="placeholder"
+      :disabled="isDisabled"
+    />
   </div>
 </template>
 
@@ -30,6 +49,32 @@ const sInputStyle: Ref<StyleValue> = computed(() => ({
     font-size: 14px;
     color: #4a4a4a;
     margin-bottom: 4px;
+  }
+
+  &_text-align {
+    &-left {
+      input {
+        text-align: left;
+      }
+    }
+    &-center {
+      input {
+        text-align: center;
+      }
+    }
+    &-right {
+      input {
+        text-align: right;
+      }
+    }
+  }
+
+  &_disabled {
+    input {
+      border-color: #ececec;
+      background-color: #f6f6f6;
+      cursor: not-allowed;
+    }
   }
 
   input {
