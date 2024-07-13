@@ -8,7 +8,7 @@ import useTimeTrackingStore from '@/store/timeTracking'
 import DialogAddTask from "./Dialogs/dialogAddTask.vue";
 import SSelect from "@/components/shared/s-select.vue";
 import DialogShowTasksPerDay from "@/views/TimeTracking/Dialogs/dialogShowTasksPerDay.vue";
-import {TypeDayData, TypeTaskInDayData} from "@/views/TimeTracking/types";
+import {TypeTaskInDayData} from "@/views/TimeTracking/types";
 
 const route = useRoute()
 const router = useRouter()
@@ -23,27 +23,20 @@ const selectedDay: Ref<string> = ref('')
 
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
 
-const tasks: ComputedRef<{ [key: string]: TypeDayData }> = computed(() => timeTrackingData.value.reduce((acc, val) => {
-  const key = dayjs(val.date.seconds * 1000).format('YYYY-MM-DD')
-  if (!acc[key]) {
-    acc[key] = {
+const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(() => timeTrackingData.value
+  .reduce((acc: { [key: string]: TypeTaskInDayData[] }, val: TypeTimeTrackingItemRead) => {
+    const key: string = dayjs(val.date.seconds * 1000).format('YYYY-MM-DD')
+    const dayData: TypeTaskInDayData = {
       id: val.id,
-      tasks: [
-        {
-          hours: val.hours,
-          task: val.task,
-        }
-      ]
-    }
-  } else {
-    acc[key].tasks.push({
       hours: val.hours,
       task: val.task,
-    })
-  }
+    }
 
-  return acc
-}, {}))
+    if (!acc[key]) acc[key] = [dayData]
+    else acc[key].push(dayData)
+
+    return acc
+  }, {}))
 
 const tasksPerDay: ComputedRef<TypeTaskInDayData[]> = computed(() => tasks.value[selectedDay.value]?.tasks || [])
 
