@@ -51,6 +51,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  loading: {
+    type: Boolean,
+    default: false
+  },
   to: {
     type: Object as PropType<RouteLocationRaw>,
     default: null
@@ -70,6 +74,7 @@ const classList = computed(() => ([
   `color-${props.color}`,
   `size-${props.size}`,
   props.disabled && 'disabled',
+  props.loading && 'loading',
 ]))
 
 const style = computed(() => ({
@@ -78,6 +83,7 @@ const style = computed(() => ({
 }))
 
 const iconClassList = computed(() => ({
+  'icon-prepended': true,
   'mr-4': !props.isOnlyIcon
 }))
 
@@ -101,13 +107,19 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
     :style="style"
   >
     <s-icon
+      v-if="loading"
+      type="mdi"
+      icon="mdiLoading"
+      class="icon-loading"
+    />
+    <s-icon
       v-if="icon"
       type="mdi"
       :icon="icon"
       :size="iconSize"
       :class="iconClassList"
     />
-    <span class="s-button-title">
+    <span v-if="!isOnlyIcon" class="s-button-title">
       <slot />
     </span>
   </component>
@@ -115,6 +127,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
 
 <style lang="scss" scoped>
 .s-button {
+  position: relative;
   border: none;
   border-radius: 8px;
   color: #fff;
@@ -135,6 +148,23 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
   &.disabled {
     cursor: not-allowed;
     pointer-events: none;
+  }
+
+  &.loading {
+    .icon-loading {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      margin: auto;
+      visibility: visible;
+    }
+
+    .s-button-title,
+    .icon-prepended {
+      visibility: hidden;
+    }
   }
 
   &.size {
@@ -218,6 +248,17 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
         }
       }
     }
+  }
+}
+
+.icon-loading {
+  animation: rotate 1s infinite linear;
+  visibility: hidden;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
