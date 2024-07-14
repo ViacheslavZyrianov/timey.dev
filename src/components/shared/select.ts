@@ -1,4 +1,4 @@
 export type TypeSelectItem = {
   label: string
-  value: string | number
+  value: string
 }
