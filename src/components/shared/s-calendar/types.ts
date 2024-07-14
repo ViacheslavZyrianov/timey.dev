@@ -10,3 +10,8 @@ export enum TypeWeekdaysFormat {
   Short = 'short',
   Min = 'min'
 }
+
+export type TypePreviousMonthDays = {
+  date: string
+  isCurrentMonth: boolean
+}[]
