@@ -18,7 +18,7 @@ const month: Ref<string> = ref('')
 const year: Ref<string> = ref('')
 const isDialogAddTaskVisible: Ref<boolean> = ref(false)
 const isDialogShowTaskPerDayVisible: Ref<boolean> = ref(false)
-const selectedDate: Ref<Object> = ref(dayjs())
+const selectedDate: Ref<string> = ref('')
 const selectedDay: Ref<string> = ref('')
 
 const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
@@ -63,7 +63,7 @@ const onShowDayWithTimeTracking = (day: string) => {
 
 watch(() => route.params, async () => {
   await fetchTimeTrackingForCurrentMonthAndYear()
-  selectedDate.value = dayjs(`${route.params.year}-${route.params.month}-01`, 'YYYY-M-D')
+  selectedDate.value = dayjs(`${route.params.year}-${route.params.month}-01`, 'YYYY-M-D').format('YYYY-M-D')
 }, {
   immediate: true,
 })
@@ -93,7 +93,7 @@ onMounted(() => {
     <s-button icon="mdiPlus" class="ml-auto" @click="onAddTask">Add task</s-button>
   </div>
   <s-calendar
-    :selected-date="selectedDate"
+    v-model="selectedDate"
     :dataset="tasks"
     is-weekdays-visible
     format-dataset-item-element="{hours}h – {task}"
