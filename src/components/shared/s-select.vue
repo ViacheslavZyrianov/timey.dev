@@ -50,7 +50,7 @@ const onSelectItem = (value: string) => {
   emit('update:modelValue', value)
 }
 
-onClickOutside(target, event => closeItems())
+onClickOutside(target, _ => closeItems())
 </script>
 
 <template>
