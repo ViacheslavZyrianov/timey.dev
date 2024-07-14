@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, where, query, arrayUnion, and } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, where, query, arrayUnion, and } from 'firebase/firestore'
 import firebase from '@/plugins/firebase'
 import { getAuth } from 'firebase/auth'
 
@@ -55,6 +55,10 @@ export const updateItem  = {
   updateDoc: async (collectionName: string, documentId: string, payload: { [key: string]: any }) => {
      return await updateDoc(doc(db, collectionName, documentId), payload)
   }
+}
+
+export const deleteItem = async (collectionName: string, documentId: string) => {
+  return await deleteDoc(doc(db, collectionName, documentId))
 }
 
 export const checkIsItemExists = async (collectionName: string, documentId: string) => {
