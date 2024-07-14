@@ -4,3 +4,9 @@ export enum TypeCalendarVariant {
 }
 
 export type TypeDatasetItemPerDay = { [key: string]: string } | string
+
+export enum TypeWeekdaysFormat {
+  Default = 'default',
+  Short = 'short',
+  Min = 'min'
+}

@@ -4,6 +4,7 @@ import {TypeTimeTrackingItemAdd} from "@/types/time-tracking";
 import useTimeTrackingStore from "@/store/timeTracking";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
 
 dayjs.extend(customParseFormat)
 
@@ -18,6 +19,10 @@ const form: TypeTimeTrackingItemAdd = reactive({
   date: dayjs().format('DD.MM.YYYY'),
 })
 const isButtonSubmitDisabled: Ref<boolean> = ref(false)
+
+const onSelectDay = (date: string) => {
+  form.date = dayjs(date).format('DD.MM.YYYY')
+}
 
 const onSubmit = async () => {
   try {
@@ -45,6 +50,13 @@ const onSubmit = async () => {
         <s-input v-model="form.task" placeholder="Enter task name" label="Task" />
         <s-input v-model="form.hours" placeholder="Enter hours spent on this task" label="Hours" />
         <s-input v-model="form.date" placeholder="DD.MM.YYYY" label="Date (DD.MM.YYYY)" />
+        <s-calendar
+          :variant="TypeCalendarVariant.Compact"
+          is-day-selectable
+          is-weekdays-visible
+          :weekdays-format="TypeWeekdaysFormat.Min"
+          @select-day="onSelectDay"
+        />
         <s-button type="submit" color="success" :disabled="isButtonSubmitDisabled">
           Add task
         </s-button>

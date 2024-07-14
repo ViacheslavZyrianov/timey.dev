@@ -6,7 +6,7 @@ import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekdays from './weekdays.vue';
 import day from './day.vue';
-import {TypeCalendarVariant} from "@/components/shared/s-calendar/types";
+import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
 
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
@@ -37,6 +37,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  weekdaysFormat: {
+    type: String as PropType<TypeWeekdaysFormat>,
+    default: TypeWeekdaysFormat.Default
+  }
 })
 
 const emit = defineEmits(['select-day'])
@@ -135,7 +139,11 @@ const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[d
 <template>
   <s-card :class="sCalendarClassList" padding="0">
       <template #content>
-        <weekdays v-if="isWeekdaysVisible" />
+        <weekdays
+          v-if="isWeekdaysVisible"
+          :variant="variant"
+          :weekdays-format="weekdaysFormat"
+        />
         <ol class="days-grid">
           <day
             v-for="day in days"

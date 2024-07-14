@@ -1,11 +1,34 @@
 <script setup lang="ts">
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+import {computed, ComputedRef, PropType} from "vue";
+import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
+import dayjs from "dayjs";
+import localeData from 'dayjs/plugin/localeData'
+
+dayjs.extend(localeData)
+
+const props = defineProps({
+  variant: {
+    type: String as PropType<TypeCalendarVariant>,
+    default: TypeCalendarVariant.Default
+  },
+  weekdaysFormat: {
+    type: String as PropType<TypeWeekdaysFormat>,
+    default: TypeWeekdaysFormat.Default
+  }
+})
+
+const weekdays: ComputedRef<string[]> = computed(() => {
+  if (props.weekdaysFormat === TypeWeekdaysFormat.Short) return dayjs().localeData().weekdaysShort()
+  else if (props.weekdaysFormat === TypeWeekdaysFormat.Min) return dayjs().localeData().weekdaysMin()
+
+  return dayjs().localeData().weekdays()
+})
 </script>
 
 <template>
   <ol class="weekdays">
     <li
-      v-for="weekday in WEEKDAYS"
+      v-for="weekday in weekdays"
       :key="weekday"
       class="weekday"
     >
