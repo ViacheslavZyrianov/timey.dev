@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import {ref, computed, PropType} from 'vue'
+import {ref, computed, PropType, Ref} from 'vue'
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekdays from './weekdays.vue';
 import day from './day.vue';
-import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
+import {TypeCalendarVariant, TypePreviousMonthDays, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
 
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 dayjs.extend(customParseFormat)
 
+const model = defineModel({
+  default: '',
+  type: String
+})
+
 const props = defineProps({
-  selectedDate: {
-    type: Object,
-    default: () => dayjs()
-  },
   dataset: {
     type: Object,
     default: null
@@ -40,22 +41,26 @@ const props = defineProps({
   weekdaysFormat: {
     type: String as PropType<TypeWeekdaysFormat>,
     default: TypeWeekdaysFormat.Default
-  }
+  },
+  isShowSelectedDay: {
+    type: Boolean,
+    default: false
+  },
 })
 
 const emit = defineEmits(['select-day'])
 
-const today = ref(dayjs().format("YYYY-MM-DD"))
+const today: Ref<string> = ref(dayjs().format("YYYY-MM-DD"))
 
-const month = computed(() => Number(props.selectedDate.format("M")))
+const month: Ref<string> = computed(() => model.value.split('-')[1])
 
-const year = computed(() => Number(props.selectedDate.format("YYYY")))
+const year: Ref<string> = computed(() => model.value.split('-')[0])
 
-const numberOfDaysInMonth = computed(() => dayjs(props.selectedDate.toString()).daysInMonth())
+const numberOfDaysInMonth: Ref<number> = computed(() => dayjs(model.value, 'YYYY-M-D').daysInMonth())
 
-const previousMonthDays = computed(() => {
+const previousMonthDays: Ref<TypePreviousMonthDays> = computed(() => {
   const firstDayOfTheMonthWeekday = getWeekday.value(
-    currentMonthDays.value[0].date
+    currentMonthDays.value[0]?.date
   );
   const previousMonth = dayjs(`${year.value}-${month.value}-01`).subtract(
     1,
@@ -68,7 +73,7 @@ const previousMonthDays = computed(() => {
     : 6;
 
   const previousMonthLastMondayDayOfMonth = dayjs(
-    currentMonthDays.value[0].date
+    currentMonthDays.value[0]?.date
   )
     .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
     .date();
@@ -97,7 +102,7 @@ const nextMonthDays = computed(() => {
     ? 7 - lastDayOfTheMonthWeekday
     : lastDayOfTheMonthWeekday;
 
-  return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
+  return [...Array(visibleNumberOfDaysFromNextMonth || 0)].map((_, index) => {
     return {
       date: dayjs(
         `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
@@ -107,7 +112,7 @@ const nextMonthDays = computed(() => {
   });
 })
 
-const currentMonthDays = computed(() => [...Array(numberOfDaysInMonth.value)].map((day, index) => {
+const currentMonthDays = computed(() => [...Array(numberOfDaysInMonth.value || 0)].map((day, index) => {
   return {
     date: dayjs(`${year.value}-${month.value}-${index + 1}`).format("YYYY-MM-DD"),
     isCurrentMonth: true
@@ -151,9 +156,11 @@ const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[d
             :day="day"
             :is-today="isToday(day.date)"
             :is-current-month="day.isCurrentMonth"
+            :is-day-selectable="isDaySelectable"
+            :is-show-selected-day="isShowSelectedDay"
+            :selected-day="day.date"
             :dataset="generateDatasetPerDay(day.date)"
             :variant="variant"
-            :is-day-selectable="isDaySelectable"
             :format-dataset-item-element="formatDatasetItemElement"
             @select-day="emit('select-day', day.date)"
           />

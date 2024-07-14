@@ -8,6 +8,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  selectedDay: {
+    type: String,
+    default: ""
+  },
   isCurrentMonth: {
     type: Boolean,
     default: false
@@ -31,7 +35,11 @@ const props = defineProps({
   formatDatasetItemElement: {
     type: String,
     default: ''
-  }
+  },
+  isShowSelectedDay: {
+    type: Boolean,
+    default: false
+  },
 })
 
 const emit = defineEmits(['select-day'])
@@ -45,6 +53,7 @@ const calendarDayClassList = computed(() => ({
   'calendar-day--selectable': isCalendarDaySelectable.value,
   'calendar-day--not-current': !props.isCurrentMonth,
   'calendar-day--today': props.isToday,
+  'calendar-day--selected': props.isShowSelectedDay && props.day.date === props.selectedDay,
   [`calendar-day--variant-${props.variant}`]: true
 }))
 
@@ -154,6 +163,10 @@ const onSelectDay = () => {
     &:hover{
       background-color: #f4f4f4;
     }
+  }
+
+  &--selected {
+    background-color: pink;
   }
 
   &-dataset-item {
