@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {computed, ComputedRef, defineModel, ref} from "vue"
+import {computed, ComputedRef, defineModel, PropType, ref} from "vue"
 import { onClickOutside } from '@vueuse/core'
+import {TypeSelectItem} from "@/components/shared/select";
 
 const props = defineProps({
   items: {
-    type: Array,
+    type: Array as PropType<TypeSelectItem[]>,
     default: () => []
   },
   width: {
@@ -20,7 +21,7 @@ const model = defineModel()
 const isOpen = ref(false)
 const target = ref(null)
 
-const label: ComputedRef<string> = computed(() => props.items.find(item => item.value === model.value)?.label)
+const label: ComputedRef<string> = computed(() => props.items.find(item => item.value === model.value)?.label || "")
 
 const selectItemsClassList = computed(() => [
   's-select-items',
@@ -62,7 +63,12 @@ onClickOutside(target, event => closeItems())
     </s-card>
     <s-card :class="selectItemsClassList" padding="0">
       <template #content>
-        <div v-for="item in items" :key="item.value" :class="selectItemClassList(item.value)" @click="onSelectItem(item.value)">
+        <div
+          v-for="item in items"
+          :key="item.value"
+          :class="selectItemClassList(item.value)"
+          @click="onSelectItem(item.value)"
+        >
           {{ item.label }}
         </div>
       </template>
