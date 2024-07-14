@@ -102,6 +102,10 @@ onMounted(() => {
 
   <dialog-add-task v-model="isDialogAddTaskVisible" @submit="fetchTimeTrackingForCurrentMonthAndYear" />
   <dialog-show-tasks-per-day v-model="isDialogShowTaskPerDayVisible" :day="selectedDay" :tasks="tasksPerDay" />
+  <dialog-add-task
+    v-model="isDialogAddTaskVisible"
+    @submit="fetchTimeTrackingForCurrentMonthAndYear"
+  />
 </template>
 
 <style scoped lang="scss">
