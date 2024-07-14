@@ -15,7 +15,7 @@ export default defineStore('timeTracking', () => {
     return await postItem<TypeTimeTrackingItemAdd>(`users/${authStore.user.uid}/time-tracking`, payload)
   }
 
-  async function updateTimeTracking(id: string, payload: TypeTaskInDayData):Promise<void> {
+  async function updateTimeTracking(id: string, payload: Omit<TypeTaskInDayData, 'id'>):Promise<void> {
     await updateItem.updateDoc(`users/${authStore.user.uid}/time-tracking`, id, payload)
   }
 
