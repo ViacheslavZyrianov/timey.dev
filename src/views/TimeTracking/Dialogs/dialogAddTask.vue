@@ -15,7 +15,7 @@ const isOpen = defineModel()
 const form: TypeTimeTrackingItemAdd = reactive({
   task: "",
   hours: null,
-  date: '12.07.2024',
+  date: dayjs().format('DD.MM.YYYY'),
 })
 const isButtonSubmitDisabled: Ref<boolean> = ref(false)
 
