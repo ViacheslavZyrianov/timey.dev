@@ -51,6 +51,9 @@ export const updateItem  = {
      await updateDoc(doc(db, collectionName, documentId), {
       [field]: arrayUnion(...values)
     })
+  },
+  updateDoc: async (collectionName: string, documentId: string, payload: { [key: string]: any }) => {
+     return await updateDoc(doc(db, collectionName, documentId), payload)
   }
 }
 
