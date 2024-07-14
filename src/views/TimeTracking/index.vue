@@ -100,10 +100,14 @@ onMounted(() => {
     @select-day="onShowDayWithTimeTracking"
   />
 
-  <dialog-add-task v-model="isDialogAddTaskVisible" @submit="fetchTimeTrackingForCurrentMonthAndYear" />
-  <dialog-show-tasks-per-day v-model="isDialogShowTaskPerDayVisible" :day="selectedDay" :tasks="tasksPerDay" />
   <dialog-add-task
     v-model="isDialogAddTaskVisible"
+    @submit="fetchTimeTrackingForCurrentMonthAndYear"
+  />
+  <dialog-show-tasks-per-day
+    v-model="isDialogShowTaskPerDayVisible"
+    :day="selectedDay"
+    :tasks="tasksPerDay"
     @submit="fetchTimeTrackingForCurrentMonthAndYear"
   />
 </template>
