@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {defineModel, reactive, ref, Ref} from "vue";
+import {defineModel, onMounted, reactive, ref, Ref} from "vue";
 import {TypeTimeTrackingItemAdd} from "@/types/time-tracking";
 import useTimeTrackingStore from "@/store/timeTracking";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
+import {months, years} from "@/views/TimeTracking/dates";
 
 dayjs.extend(customParseFormat)
 
@@ -13,24 +14,41 @@ const emit = defineEmits(['submit'])
 const timeTrackingStore = useTimeTrackingStore()
 
 const isOpen = defineModel()
+
 const form: TypeTimeTrackingItemAdd = reactive({
   task: "",
   hours: null,
-  date: dayjs().format('DD.MM.YYYY'),
+  date: new Date(),
 })
 const isButtonSubmitDisabled: Ref<boolean> = ref(false)
+const selectedDate: Ref<string> = ref('')
+const month: Ref<string> = ref('')
+const year: Ref<string> = ref('')
 
 const onSelectDay = (date: string) => {
-  form.date = dayjs(date).format('DD.MM.YYYY')
+  selectedDate.value = date
+}
+
+const onSelectMonth = (_month: string) => {
+  month.value = _month;
+  const [year, _, day] = selectedDate.value.split('-')
+  selectedDate.value = `${year}-${_month}-${day}`
+}
+
+const onSelectYear = (_year: string) => {
+  year.value = _year;
+  const [_, month, day] = selectedDate.value.split('-')
+  selectedDate.value = `${_year}-${month}-${day}`
 }
 
 const onSubmit = async () => {
   try {
     isButtonSubmitDisabled.value = true
-    await timeTrackingStore.postTimeTracking({
+    const payload = {
       ...form,
-      date: new Date(dayjs(form.date, 'DD-MM-YYYY').toDate())
-    })
+      date: new Date(dayjs(selectedDate.value).toDate())
+    }
+    await timeTrackingStore.postTimeTracking(payload)
     emit('submit')
     isOpen.value = false
   }
@@ -40,6 +58,12 @@ const onSubmit = async () => {
     isButtonSubmitDisabled.value = false
   }
 }
+
+onMounted(() => {
+  onSelectDay(dayjs().format('YYYY-M-D'))
+  onSelectMonth(dayjs().format('M'))
+  onSelectYear(dayjs().format('YYYY'))
+})
 </script>
 
 <template>
@@ -49,11 +73,26 @@ const onSubmit = async () => {
       <form class="d-flex flex-column flex-row-gap-8" @submit.prevent="onSubmit">
         <s-input v-model="form.task" placeholder="Enter task name" label="Task" />
         <s-input v-model="form.hours" placeholder="Enter hours spent on this task" label="Hours" />
-        <s-input v-model="form.date" placeholder="DD.MM.YYYY" label="Date (DD.MM.YYYY)" />
+        <div class="d-flex flex-column-gap-4 full-width">
+          <s-select
+            v-model="year"
+            :items="years"
+            class=" flex-grow-1"
+            @update:model-value="onSelectYear"
+          />
+          <s-select
+            v-model="month"
+            :items="months"
+            class="flex-grow-1"
+            @update:model-value="onSelectMonth"
+          />
+        </div>
         <s-calendar
+          v-model="selectedDate"
           :variant="TypeCalendarVariant.Compact"
           is-day-selectable
           is-weekdays-visible
+          is-show-selected-day
           :weekdays-format="TypeWeekdaysFormat.Min"
           @select-day="onSelectDay"
         />

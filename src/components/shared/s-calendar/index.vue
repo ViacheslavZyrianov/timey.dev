@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, computed, PropType, Ref} from 'vue'
+import {ref, computed, PropType, Ref, ComputedRef} from 'vue'
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import weekday from "dayjs/plugin/weekday";
@@ -11,11 +11,6 @@ import {TypeCalendarVariant, TypePreviousMonthDays, TypeWeekdaysFormat} from "@/
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 dayjs.extend(customParseFormat)
-
-const model = defineModel({
-  default: '',
-  type: String
-})
 
 const props = defineProps({
   dataset: {
@@ -48,19 +43,26 @@ const props = defineProps({
   },
 })
 
+const model = defineModel({
+  type: String,
+  default: dayjs().format('YYYY-M-D')
+})
+
 const emit = defineEmits(['select-day'])
 
-const today: Ref<string> = ref(dayjs().format("YYYY-MM-DD"))
+const today: Ref<string> = ref(dayjs().format("YYYY-M-D"))
 
-const month: Ref<string> = computed(() => model.value.split('-')[1])
+const month: ComputedRef<string> = computed(() => model.value.split('-')[1])
 
-const year: Ref<string> = computed(() => model.value.split('-')[0])
+const year: ComputedRef<string> = computed(() => model.value.split('-')[0])
 
-const numberOfDaysInMonth: Ref<number> = computed(() => dayjs(model.value, 'YYYY-M-D').daysInMonth())
+const numberOfDaysInMonth: ComputedRef<number | null> = computed(() =>
+  model.value ? dayjs(model.value, 'YYYY-M-D').daysInMonth() : null
+)
 
-const previousMonthDays: Ref<TypePreviousMonthDays> = computed(() => {
+const previousMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() => {
   const firstDayOfTheMonthWeekday = getWeekday.value(
-    currentMonthDays.value[0]?.date
+    currentMonthDays.value[0].date
   );
   const previousMonth = dayjs(`${year.value}-${month.value}-01`).subtract(
     1,
@@ -73,7 +75,7 @@ const previousMonthDays: Ref<TypePreviousMonthDays> = computed(() => {
     : 6;
 
   const previousMonthLastMondayDayOfMonth = dayjs(
-    currentMonthDays.value[0]?.date
+    currentMonthDays.value[0].date
   )
     .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
     .date();
@@ -84,14 +86,14 @@ const previousMonthDays: Ref<TypePreviousMonthDays> = computed(() => {
         date: dayjs(
           `${previousMonth.year()}-${previousMonth.month() +
           1}-${previousMonthLastMondayDayOfMonth + index}`
-        ).format("YYYY-MM-DD"),
+        ).format("YYYY-M-D"),
         isCurrentMonth: false
       };
     }
   );
 })
 
-const nextMonthDays = computed(() => {
+const nextMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() => {
   const lastDayOfTheMonthWeekday = getWeekday.value(
     `${year.value}-${month.value}-${currentMonthDays.value.length}`
   );
@@ -106,18 +108,17 @@ const nextMonthDays = computed(() => {
     return {
       date: dayjs(
         `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
-      ).format("YYYY-MM-DD"),
+      ).format("YYYY-M-D"),
       isCurrentMonth: false
     };
   });
 })
 
-const currentMonthDays = computed(() => [...Array(numberOfDaysInMonth.value || 0)].map((day, index) => {
-  return {
-    date: dayjs(`${year.value}-${month.value}-${index + 1}`).format("YYYY-MM-DD"),
+const currentMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() =>
+  [...Array(Number(numberOfDaysInMonth.value))].map((day, index) => ({
+    date: dayjs(`${year.value}-${month.value}-${index + 1}`).format("YYYY-M-D"),
     isCurrentMonth: true
-  };
-}))
+  })))
 
 const days = computed(() => [
   ...previousMonthDays.value,
@@ -125,7 +126,7 @@ const days = computed(() => [
   ...nextMonthDays.value,
 ])
 
-const isToday = computed(() => (date: string) => date === today.value)
+const isToday = computed(() => (date: string): boolean => date === today.value)
 
 const getWeekday = computed(() => (date: string) => dayjs(date).weekday())
 
@@ -138,11 +139,18 @@ const sCalendarClassList = computed(() => {
   return classList
 })
 
+const isReady: ComputedRef<boolean> = computed(() => Boolean(numberOfDaysInMonth.value))
+
 const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[date] ? props.dataset[date] : null
+
+const onSelectDay = (date: string) => {
+  model.value = date
+  emit('select-day', date)
+}
 </script>
 
 <template>
-  <s-card :class="sCalendarClassList" padding="0">
+  <s-card v-if="isReady" :class="sCalendarClassList" padding="0">
       <template #content>
         <weekdays
           v-if="isWeekdaysVisible"
@@ -158,11 +166,11 @@ const generateDatasetPerDay = (date: string) => props.dataset && props.dataset[d
             :is-current-month="day.isCurrentMonth"
             :is-day-selectable="isDaySelectable"
             :is-show-selected-day="isShowSelectedDay"
-            :selected-day="day.date"
+            :selected-day="model"
             :dataset="generateDatasetPerDay(day.date)"
             :variant="variant"
             :format-dataset-item-element="formatDatasetItemElement"
-            @select-day="emit('select-day', day.date)"
+            @select-day="onSelectDay(day.date)"
           />
         </ol>
       </template>
