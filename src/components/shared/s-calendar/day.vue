@@ -69,8 +69,10 @@ const isLessThenMinDatasetItems = computed(() => datasetItemsCount.value < 4)
 
 const isCalendarDaySelectable = computed(() =>
   Boolean(
-    props.variant === TypeCalendarVariant.Compact && props.isDaySelectable ||
-    datasetItemsCount.value
+    props.isCurrentMonth && (
+      props.variant === TypeCalendarVariant.Compact && props.isDaySelectable ||
+      datasetItemsCount.value > 0
+    )
   )
 )
 
