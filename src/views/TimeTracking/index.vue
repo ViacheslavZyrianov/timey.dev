@@ -24,7 +24,7 @@ const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([])
 
 const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(() => timeTrackingData.value
   .reduce((acc: { [key: string]: TypeTaskInDayData[] }, val: TypeTimeTrackingItemRead) => {
-    const key: string = dayjs(val.date.seconds * 1000).format('YYYY-MM-DD')
+    const key: string = dayjs(val.date.seconds * 1000).format('YYYY-M-D')
     const dayData: TypeTaskInDayData = {
       id: val.id,
       hours: val.hours,
