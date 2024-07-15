@@ -83,7 +83,7 @@ const formatDatasetItem = (datasetItem: TypeDatasetItemPerDay) => {
 }
 
 const onSelectDay = () => {
-  if (isCalendarDaySelectable.value) emit('select-day')
+  if (isCalendarDaySelectable.value && props.isCurrentMonth) emit('select-day')
 }
 </script>
 
