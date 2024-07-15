@@ -42,7 +42,7 @@ const weekdays: ComputedRef<string[]> = computed(() => {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   padding: 16px 0;
-  background-color: $c-primary;
+  background-color: #aeaeae;
 
   .weekday {
     text-align: center;
