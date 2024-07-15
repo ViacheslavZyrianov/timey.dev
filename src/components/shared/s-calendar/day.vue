@@ -168,7 +168,13 @@ const onSelectDay = () => {
   }
 
   &--selected {
-    background-color: pink;
+    background-color: $c-primary;
+    color: #ffffff;
+
+    &:hover {
+      background-color: $c-primary;
+      color: #ffffff;
+    }
   }
 
   &-dataset-item {
