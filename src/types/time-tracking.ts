@@ -11,5 +11,5 @@ export type TypeTimeTrackingItemRead = {
 export type TypeTimeTrackingItemAdd = {
   task: string
   hours: number | null
-  date: string | Date | null
+  date: Date
 }
