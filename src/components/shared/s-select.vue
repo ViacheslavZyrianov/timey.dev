@@ -93,6 +93,7 @@ onClickOutside(target, _ => closeItems())
     top: 0;
     right: 0;
     max-height: 300px;
+    width: 100%;
     overflow-y: auto;
     transform: translateY(55px);
     opacity: 0;
