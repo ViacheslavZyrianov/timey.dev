@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineModel, onMounted, reactive, ref, Ref} from "vue";
+import {defineModel, onMounted, reactive, ref, Ref, watch} from "vue";
 import {TypeTimeTrackingItemAdd} from "@/types/time-tracking";
 import useTimeTrackingStore from "@/store/timeTracking";
 import dayjs from "dayjs";
@@ -59,10 +59,23 @@ const onSubmit = async () => {
   }
 }
 
-onMounted(() => {
+const resetDates = () => {
   onSelectDay(dayjs().format('YYYY-M-D'))
   onSelectMonth(dayjs().format('M'))
   onSelectYear(dayjs().format('YYYY'))
+}
+
+watch(() => isOpen.value, () => {
+  if (isOpen.value) {
+    form.task = ''
+    form.hours = null
+    form.date = new Date()
+    resetDates()
+  }
+})
+
+onMounted(() => {
+  resetDates()
 })
 </script>
 
