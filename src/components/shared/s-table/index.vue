@@ -5,7 +5,7 @@
     TypeTableRow,
   } from "@/components/shared/s-table/types";
 
-  const props = defineProps({
+  defineProps({
     headers: {
       type: Array as () => TypeTableHeader[],
       default: () => [],
