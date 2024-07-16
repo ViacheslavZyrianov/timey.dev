@@ -37,6 +37,10 @@
     flex-grow: 1;
   }
 
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
+
   @for $i from 1 through 16 {
     &.flex-row-gap-#{$i} {
       row-gap: $i * 2px;
