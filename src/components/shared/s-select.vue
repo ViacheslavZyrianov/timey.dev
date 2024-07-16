@@ -52,7 +52,7 @@
     emit("update:modelValue", value);
   };
 
-  onClickOutside(target, (_) => closeItems());
+  onClickOutside(target, () => closeItems());
 </script>
 
 <template>
