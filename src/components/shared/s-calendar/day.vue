@@ -68,7 +68,7 @@
   });
 
   const moreDatasetItemsText = computed(
-    () => `${datasetItemsCount.value - 2} items more...` || "Loading...",
+    () => `${datasetItemsCount.value - 2} items more...`,
   );
 
   const isLessThenMinDatasetItems = computed(() => datasetItemsCount.value < 4);
