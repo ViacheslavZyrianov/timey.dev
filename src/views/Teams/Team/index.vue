@@ -66,6 +66,13 @@
       :headers="tableHeaders"
       :rows="teamMembers"
     >
+      <template #photoURL="{ row }">
+        <s-avatar
+          :src="row.photoURL"
+          :size="48"
+          class="avatar"
+        />
+      </template>
       <template #actions="{ row }">
         <s-button
           :to="generateTeamMemberDetailsLink(row.id)"
