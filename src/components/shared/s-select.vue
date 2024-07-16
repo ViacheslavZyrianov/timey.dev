@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed, ComputedRef, defineModel, PropType, ref } from "vue";
   import { onClickOutside } from "@vueuse/core";
-  import { TypeSelectItem } from "@/components/shared/select";
+  import { TypeSelectItem } from "@/components/shared/types/select";
 
   const props = defineProps({
     items: {
