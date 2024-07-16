@@ -33,7 +33,10 @@
     :style="style"
     :class="classList"
   >
-    <img :src="props.src" />
+    <img
+      :src="props.src"
+      alt="Avatar"
+    />
   </div>
 </template>
 
