@@ -34,13 +34,13 @@
 
   const onSelectMonth = (_month: string) => {
     month.value = _month;
-    const [year, _, day] = selectedDate.value.split("-");
+    const [year, , day] = selectedDate.value.split("-");
     selectedDate.value = `${year}-${_month}-${day}`;
   };
 
   const onSelectYear = (_year: string) => {
     year.value = _year;
-    const [_, month, day] = selectedDate.value.split("-");
+    const [, month, day] = selectedDate.value.split("-");
     selectedDate.value = `${_year}-${month}-${day}`;
   };
 
