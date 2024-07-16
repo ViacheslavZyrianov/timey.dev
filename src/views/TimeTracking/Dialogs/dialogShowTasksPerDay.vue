@@ -22,17 +22,19 @@
   const isOpen = defineModel();
 
   const currentlyEditingElementIndex: Ref<number | null> = ref(null);
+  const currentlyDeletingElementIndex: Ref<number | null> = ref(null);
   const tasksToMutate: Ref<TypeTaskInDayData[]> = ref([]);
   const isButtonSaveDisabled: Ref<boolean> = ref(false);
   const isButtonSaveLoading: Ref<boolean> = ref(false);
-  const isButtonDeleteDisabled: Ref<boolean> = ref(false);
-  const isButtonDeleteLoading: Ref<boolean> = ref(false);
 
   const isInputDisabled = (index: number) =>
     currentlyEditingElementIndex.value !== index;
 
   const isInEditMode = (index: number | null) =>
     currentlyEditingElementIndex.value === index;
+
+  const isDeleting = (index: number | null) =>
+    currentlyDeletingElementIndex.value === index;
 
   const onEdit = (index: number) => {
     currentlyEditingElementIndex.value = index;
@@ -62,25 +64,27 @@
   };
 
   const onDelete = async (index: number) => {
-    currentlyEditingElementIndex.value = index;
+    currentlyDeletingElementIndex.value = index;
     try {
-      isButtonDeleteDisabled.value = true;
-      isButtonDeleteLoading.value = true;
       await timeTrackingStore.deleteTimeTracking(tasksToMutate.value[index].id);
-      currentlyEditingElementIndex.value = null;
+      currentlyDeletingElementIndex.value = null;
       emit("submit");
     } catch (e) {
       console.error(e);
     } finally {
-      isButtonDeleteDisabled.value = false;
-      isButtonDeleteLoading.value = false;
+      currentlyDeletingElementIndex.value = null;
     }
   };
 
   const onCancel = (index: number) => {
     tasksToMutate.value[index] = props.tasks[index];
     currentlyEditingElementIndex.value = null;
+    currentlyDeletingElementIndex.value = null;
     isInEditMode(null);
+  };
+
+  const setTasksToMutate = () => {
+    tasksToMutate.value = JSON.parse(JSON.stringify(props.tasks));
   };
 
   watch(
@@ -89,11 +93,19 @@
       if (isOpen.value) {
         isInEditMode(null);
         currentlyEditingElementIndex.value = null;
-        tasksToMutate.value = JSON.parse(JSON.stringify(props.tasks));
+        currentlyDeletingElementIndex.value = null;
+        setTasksToMutate();
       }
     },
     {
       immediate: true,
+    },
+  );
+
+  watch(
+    () => props.tasks.length,
+    () => {
+      setTasksToMutate();
     },
   );
 </script>
@@ -150,8 +162,8 @@
             is-only-icon
             icon="mdiTrashCanOutline"
             color="error"
-            :disabled="isButtonDeleteDisabled"
-            :loading="isButtonDeleteLoading"
+            :disabled="isDeleting(index)"
+            :loading="isDeleting(index)"
             @click="onDelete(index)"
           />
         </template>
