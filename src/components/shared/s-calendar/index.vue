@@ -163,7 +163,11 @@ const onSelectDay = (date: string) => {
 </script>
 
 <template>
-  <s-card v-if="isReady" :class="sCalendarClassList" padding="0">
+  <s-card
+    v-if="isReady"
+    :class="sCalendarClassList"
+    padding="0"
+  >
     <template #content>
       <weekdays
         v-if="isWeekdaysVisible"

@@ -44,8 +44,15 @@ const teamMembers = teamMembersRequests
   <div class="d-flex direction-column full-width">
     <h1>{{ team.name }}</h1>
     <p>{{ team.description }}</p>
-    <form class="d-flex ml-auto mb-8" @submit.prevent="onSubmitAddTeamMember">
-      <s-input v-model="uid" placeholder="Enter user id" width="300px" />
+    <form
+      class="d-flex ml-auto mb-8"
+      @submit.prevent="onSubmitAddTeamMember"
+    >
+      <s-input
+        v-model="uid"
+        placeholder="Enter user id"
+        width="300px"
+      />
       <s-button
         type="submit"
         icon="mdiAccountPlusOutline"
@@ -55,7 +62,10 @@ const teamMembers = teamMembersRequests
         Add team member
       </s-button>
     </form>
-    <s-table :headers="tableHeaders" :rows="teamMembers">
+    <s-table
+      :headers="tableHeaders"
+      :rows="teamMembers"
+    >
       <template #actions="{ row }">
         <s-button
           :to="generateTeamMemberDetailsLink(row.id)"

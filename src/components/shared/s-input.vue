@@ -48,8 +48,14 @@ const sInputLabelClassList: Ref<string[]> = computed(() => [
 </script>
 
 <template>
-  <div :class="sInputClassList" :style="sInputStyle">
-    <div v-if="$attrs.label" :class="sInputLabelClassList">
+  <div
+    :class="sInputClassList"
+    :style="sInputStyle"
+  >
+    <div
+      v-if="$attrs.label"
+      :class="sInputLabelClassList"
+    >
       {{ $attrs.label }}
     </div>
     <input

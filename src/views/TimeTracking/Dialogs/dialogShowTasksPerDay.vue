@@ -98,7 +98,10 @@ watch(
 </script>
 
 <template>
-  <s-dialog v-model="isOpen" min-width="600px">
+  <s-dialog
+    v-model="isOpen"
+    min-width="600px"
+  >
     <template #title>
       {{ dayjs(day).format("DD MMMM YYYY") }}
     </template>
@@ -137,7 +140,11 @@ watch(
           />
         </template>
         <template v-else>
-          <s-button is-only-icon icon="mdiPencil" @click="onEdit(index)" />
+          <s-button
+            is-only-icon
+            icon="mdiPencil"
+            @click="onEdit(index)"
+          />
           <s-button
             is-only-icon
             icon="mdiTrashCanOutline"

@@ -28,7 +28,10 @@ const onAddNewTeam = async () => {
 </script>
 
 <template>
-  <s-card class="d-flex direction-column mb-auto flex-gap-12" width="400px">
+  <s-card
+    class="d-flex direction-column mb-auto flex-gap-12"
+    width="400px"
+  >
     <template #title> Add Team </template>
     <template #content>
       <s-input

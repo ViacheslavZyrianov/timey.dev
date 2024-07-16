@@ -56,7 +56,10 @@ onClickOutside(target, (_) => closeItems());
 </script>
 
 <template>
-  <div class="s-select" :style="style">
+  <div
+    class="s-select"
+    :style="style"
+  >
     <s-card
       class="s-select-input d-flex align-center justify-space-between"
       hover
@@ -72,7 +75,10 @@ onClickOutside(target, (_) => closeItems());
         />
       </template>
     </s-card>
-    <s-card :class="selectItemsClassList" padding="0">
+    <s-card
+      :class="selectItemsClassList"
+      padding="0"
+    >
       <template #content>
         <div
           v-for="item in items"

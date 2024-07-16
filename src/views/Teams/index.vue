@@ -67,7 +67,10 @@ const onRedirectToTeam = (id: string) => {
       Add Team
     </s-button>
   </div>
-  <s-table :headers="tableHeaders" :rows="tableRows">
+  <s-table
+    :headers="tableHeaders"
+    :rows="tableRows"
+  >
     <template #actions="{ row }">
       <s-button
         size="small"

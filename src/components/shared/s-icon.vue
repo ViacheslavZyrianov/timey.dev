@@ -24,7 +24,13 @@ const style = {
 </script>
 
 <template>
-  <svg :style="style" viewBox="0 0 24 24">
-    <path :d="mdiIcon[icon]" :fill="color" />
+  <svg
+    :style="style"
+    viewBox="0 0 24 24"
+  >
+    <path
+      :d="mdiIcon[icon]"
+      :fill="color"
+    />
   </svg>
 </template>

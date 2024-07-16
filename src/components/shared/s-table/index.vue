@@ -51,7 +51,10 @@ const headerStyle = computed(() => (style: Record<string, string>) => ({
         </tr>
       </thead>
       <tbody>
-        <template v-for="(row, index) in rows" :key="index">
+        <template
+          v-for="(row, index) in rows"
+          :key="index"
+        >
           <tr>
             <template
               v-if="
@@ -67,7 +70,10 @@ const headerStyle = computed(() => (style: Record<string, string>) => ({
               v-for="header in headers.slice(1)"
               :key="`${row.id}-${header.key}`"
             >
-              <slot :name="header.key" :row="row" />
+              <slot
+                :name="header.key"
+                :row="row"
+              />
               <template v-if="!$slots[header.key]">{{
                 row[header.key]
               }}</template>

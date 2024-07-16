@@ -44,7 +44,11 @@ async function onLogout() {
       block
       class="nav-button d-flex align-center"
     >
-      <s-icon :icon="icon" :size="24" class="nav-icon" />
+      <s-icon
+        :icon="icon"
+        :size="24"
+        class="nav-icon"
+      />
       <span class="nav-title">{{ title }}</span>
     </router-link>
     <s-button

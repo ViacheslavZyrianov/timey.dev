@@ -97,7 +97,10 @@ const onSelectDay = () => {
 </script>
 
 <template>
-  <li :class="calendarDayClassList" @click="onSelectDay">
+  <li
+    :class="calendarDayClassList"
+    @click="onSelectDay"
+  >
     <div class="calendar-day-label">
       {{ label }}
     </div>

@@ -28,7 +28,11 @@ const classList = computed(() => ({
 </script>
 
 <template>
-  <div class="s-avatar" :style="style" :class="classList">
+  <div
+    class="s-avatar"
+    :style="style"
+    :class="classList"
+  >
     <img :src="props.src" />
   </div>
 </template>

@@ -110,7 +110,12 @@ const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
     :class="classList"
     :style="style"
   >
-    <s-icon v-if="loading" type="mdi" icon="mdiLoading" class="icon-loading" />
+    <s-icon
+      v-if="loading"
+      type="mdi"
+      icon="mdiLoading"
+      class="icon-loading"
+    />
     <s-icon
       v-if="icon"
       type="mdi"
@@ -118,7 +123,10 @@ const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
       :size="iconSize"
       :class="iconClassList"
     />
-    <span v-if="!isOnlyIcon" class="s-button-title">
+    <span
+      v-if="!isOnlyIcon"
+      class="s-button-title"
+    >
       <slot />
     </span>
   </component>

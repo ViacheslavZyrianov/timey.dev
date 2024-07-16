@@ -6,7 +6,11 @@ const authStore = useAuthStore();
 
 <template>
   <div class="d-flex align-center mb-8">
-    <s-avatar rounded :src="authStore.user.photoURL" class="mr-8" />
+    <s-avatar
+      rounded
+      :src="authStore.user.photoURL"
+      class="mr-8"
+    />
     <h1>{{ authStore.user.displayName }}</h1>
   </div>
 </template>

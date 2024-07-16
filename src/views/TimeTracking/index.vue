@@ -109,7 +109,10 @@ onMounted(() => {
       width="160px"
       @update:model-value="goToMonth"
     />
-    <s-button icon="mdiPlus" class="ml-auto" @click="onAddTask"
+    <s-button
+      icon="mdiPlus"
+      class="ml-auto"
+      @click="onAddTask"
       >Add task</s-button
     >
   </div>

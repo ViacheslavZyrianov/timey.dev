@@ -26,8 +26,15 @@ onClickOutside(target, () => close());
 </script>
 
 <template>
-  <div v-if="model" class="s-dialog">
-    <div class="s-dialog-body" :style="style" ref="target">
+  <div
+    v-if="model"
+    class="s-dialog"
+  >
+    <div
+      class="s-dialog-body"
+      :style="style"
+      ref="target"
+    >
       <div class="s-dialog-title d-flex justify-space-between">
         <slot name="title" />
         <s-icon

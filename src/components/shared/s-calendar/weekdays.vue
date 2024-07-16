@@ -32,7 +32,11 @@ const weekdays: ComputedRef<string[]> = computed(() => {
 
 <template>
   <ol class="weekdays">
-    <li v-for="weekday in weekdays" :key="weekday" class="weekday">
+    <li
+      v-for="weekday in weekdays"
+      :key="weekday"
+      class="weekday"
+    >
       {{ weekday }}
     </li>
   </ol>

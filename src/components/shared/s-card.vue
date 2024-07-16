@@ -47,7 +47,10 @@ const style = computed(() => [
     :class="classList"
     :style="style"
   >
-    <div v-if="slots.title" class="title">
+    <div
+      v-if="slots.title"
+      class="title"
+    >
       <slot name="title" />
     </div>
     <slot name="content" />

@@ -16,7 +16,11 @@ async function onAuthClick() {
     <s-card width="300px">
       <template #title>Authorize</template>
       <template #content>
-        <s-button icon="mdiGoogle" width="100%" @click="onAuthClick">
+        <s-button
+          icon="mdiGoogle"
+          width="100%"
+          @click="onAuthClick"
+        >
           Sign in with Google
         </s-button>
       </template>

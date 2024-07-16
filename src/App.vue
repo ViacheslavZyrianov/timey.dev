@@ -15,7 +15,10 @@ const backLink: ComputedRef<RouteLocationRaw> = computed(() => {
 </script>
 
 <template>
-  <div v-if="authStore.isUserLoggedIn" class="grid-container pa-8">
+  <div
+    v-if="authStore.isUserLoggedIn"
+    class="grid-container pa-8"
+  >
     <app-bar />
     <app-nav />
     <main>
