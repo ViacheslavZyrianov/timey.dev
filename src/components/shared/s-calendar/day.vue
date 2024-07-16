@@ -108,7 +108,8 @@
     <template v-if="dataset">
       <template v-if="isLessThenMinDatasetItems">
         <div
-          v-for="datasetItem in dataset"
+          v-for="(datasetItem, index) in dataset"
+          :key="`${index}-${day.date}`"
           class="calendar-day-dataset-item d-flex"
         >
           <div class="dataset-item-text">
@@ -118,7 +119,8 @@
       </template>
       <template v-else-if="isDatasetExists">
         <div
-          v-for="datasetItem in minDatasetItems"
+          v-for="(datasetItem, index) in minDatasetItems"
+          :key="`${index}-${day.date}`"
           class="calendar-day-dataset-item d-flex"
         >
           <div class="dataset-item-text">
