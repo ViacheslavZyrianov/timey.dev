@@ -84,8 +84,20 @@ onMounted(() => {
     <template #title>Add Task</template>
     <template #content>
       <form class="d-flex flex-column flex-row-gap-8" @submit.prevent="onSubmit">
-        <s-input v-model="form.task" placeholder="Enter task name" label="Task" />
-        <s-input v-model="form.hours" placeholder="Enter hours spent on this task" label="Hours" />
+        <div class="d-flex flex-column-gap-4 ">
+          <s-input
+            v-model="form.hours"
+            label="Hours"
+            width="50px"
+            label-align="center"
+          />
+          <s-input
+            v-model="form.task"
+            placeholder="Enter task name"
+            label="Task"
+            class="flex-grow-1"
+          />
+        </div>
         <div class="d-flex flex-column-gap-4 full-width">
           <s-select
             v-model="year"
