@@ -1,87 +1,87 @@
 <script setup lang="ts">
-import { defineModel, onMounted, reactive, ref, Ref, watch } from "vue";
-import { TypeTimeTrackingItemAdd } from "@/types/time-tracking";
-import useTimeTrackingStore from "@/store/timeTracking";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import {
-  TypeCalendarVariant,
-  TypeWeekdaysFormat,
-} from "@/components/shared/s-calendar/types";
-import { months, years } from "@/views/TimeTracking/dates";
+  import { defineModel, onMounted, reactive, ref, Ref, watch } from "vue";
+  import { TypeTimeTrackingItemAdd } from "@/types/time-tracking";
+  import useTimeTrackingStore from "@/store/timeTracking";
+  import dayjs from "dayjs";
+  import customParseFormat from "dayjs/plugin/customParseFormat";
+  import {
+    TypeCalendarVariant,
+    TypeWeekdaysFormat,
+  } from "@/components/shared/s-calendar/types";
+  import { months, years } from "@/views/TimeTracking/dates";
 
-dayjs.extend(customParseFormat);
+  dayjs.extend(customParseFormat);
 
-const emit = defineEmits(["submit"]);
+  const emit = defineEmits(["submit"]);
 
-const timeTrackingStore = useTimeTrackingStore();
+  const timeTrackingStore = useTimeTrackingStore();
 
-const isOpen = defineModel();
+  const isOpen = defineModel();
 
-const form: TypeTimeTrackingItemAdd = reactive({
-  task: "",
-  hours: null,
-  date: new Date(),
-});
-const isButtonSubmitDisabled: Ref<boolean> = ref(false);
-const selectedDate: Ref<string> = ref("");
-const month: Ref<string> = ref("");
-const year: Ref<string> = ref("");
+  const form: TypeTimeTrackingItemAdd = reactive({
+    task: "",
+    hours: null,
+    date: new Date(),
+  });
+  const isButtonSubmitDisabled: Ref<boolean> = ref(false);
+  const selectedDate: Ref<string> = ref("");
+  const month: Ref<string> = ref("");
+  const year: Ref<string> = ref("");
 
-const onSelectDay = (date: string) => {
-  selectedDate.value = date;
-};
+  const onSelectDay = (date: string) => {
+    selectedDate.value = date;
+  };
 
-const onSelectMonth = (_month: string) => {
-  month.value = _month;
-  const [year, _, day] = selectedDate.value.split("-");
-  selectedDate.value = `${year}-${_month}-${day}`;
-};
+  const onSelectMonth = (_month: string) => {
+    month.value = _month;
+    const [year, _, day] = selectedDate.value.split("-");
+    selectedDate.value = `${year}-${_month}-${day}`;
+  };
 
-const onSelectYear = (_year: string) => {
-  year.value = _year;
-  const [_, month, day] = selectedDate.value.split("-");
-  selectedDate.value = `${_year}-${month}-${day}`;
-};
+  const onSelectYear = (_year: string) => {
+    year.value = _year;
+    const [_, month, day] = selectedDate.value.split("-");
+    selectedDate.value = `${_year}-${month}-${day}`;
+  };
 
-const onSubmit = async () => {
-  try {
-    isButtonSubmitDisabled.value = true;
-    const payload = {
-      ...form,
-      date: new Date(dayjs(selectedDate.value).toDate()),
-    };
-    await timeTrackingStore.postTimeTracking(payload);
-    emit("submit");
-    isOpen.value = false;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    isButtonSubmitDisabled.value = false;
-  }
-};
-
-const resetDates = () => {
-  onSelectDay(dayjs().format("YYYY-M-D"));
-  onSelectMonth(dayjs().format("M"));
-  onSelectYear(dayjs().format("YYYY"));
-};
-
-watch(
-  () => isOpen.value,
-  () => {
-    if (isOpen.value) {
-      form.task = "";
-      form.hours = null;
-      form.date = new Date();
-      resetDates();
+  const onSubmit = async () => {
+    try {
+      isButtonSubmitDisabled.value = true;
+      const payload = {
+        ...form,
+        date: new Date(dayjs(selectedDate.value).toDate()),
+      };
+      await timeTrackingStore.postTimeTracking(payload);
+      emit("submit");
+      isOpen.value = false;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isButtonSubmitDisabled.value = false;
     }
-  },
-);
+  };
 
-onMounted(() => {
-  resetDates();
-});
+  const resetDates = () => {
+    onSelectDay(dayjs().format("YYYY-M-D"));
+    onSelectMonth(dayjs().format("M"));
+    onSelectYear(dayjs().format("YYYY"));
+  };
+
+  watch(
+    () => isOpen.value,
+    () => {
+      if (isOpen.value) {
+        form.task = "";
+        form.hours = null;
+        form.date = new Date();
+        resetDates();
+      }
+    },
+  );
+
+  onMounted(() => {
+    resetDates();
+  });
 </script>
 
 <template>

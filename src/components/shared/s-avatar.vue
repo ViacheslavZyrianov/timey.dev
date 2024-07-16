@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { computed } from "vue";
+  import { computed } from "vue";
 
-const props = defineProps({
-  src: {
-    type: String,
-    default: "",
-    required: true,
-  },
-  rounded: {
-    type: Boolean,
-    default: true,
-  },
-  size: {
-    type: Number,
-    default: 64,
-  },
-});
+  const props = defineProps({
+    src: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
+    size: {
+      type: Number,
+      default: 64,
+    },
+  });
 
-const style = computed(() => ({
-  width: `${props.size}px`,
-  height: `${props.size}px`,
-}));
+  const style = computed(() => ({
+    width: `${props.size}px`,
+    height: `${props.size}px`,
+  }));
 
-const classList = computed(() => ({
-  rounded: props.rounded,
-}));
+  const classList = computed(() => ({
+    rounded: props.rounded,
+  }));
 </script>
 
 <template>
@@ -38,15 +38,15 @@ const classList = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-.s-avatar {
-  overflow: hidden;
+  .s-avatar {
+    overflow: hidden;
 
-  img {
-    width: 100%;
-    object-fit: cover;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+    &.rounded {
+      border-radius: 8px;
+    }
   }
-  &.rounded {
-    border-radius: 8px;
-  }
-}
 </style>

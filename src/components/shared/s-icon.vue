@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import * as mdiIcon from "@mdi/js";
+  import * as mdiIcon from "@mdi/js";
 
-const props = defineProps({
-  icon: {
-    type: String,
-    default: "mdi-alert-circle-outline",
-    required: true,
-  },
-  size: {
-    type: Number,
-    default: 16,
-  },
-  color: {
-    type: String,
-    default: "currentcolor",
-  },
-});
+  const props = defineProps({
+    icon: {
+      type: String,
+      default: "mdi-alert-circle-outline",
+      required: true,
+    },
+    size: {
+      type: Number,
+      default: 16,
+    },
+    color: {
+      type: String,
+      default: "currentcolor",
+    },
+  });
 
-const style = {
-  width: `${props.size}px`,
-  height: `${props.size}px`,
-};
+  const style = {
+    width: `${props.size}px`,
+    height: `${props.size}px`,
+  };
 </script>
 
 <template>

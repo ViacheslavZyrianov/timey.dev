@@ -1,58 +1,58 @@
 <script setup lang="ts">
-import { computed, ComputedRef, defineModel, PropType, ref } from "vue";
-import { onClickOutside } from "@vueuse/core";
-import { TypeSelectItem } from "@/components/shared/select";
+  import { computed, ComputedRef, defineModel, PropType, ref } from "vue";
+  import { onClickOutside } from "@vueuse/core";
+  import { TypeSelectItem } from "@/components/shared/select";
 
-const props = defineProps({
-  items: {
-    type: Array as PropType<TypeSelectItem[]>,
-    default: () => [],
-  },
-  width: {
-    type: String,
-    default: "auto",
-  },
-});
+  const props = defineProps({
+    items: {
+      type: Array as PropType<TypeSelectItem[]>,
+      default: () => [],
+    },
+    width: {
+      type: String,
+      default: "auto",
+    },
+  });
 
-const emit = defineEmits(["update:modelValue"]);
+  const emit = defineEmits(["update:modelValue"]);
 
-const model = defineModel();
+  const model = defineModel();
 
-const isOpen = ref(false);
-const target = ref(null);
+  const isOpen = ref(false);
+  const target = ref(null);
 
-const label: ComputedRef<string> = computed(
-  () => props.items.find((item) => item.value === model.value)?.label || "",
-);
+  const label: ComputedRef<string> = computed(
+    () => props.items.find((item) => item.value === model.value)?.label || "",
+  );
 
-const selectItemsClassList = computed(() => [
-  "s-select-items",
-  isOpen.value && "s-select-items--opened",
-]);
+  const selectItemsClassList = computed(() => [
+    "s-select-items",
+    isOpen.value && "s-select-items--opened",
+  ]);
 
-const style = computed(() => ({
-  width: props.width,
-}));
+  const style = computed(() => ({
+    width: props.width,
+  }));
 
-const selectItemClassList = computed(() => (value: string) => [
-  "s-select-item",
-  model.value === value && "s-select-item--current",
-]);
+  const selectItemClassList = computed(() => (value: string) => [
+    "s-select-item",
+    model.value === value && "s-select-item--current",
+  ]);
 
-const closeItems = () => {
-  isOpen.value = false;
-};
+  const closeItems = () => {
+    isOpen.value = false;
+  };
 
-const onToggle = () => {
-  isOpen.value = !isOpen.value;
-};
+  const onToggle = () => {
+    isOpen.value = !isOpen.value;
+  };
 
-const onSelectItem = (value: string) => {
-  closeItems();
-  emit("update:modelValue", value);
-};
+  const onSelectItem = (value: string) => {
+    closeItems();
+    emit("update:modelValue", value);
+  };
 
-onClickOutside(target, (_) => closeItems());
+  onClickOutside(target, (_) => closeItems());
 </script>
 
 <template>
@@ -94,59 +94,59 @@ onClickOutside(target, (_) => closeItems());
 </template>
 
 <style scoped lang="scss">
-.s-select {
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  z-index: 10;
+  .s-select {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
 
-  &-input-label {
-    font-weight: 600;
-    color: $c-primary;
-  }
-
-  &-items {
-    position: absolute;
-    top: 0;
-    right: 0;
-    max-height: 300px;
-    width: 100%;
-    overflow-y: auto;
-    transform: translateY(55px);
-    opacity: 0;
-    visibility: hidden;
-    will-change: transform, opacity, visibility;
-    transition:
-      transform 0.2s,
-      opacity 0.2s,
-      visibility 0.2s;
-
-    &--opened {
-      transform: translateY(60px);
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  &-item {
-    padding: 16px;
-    transition: background-color 0.2s;
-    will-change: background-color;
-
-    &--current {
+    &-input-label {
       font-weight: 600;
       color: $c-primary;
-      cursor: not-allowed;
-      pointer-events: none;
     }
 
-    &:last-child {
-      border-bottom: none;
+    &-items {
+      position: absolute;
+      top: 0;
+      right: 0;
+      max-height: 300px;
+      width: 100%;
+      overflow-y: auto;
+      transform: translateY(55px);
+      opacity: 0;
+      visibility: hidden;
+      will-change: transform, opacity, visibility;
+      transition:
+        transform 0.2s,
+        opacity 0.2s,
+        visibility 0.2s;
+
+      &--opened {
+        transform: translateY(60px);
+        opacity: 1;
+        visibility: visible;
+      }
     }
 
-    &:hover {
-      background-color: #e6e6f4;
+    &-item {
+      padding: 16px;
+      transition: background-color 0.2s;
+      will-change: background-color;
+
+      &--current {
+        font-weight: 600;
+        color: $c-primary;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #e6e6f4;
+      }
     }
   }
-}
 </style>

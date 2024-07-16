@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import { defineSlots, computed, PropType } from "vue";
+  import { defineSlots, computed, PropType } from "vue";
 
-const props = defineProps({
-  hover: {
-    type: Boolean,
-    default: false,
-  },
-  to: {
-    type: String,
-    default: "",
-  },
-  width: {
-    type: String,
-    default: "",
-  },
-  padding: {
-    type: String,
-    default: "16px",
-  },
-  variant: {
-    type: String as PropType<"shadow" | "border">,
-    default: "shadow",
-  },
-});
+  const props = defineProps({
+    hover: {
+      type: Boolean,
+      default: false,
+    },
+    to: {
+      type: String,
+      default: "",
+    },
+    width: {
+      type: String,
+      default: "",
+    },
+    padding: {
+      type: String,
+      default: "16px",
+    },
+    variant: {
+      type: String as PropType<"shadow" | "border">,
+      default: "shadow",
+    },
+  });
 
-const slots = defineSlots();
+  const slots = defineSlots();
 
-const tag = props.to ? "router-link" : "div";
+  const tag = props.to ? "router-link" : "div";
 
-const classList = computed(() => [
-  { hover: props.hover },
-  `s-card--variant-${props.variant}`,
-]);
+  const classList = computed(() => [
+    { hover: props.hover },
+    `s-card--variant-${props.variant}`,
+  ]);
 
-const style = computed(() => [
-  { width: props.width },
-  { padding: props.padding },
-]);
+  const style = computed(() => [
+    { width: props.width },
+    { padding: props.padding },
+  ]);
 </script>
 
 <template>
@@ -59,56 +59,56 @@ const style = computed(() => [
 </template>
 
 <style lang="scss" scoped>
-.s-card {
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  transition:
-    color 0.2s,
-    background 0.2s;
-  will-change: color, background;
+  .s-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition:
+      color 0.2s,
+      background 0.2s;
+    will-change: color, background;
 
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: #252525;
-  }
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #252525;
+    }
 
-  &.router-link-active {
-    color: #fff;
-    background-color: $c-primary;
-
-    &:hover {
+    &.router-link-active {
       color: #fff;
       background-color: $c-primary;
+
+      &:hover {
+        color: #fff;
+        background-color: $c-primary;
+      }
+    }
+
+    &.hover {
+      transition: box-shadow 0.2s;
+      will-change: box-shadow;
+
+      &:hover {
+        box-shadow: 0 0 8px 0 #aeaeae;
+      }
+    }
+
+    &--variant {
+      &-shadow {
+        box-shadow: 0 0 16px 0 #d9d9d9;
+      }
+
+      &-border {
+        border: 1px solid #ececec;
+      }
     }
   }
 
-  &.hover {
-    transition: box-shadow 0.2s;
-    will-change: box-shadow;
-
+  a.s-card {
     &:hover {
-      box-shadow: 0 0 8px 0 #aeaeae;
+      color: $c-primary;
+      background-color: lighten($c-primary, 45%);
     }
   }
-
-  &--variant {
-    &-shadow {
-      box-shadow: 0 0 16px 0 #d9d9d9;
-    }
-
-    &-border {
-      border: 1px solid #ececec;
-    }
-  }
-}
-
-a.s-card {
-  &:hover {
-    color: $c-primary;
-    background-color: lighten($c-primary, 45%);
-  }
-}
 </style>

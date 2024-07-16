@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { computed, ComputedRef, PropType } from "vue";
-import {
-  TypeCalendarVariant,
-  TypeWeekdaysFormat,
-} from "@/components/shared/s-calendar/types";
-import dayjs from "dayjs";
-import localeData from "dayjs/plugin/localeData";
+  import { computed, ComputedRef, PropType } from "vue";
+  import {
+    TypeCalendarVariant,
+    TypeWeekdaysFormat,
+  } from "@/components/shared/s-calendar/types";
+  import dayjs from "dayjs";
+  import localeData from "dayjs/plugin/localeData";
 
-dayjs.extend(localeData);
+  dayjs.extend(localeData);
 
-const props = defineProps({
-  variant: {
-    type: String as PropType<TypeCalendarVariant>,
-    default: TypeCalendarVariant.Default,
-  },
-  weekdaysFormat: {
-    type: String as PropType<TypeWeekdaysFormat>,
-    default: TypeWeekdaysFormat.Default,
-  },
-});
+  const props = defineProps({
+    variant: {
+      type: String as PropType<TypeCalendarVariant>,
+      default: TypeCalendarVariant.Default,
+    },
+    weekdaysFormat: {
+      type: String as PropType<TypeWeekdaysFormat>,
+      default: TypeWeekdaysFormat.Default,
+    },
+  });
 
-const weekdays: ComputedRef<string[]> = computed(() => {
-  if (props.weekdaysFormat === TypeWeekdaysFormat.Short)
-    return dayjs().localeData().weekdaysShort();
-  else if (props.weekdaysFormat === TypeWeekdaysFormat.Min)
-    return dayjs().localeData().weekdaysMin();
+  const weekdays: ComputedRef<string[]> = computed(() => {
+    if (props.weekdaysFormat === TypeWeekdaysFormat.Short)
+      return dayjs().localeData().weekdaysShort();
+    else if (props.weekdaysFormat === TypeWeekdaysFormat.Min)
+      return dayjs().localeData().weekdaysMin();
 
-  return dayjs().localeData().weekdays();
-});
+    return dayjs().localeData().weekdays();
+  });
 </script>
 
 <template>
@@ -43,16 +43,16 @@ const weekdays: ComputedRef<string[]> = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 16px 0;
-  background-color: #aeaeae;
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 16px 0;
+    background-color: #aeaeae;
 
-  .weekday {
-    text-align: center;
-    color: #ffffff;
-    font-weight: 600;
+    .weekday {
+      text-align: center;
+      color: #ffffff;
+      font-weight: 600;
+    }
   }
-}
 </style>

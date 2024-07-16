@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { reactive, ref, Ref, watch } from "vue";
-import { useRouter } from "vue-router";
-import useTeamsStore from "@/store/teams";
-import { TypeTeamCreate } from "@/types/teams";
+  import { reactive, ref, Ref, watch } from "vue";
+  import { useRouter } from "vue-router";
+  import useTeamsStore from "@/store/teams";
+  import { TypeTeamCreate } from "@/types/teams";
 
-const router = useRouter();
-const teamsStore = useTeamsStore();
+  const router = useRouter();
+  const teamsStore = useTeamsStore();
 
-const isSubmitButtonDisabled: Ref<boolean> = ref(true);
+  const isSubmitButtonDisabled: Ref<boolean> = ref(true);
 
-const form: TypeTeamCreate = reactive({
-  name: "",
-  description: "",
-});
+  const form: TypeTeamCreate = reactive({
+    name: "",
+    description: "",
+  });
 
-watch(
-  () => form.name,
-  () => {
-    isSubmitButtonDisabled.value = form.name.length < 2;
-  },
-);
+  watch(
+    () => form.name,
+    () => {
+      isSubmitButtonDisabled.value = form.name.length < 2;
+    },
+  );
 
-const onAddNewTeam = async () => {
-  const id = await teamsStore.postTeam(form);
-  await router.push({ name: "team", params: { id } });
-};
+  const onAddNewTeam = async () => {
+    const id = await teamsStore.postTeam(form);
+    await router.push({ name: "team", params: { id } });
+  };
 </script>
 
 <template>

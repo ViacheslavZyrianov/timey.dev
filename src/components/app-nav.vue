@@ -1,38 +1,38 @@
 <script setup lang="ts">
-import useAuthStore from "@/store/auth";
-import { useRouter } from "vue-router";
-import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
+  import useAuthStore from "@/store/auth";
+  import { useRouter } from "vue-router";
+  import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
 
-const authStore = useAuthStore();
-const router = useRouter();
+  const authStore = useAuthStore();
+  const router = useRouter();
 
-const navList = [
-  {
-    title: "Dashboard",
-    to: "/dashboard",
-    icon: "mdiViewDashboardOutline",
-  },
-  {
-    title: "Time Tracking",
-    to: "/time-tracking",
-    icon: `mdiClockTime${getCurrentHourInWords()}Outline`,
-  },
-  {
-    title: "Teams",
-    to: "/teams",
-    icon: "mdiAccountGroupOutline",
-  },
-  {
-    title: "Settings",
-    to: "/settings",
-    icon: "mdiCogOutline",
-  },
-];
+  const navList = [
+    {
+      title: "Dashboard",
+      to: "/dashboard",
+      icon: "mdiViewDashboardOutline",
+    },
+    {
+      title: "Time Tracking",
+      to: "/time-tracking",
+      icon: `mdiClockTime${getCurrentHourInWords()}Outline`,
+    },
+    {
+      title: "Teams",
+      to: "/teams",
+      icon: "mdiAccountGroupOutline",
+    },
+    {
+      title: "Settings",
+      to: "/settings",
+      icon: "mdiCogOutline",
+    },
+  ];
 
-async function onLogout() {
-  await authStore.logout();
-  await router.push("/auth");
-}
+  async function onLogout() {
+    await authStore.logout();
+    await router.push("/auth");
+  }
 </script>
 
 <template>
@@ -65,50 +65,50 @@ async function onLogout() {
 </template>
 
 <style lang="scss" scoped>
-.app-nav {
-  grid-area: app-nav;
-  padding: 16px;
-  width: 256px;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 16px 0 #d9d9d9;
-
-  .nav-button {
+  .app-nav {
+    grid-area: app-nav;
     padding: 16px;
-    margin-bottom: 8px;
-    color: #898f9b;
-    transition:
-      color 0.2s,
-      background 0.2s;
-    will-change: color, background;
+    width: 256px;
     border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 16px 0 #d9d9d9;
 
-    &.router-link-active {
-      color: #fff;
-      background-color: $c-primary;
+    .nav-button {
+      padding: 16px;
+      margin-bottom: 8px;
+      color: #898f9b;
+      transition:
+        color 0.2s,
+        background 0.2s;
+      will-change: color, background;
+      border-radius: 8px;
 
-      &:hover {
+      &.router-link-active {
         color: #fff;
         background-color: $c-primary;
+
+        &:hover {
+          color: #fff;
+          background-color: $c-primary;
+        }
+      }
+
+      &:hover {
+        color: $c-primary;
+        background-color: lighten($c-primary, 45%);
       }
     }
 
-    &:hover {
-      color: $c-primary;
-      background-color: lighten($c-primary, 45%);
+    .nav-title {
+      font-size: 14px;
+    }
+
+    .nav-icon {
+      margin-right: 8px;
+    }
+
+    .nav-logout {
+      margin-top: auto;
     }
   }
-
-  .nav-title {
-    font-size: 14px;
-  }
-
-  .nav-icon {
-    margin-right: 8px;
-  }
-
-  .nav-logout {
-    margin-top: auto;
-  }
-}
 </style>

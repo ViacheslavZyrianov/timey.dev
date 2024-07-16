@@ -1,103 +1,103 @@
 <script setup lang="ts">
-import { computed, ComputedRef, PropType } from "vue";
-import { RouteLocationRaw } from "vue-router";
+  import { computed, ComputedRef, PropType } from "vue";
+  import { RouteLocationRaw } from "vue-router";
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: "",
-  },
-  variant: {
-    type: String as PropType<"default" | "outlined" | "text">,
-    default: "default",
-  },
-  type: {
-    type: String as PropType<"button" | "reset" | "submit">,
-    default: "button",
-  },
-  color: {
-    type: String as PropType<
-      "primary" | "support-1" | "success" | "info" | "warning" | "error"
-    >,
-    default: "primary",
-  },
-  isOnlyIcon: {
-    type: Boolean,
-    default: false,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  iconSize: {
-    type: Number,
-    default: 18,
-  },
-  block: {
-    type: Boolean,
-    default: false,
-  },
-  size: {
-    type: String as PropType<"small" | "medium" | "large">,
-    default: "medium",
-  },
-  width: {
-    type: String,
-    default: null,
-  },
-  height: {
-    type: String,
-    default: null,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  to: {
-    type: Object as PropType<RouteLocationRaw>,
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  target: {
-    type: String as PropType<"_blank" | "_self">,
-    default: null,
-  },
-});
+  const props = defineProps({
+    title: {
+      type: String,
+      default: "",
+    },
+    variant: {
+      type: String as PropType<"default" | "outlined" | "text">,
+      default: "default",
+    },
+    type: {
+      type: String as PropType<"button" | "reset" | "submit">,
+      default: "button",
+    },
+    color: {
+      type: String as PropType<
+        "primary" | "support-1" | "success" | "info" | "warning" | "error"
+      >,
+      default: "primary",
+    },
+    isOnlyIcon: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
+      type: String,
+      default: null,
+    },
+    iconSize: {
+      type: Number,
+      default: 18,
+    },
+    block: {
+      type: Boolean,
+      default: false,
+    },
+    size: {
+      type: String as PropType<"small" | "medium" | "large">,
+      default: "medium",
+    },
+    width: {
+      type: String,
+      default: null,
+    },
+    height: {
+      type: String,
+      default: null,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    to: {
+      type: Object as PropType<RouteLocationRaw>,
+      default: null,
+    },
+    href: {
+      type: String,
+      default: null,
+    },
+    target: {
+      type: String as PropType<"_blank" | "_self">,
+      default: null,
+    },
+  });
 
-const classList = computed(() => [
-  `variant-${props.variant}`,
-  `color-${props.color}`,
-  `size-${props.size}`,
-  props.disabled && "disabled",
-  props.loading && "loading",
-]);
+  const classList = computed(() => [
+    `variant-${props.variant}`,
+    `color-${props.color}`,
+    `size-${props.size}`,
+    props.disabled && "disabled",
+    props.loading && "loading",
+  ]);
 
-const style = computed(() => ({
-  height: props.height,
-  width: props.width,
-}));
+  const style = computed(() => ({
+    height: props.height,
+    width: props.width,
+  }));
 
-const iconClassList = computed(() => ({
-  "icon-prepended": true,
-  "mr-4": !props.isOnlyIcon,
-}));
+  const iconClassList = computed(() => ({
+    "icon-prepended": true,
+    "mr-4": !props.isOnlyIcon,
+  }));
 
-const icon = computed(() => props.icon || null);
+  const icon = computed(() => props.icon || null);
 
-const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
-  () => {
-    if (props.to) return "router-link";
-    else if (props.href) return "a";
-    return "button";
-  },
-);
+  const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
+    () => {
+      if (props.to) return "router-link";
+      else if (props.href) return "a";
+      return "button";
+    },
+  );
 </script>
 
 <template>
@@ -133,139 +133,139 @@ const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
 </template>
 
 <style lang="scss" scoped>
-.s-button {
-  position: relative;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-  user-select: none;
-  transition: background 0.2s;
-  will-change: background;
+  .s-button {
+    position: relative;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    transition: background 0.2s;
+    will-change: background;
 
-  &:focus {
-    outline: none;
-  }
-
-  &-title {
-    white-space: nowrap;
-  }
-
-  &.disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  &.loading {
-    .icon-loading {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      margin: auto;
-      visibility: visible;
+    &:focus {
+      outline: none;
     }
 
-    .s-button-title,
-    .icon-prepended {
-      visibility: hidden;
-    }
-  }
-
-  &.size {
-    &-small {
-      padding: 8px 12px;
+    &-title {
+      white-space: nowrap;
     }
 
-    &-medium {
-      padding: 12px 16px;
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
-    &-large {
-      padding: 16px 24px;
-      font-size: 18px;
+    &.loading {
+      .icon-loading {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        visibility: visible;
+      }
+
+      .s-button-title,
+      .icon-prepended {
+        visibility: hidden;
+      }
     }
-  }
 
-  &.variant {
-    &-outlined {
-      border-width: 1px;
-      border-style: solid;
-      background-color: transparent;
+    &.size {
+      &-small {
+        padding: 8px 12px;
+      }
+
+      &-medium {
+        padding: 12px 16px;
+      }
+
+      &-large {
+        padding: 16px 24px;
+        font-size: 18px;
+      }
     }
 
-    &-text {
-      padding: 0;
+    &.variant {
+      &-outlined {
+        border-width: 1px;
+        border-style: solid;
+        background-color: transparent;
+      }
+
+      &-text {
+        padding: 0;
+      }
     }
-  }
 
-  &.color {
-    $colors: (
-      primary: $c-primary,
-      support-1: $c-support-1,
-      info: $c-info,
-      success: $c-success,
-      warning: $c-warning,
-      error: $c-error,
-    );
+    &.color {
+      $colors: (
+        primary: $c-primary,
+        support-1: $c-support-1,
+        info: $c-info,
+        success: $c-success,
+        warning: $c-warning,
+        error: $c-error,
+      );
 
-    @each $color, $colorVariable in $colors {
-      &-#{$color} {
-        &.variant {
-          &-default {
-            background-color: $colorVariable;
+      @each $color, $colorVariable in $colors {
+        &-#{$color} {
+          &.variant {
+            &-default {
+              background-color: $colorVariable;
 
-            &.disabled {
-              background-color: $c-disabled;
+              &.disabled {
+                background-color: $c-disabled;
+              }
+
+              &:hover {
+                background-color: lighten($colorVariable, 5%);
+              }
             }
 
-            &:hover {
-              background-color: lighten($colorVariable, 5%);
-            }
-          }
-
-          &-outlined {
-            border-color: $colorVariable;
-            color: $colorVariable;
-
-            &.disabled {
-              border-color: $c-disabled;
-            }
-
-            &:hover {
-              background-color: rgba($colorVariable, 0.15);
-            }
-          }
-
-          &-text {
-            border: none;
-            color: $colorVariable;
-            background-color: transparent;
-
-            &.disabled {
-              color: $c-disabled;
-            }
-
-            &:hover {
+            &-outlined {
+              border-color: $colorVariable;
               color: $colorVariable;
+
+              &.disabled {
+                border-color: $c-disabled;
+              }
+
+              &:hover {
+                background-color: rgba($colorVariable, 0.15);
+              }
+            }
+
+            &-text {
+              border: none;
+              color: $colorVariable;
+              background-color: transparent;
+
+              &.disabled {
+                color: $c-disabled;
+              }
+
+              &:hover {
+                color: $colorVariable;
+              }
             }
           }
         }
       }
     }
   }
-}
 
-.icon-loading {
-  animation: rotate 1s infinite linear;
-  visibility: hidden;
-}
-
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
+  .icon-loading {
+    animation: rotate 1s infinite linear;
+    visibility: hidden;
   }
-}
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
