@@ -20,6 +20,7 @@
         </div>
       </Suspense>
     </main>
+    <s-toast />
   </div>
   <router-view v-else />
 </template>
