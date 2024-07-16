@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import {defineSlots, computed, PropType} from 'vue'
+import { defineSlots, computed, PropType } from "vue";
 
 const props = defineProps({
   hover: {
     type: Boolean,
-    default: false
+    default: false,
   },
   to: {
     type: String,
-    default: ''
+    default: "",
   },
   width: {
     type: String,
-    default: ''
+    default: "",
   },
   padding: {
     type: String,
-    default: '16px'
+    default: "16px",
   },
   variant: {
-    type: String as PropType<'shadow' | 'border'>,
-    default: 'shadow'
-  }
-})
+    type: String as PropType<"shadow" | "border">,
+    default: "shadow",
+  },
+});
 
-const slots = defineSlots()
+const slots = defineSlots();
 
-const tag = props.to ? 'router-link' : 'div'
+const tag = props.to ? "router-link" : "div";
 
-const classList = computed(() => ([
+const classList = computed(() => [
   { hover: props.hover },
-  `s-card--variant-${props.variant}`
-]))
+  `s-card--variant-${props.variant}`,
+]);
 
-const style = computed(() => ([
+const style = computed(() => [
   { width: props.width },
-  { padding: props.padding }
-]))
+  { padding: props.padding },
+]);
 </script>
 
 <template>
@@ -47,10 +47,7 @@ const style = computed(() => ([
     :class="classList"
     :style="style"
   >
-    <div
-      v-if="slots.title"
-      class="title"
-    >
+    <div v-if="slots.title" class="title">
       <slot name="title" />
     </div>
     <slot name="content" />
@@ -63,7 +60,9 @@ const style = computed(() => ([
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
-  transition: color .2s, background .2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
   will-change: color, background;
 
   .title {
@@ -84,7 +83,7 @@ const style = computed(() => ([
   }
 
   &.hover {
-    transition: box-shadow .2s;
+    transition: box-shadow 0.2s;
     will-change: box-shadow;
 
     &:hover {

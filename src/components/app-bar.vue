@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useAuthStore from "@/store/auth";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -11,11 +11,7 @@ const authStore = useAuthStore()
       <div class="display-name mr-8">
         {{ authStore.user.displayName }}
       </div>
-      <s-avatar
-        :src="authStore.user.photoURL"
-        :size="48"
-        class="avatar"
-      />
+      <s-avatar :src="authStore.user.photoURL" :size="48" class="avatar" />
     </router-link>
   </div>
 </template>
@@ -31,7 +27,9 @@ const authStore = useAuthStore()
 
 .profile {
   padding-left: 16px;
-  transition: color .2s, background .2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
   will-change: color, background;
   border-radius: 8px;
 
@@ -41,7 +39,7 @@ const authStore = useAuthStore()
     text-wrap: nowrap;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: color .2s;
+    transition: color 0.2s;
     will-change: color;
   }
 

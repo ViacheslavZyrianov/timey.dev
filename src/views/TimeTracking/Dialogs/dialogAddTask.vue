@@ -1,90 +1,98 @@
 <script setup lang="ts">
-import {defineModel, onMounted, reactive, ref, Ref, watch} from "vue";
-import {TypeTimeTrackingItemAdd} from "@/types/time-tracking";
+import { defineModel, onMounted, reactive, ref, Ref, watch } from "vue";
+import { TypeTimeTrackingItemAdd } from "@/types/time-tracking";
 import useTimeTrackingStore from "@/store/timeTracking";
 import dayjs from "dayjs";
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import {TypeCalendarVariant, TypeWeekdaysFormat} from "@/components/shared/s-calendar/types";
-import {months, years} from "@/views/TimeTracking/dates";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import {
+  TypeCalendarVariant,
+  TypeWeekdaysFormat,
+} from "@/components/shared/s-calendar/types";
+import { months, years } from "@/views/TimeTracking/dates";
 
-dayjs.extend(customParseFormat)
+dayjs.extend(customParseFormat);
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(["submit"]);
 
-const timeTrackingStore = useTimeTrackingStore()
+const timeTrackingStore = useTimeTrackingStore();
 
-const isOpen = defineModel()
+const isOpen = defineModel();
 
 const form: TypeTimeTrackingItemAdd = reactive({
   task: "",
   hours: null,
   date: new Date(),
-})
-const isButtonSubmitDisabled: Ref<boolean> = ref(false)
-const selectedDate: Ref<string> = ref('')
-const month: Ref<string> = ref('')
-const year: Ref<string> = ref('')
+});
+const isButtonSubmitDisabled: Ref<boolean> = ref(false);
+const selectedDate: Ref<string> = ref("");
+const month: Ref<string> = ref("");
+const year: Ref<string> = ref("");
 
 const onSelectDay = (date: string) => {
-  selectedDate.value = date
-}
+  selectedDate.value = date;
+};
 
 const onSelectMonth = (_month: string) => {
   month.value = _month;
-  const [year, _, day] = selectedDate.value.split('-')
-  selectedDate.value = `${year}-${_month}-${day}`
-}
+  const [year, _, day] = selectedDate.value.split("-");
+  selectedDate.value = `${year}-${_month}-${day}`;
+};
 
 const onSelectYear = (_year: string) => {
   year.value = _year;
-  const [_, month, day] = selectedDate.value.split('-')
-  selectedDate.value = `${_year}-${month}-${day}`
-}
+  const [_, month, day] = selectedDate.value.split("-");
+  selectedDate.value = `${_year}-${month}-${day}`;
+};
 
 const onSubmit = async () => {
   try {
-    isButtonSubmitDisabled.value = true
+    isButtonSubmitDisabled.value = true;
     const payload = {
       ...form,
-      date: new Date(dayjs(selectedDate.value).toDate())
-    }
-    await timeTrackingStore.postTimeTracking(payload)
-    emit('submit')
-    isOpen.value = false
-  }
-  catch (error) {
-    console.error(error)
+      date: new Date(dayjs(selectedDate.value).toDate()),
+    };
+    await timeTrackingStore.postTimeTracking(payload);
+    emit("submit");
+    isOpen.value = false;
+  } catch (error) {
+    console.error(error);
   } finally {
-    isButtonSubmitDisabled.value = false
+    isButtonSubmitDisabled.value = false;
   }
-}
+};
 
 const resetDates = () => {
-  onSelectDay(dayjs().format('YYYY-M-D'))
-  onSelectMonth(dayjs().format('M'))
-  onSelectYear(dayjs().format('YYYY'))
-}
+  onSelectDay(dayjs().format("YYYY-M-D"));
+  onSelectMonth(dayjs().format("M"));
+  onSelectYear(dayjs().format("YYYY"));
+};
 
-watch(() => isOpen.value, () => {
-  if (isOpen.value) {
-    form.task = ''
-    form.hours = null
-    form.date = new Date()
-    resetDates()
-  }
-})
+watch(
+  () => isOpen.value,
+  () => {
+    if (isOpen.value) {
+      form.task = "";
+      form.hours = null;
+      form.date = new Date();
+      resetDates();
+    }
+  },
+);
 
 onMounted(() => {
-  resetDates()
-})
+  resetDates();
+});
 </script>
 
 <template>
   <s-dialog v-model="isOpen">
     <template #title>Add Task</template>
     <template #content>
-      <form class="d-flex flex-column flex-row-gap-8" @submit.prevent="onSubmit">
-        <div class="d-flex flex-column-gap-4 ">
+      <form
+        class="d-flex flex-column flex-row-gap-8"
+        @submit.prevent="onSubmit"
+      >
+        <div class="d-flex flex-column-gap-4">
           <s-input
             v-model="form.hours"
             label="Hours"
@@ -102,7 +110,7 @@ onMounted(() => {
           <s-select
             v-model="year"
             :items="years"
-            class=" flex-grow-1"
+            class="flex-grow-1"
             @update:model-value="onSelectYear"
           />
           <s-select
@@ -121,7 +129,11 @@ onMounted(() => {
           :weekdays-format="TypeWeekdaysFormat.Min"
           @select-day="onSelectDay"
         />
-        <s-button type="submit" color="success" :disabled="isButtonSubmitDisabled">
+        <s-button
+          type="submit"
+          color="success"
+          :disabled="isButtonSubmitDisabled"
+        >
           Add task
         </s-button>
       </form>
@@ -129,6 +141,4 @@ onMounted(() => {
   </s-dialog>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

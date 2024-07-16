@@ -1,39 +1,34 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 const props = defineProps({
   src: {
     type: String,
-    default: '',
-    required: true
+    default: "",
+    required: true,
   },
   rounded: {
     type: Boolean,
-    default: true
+    default: true,
   },
   size: {
     type: Number,
-    default: 64
-  }
-})
+    default: 64,
+  },
+});
 
 const style = computed(() => ({
   width: `${props.size}px`,
-  height: `${props.size}px`
-}))
+  height: `${props.size}px`,
+}));
 
 const classList = computed(() => ({
-  rounded: props.rounded
-}))
+  rounded: props.rounded,
+}));
 </script>
 
-
 <template>
-  <div
-    class="s-avatar"
-    :style="style"
-    :class="classList"
-  >
+  <div class="s-avatar" :style="style" :class="classList">
     <img :src="props.src" />
   </div>
 </template>

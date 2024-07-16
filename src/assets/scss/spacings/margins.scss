@@ -44,10 +44,10 @@ $iterations: 32;
 }
 
 $properties: (
-  'mt': 'top',
-  'mb': 'bottom',
-  'mr': 'right',
-  'ml': 'left',
+  "mt": "top",
+  "mb": "bottom",
+  "mr": "right",
+  "ml": "left",
 );
 
 // Loop through the properties and generate the styles

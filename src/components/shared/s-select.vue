@@ -1,64 +1,75 @@
 <script setup lang="ts">
-import {computed, ComputedRef, defineModel, PropType, ref} from "vue"
-import { onClickOutside } from '@vueuse/core'
-import {TypeSelectItem} from "@/components/shared/select";
+import { computed, ComputedRef, defineModel, PropType, ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
+import { TypeSelectItem } from "@/components/shared/select";
 
 const props = defineProps({
   items: {
     type: Array as PropType<TypeSelectItem[]>,
-    default: () => []
+    default: () => [],
   },
   width: {
     type: String,
-    default: 'auto'
-  }
-})
+    default: "auto",
+  },
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
-const model = defineModel()
+const model = defineModel();
 
-const isOpen = ref(false)
-const target = ref(null)
+const isOpen = ref(false);
+const target = ref(null);
 
-const label: ComputedRef<string> = computed(() => props.items.find(item => item.value === model.value)?.label || "")
+const label: ComputedRef<string> = computed(
+  () => props.items.find((item) => item.value === model.value)?.label || "",
+);
 
 const selectItemsClassList = computed(() => [
-  's-select-items',
-  isOpen.value && 's-select-items--opened'
-])
+  "s-select-items",
+  isOpen.value && "s-select-items--opened",
+]);
 
 const style = computed(() => ({
-  width: props.width
-}))
+  width: props.width,
+}));
 
-const selectItemClassList = computed(() => (value: string) => ([
-  's-select-item',
-  model.value === value && 's-select-item--current'
-]))
+const selectItemClassList = computed(() => (value: string) => [
+  "s-select-item",
+  model.value === value && "s-select-item--current",
+]);
 
 const closeItems = () => {
   isOpen.value = false;
-}
+};
 
 const onToggle = () => {
-  isOpen.value = !isOpen.value
-}
+  isOpen.value = !isOpen.value;
+};
 
 const onSelectItem = (value: string) => {
-  closeItems()
-  emit('update:modelValue', value)
-}
+  closeItems();
+  emit("update:modelValue", value);
+};
 
-onClickOutside(target, _ => closeItems())
+onClickOutside(target, (_) => closeItems());
 </script>
 
 <template>
   <div class="s-select" :style="style">
-    <s-card class="s-select-input d-flex align-center justify-space-between" hover ref="target" @click="onToggle">
+    <s-card
+      class="s-select-input d-flex align-center justify-space-between"
+      hover
+      ref="target"
+      @click="onToggle"
+    >
       <template #content>
         <div class="s-select-input-label">{{ label }}</div>
-        <s-icon icon="mdiChevronDown" class="ml-2 s-select-chevron" color="#4b49ac" />
+        <s-icon
+          icon="mdiChevronDown"
+          class="ml-2 s-select-chevron"
+          color="#4b49ac"
+        />
       </template>
     </s-card>
     <s-card :class="selectItemsClassList" padding="0">
@@ -99,7 +110,10 @@ onClickOutside(target, _ => closeItems())
     opacity: 0;
     visibility: hidden;
     will-change: transform, opacity, visibility;
-    transition: transform .2s, opacity .2s, visibility .2s;
+    transition:
+      transform 0.2s,
+      opacity 0.2s,
+      visibility 0.2s;
 
     &--opened {
       transform: translateY(60px);
@@ -110,7 +124,7 @@ onClickOutside(target, _ => closeItems())
 
   &-item {
     padding: 16px;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
     will-change: background-color;
 
     &--current {

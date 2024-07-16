@@ -1,48 +1,57 @@
 <script setup lang="ts">
-import {computed, Ref, useAttrs, defineModel, StyleValue, PropType} from "vue";
+import {
+  computed,
+  Ref,
+  useAttrs,
+  defineModel,
+  StyleValue,
+  PropType,
+} from "vue";
 
 const $attrs = useAttrs();
 const props = defineProps({
   width: {
     type: String,
-    default: 'auto'
+    default: "auto",
   },
   textAlign: {
-    type: String as PropType<'left' | 'center' | 'right'>,
-    default: 'left'
+    type: String as PropType<"left" | "center" | "right">,
+    default: "left",
   },
   labelAlign: {
-    type: String as PropType<'left' | 'center' | 'right'>,
-    default: 'left'
+    type: String as PropType<"left" | "center" | "right">,
+    default: "left",
   },
   isDisabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
-})
+});
 const model = defineModel();
 
 const placeholder: Ref<string> = computed(() => $attrs?.placeholder as string);
 
 const sInputStyle: Ref<StyleValue> = computed(() => ({
   width: props.width,
-}))
+}));
 
 const sInputClassList: Ref<string[]> = computed(() => [
-  's-input',
+  "s-input",
   `s-input_text-align-${props.textAlign}`,
-  {'s-input_disabled': props.isDisabled}
-])
+  { "s-input_disabled": props.isDisabled },
+]);
 
 const sInputLabelClassList: Ref<string[]> = computed(() => [
-  's-input--label',
+  "s-input--label",
   `s-input--label-align-${props.labelAlign}`,
-])
+]);
 </script>
 
 <template>
   <div :class="sInputClassList" :style="sInputStyle">
-    <div v-if="$attrs.label" :class="sInputLabelClassList">{{ $attrs.label }}</div>
+    <div v-if="$attrs.label" :class="sInputLabelClassList">
+      {{ $attrs.label }}
+    </div>
     <input
       v-model="model"
       type="text"

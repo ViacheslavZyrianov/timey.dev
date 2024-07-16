@@ -1,8 +1,8 @@
 export default {
-  path: '/profile',
-  name: 'profile',
+  path: "/profile",
+  name: "profile",
   meta: {
-    name: 'Profile'
+    name: "Profile",
   },
-  component: () => import('@/views/Profile/index.vue')
-}
+  component: () => import("@/views/Profile/index.vue"),
+};

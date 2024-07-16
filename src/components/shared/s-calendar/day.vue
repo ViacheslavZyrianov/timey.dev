@@ -1,90 +1,99 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import {computed, PropType} from "vue";
-import {TypeCalendarVariant, TypeDatasetItemPerDay} from "@/components/shared/s-calendar/types";
+import { computed, PropType } from "vue";
+import {
+  TypeCalendarVariant,
+  TypeDatasetItemPerDay,
+} from "@/components/shared/s-calendar/types";
 
 const props = defineProps({
   day: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   selectedDay: {
     type: String,
-    default: ""
+    default: "",
   },
   isCurrentMonth: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isToday: {
     type: Boolean,
-    default: false
+    default: false,
   },
   dataset: {
     type: Array as PropType<TypeDatasetItemPerDay[]>,
-    default: () => []
+    default: () => [],
   },
   variant: {
     type: String as PropType<TypeCalendarVariant>,
-    default: TypeCalendarVariant.Default
+    default: TypeCalendarVariant.Default,
   },
   isDaySelectable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   formatDatasetItemElement: {
     type: String,
-    default: ''
+    default: "",
   },
   isShowSelectedDay: {
     type: Boolean,
-    default: false
+    default: false,
   },
-})
+});
 
-const emit = defineEmits(['select-day'])
+const emit = defineEmits(["select-day"]);
 
-const label = computed(() => dayjs(props.day.date).format("D"))
+const label = computed(() => dayjs(props.day.date).format("D"));
 
-const datasetItemsCount = computed(() => props.dataset?.length)
+const datasetItemsCount = computed(() => props.dataset?.length);
 
 const calendarDayClassList = computed(() => ({
-  'calendar-day d-flex flex-column': true,
-  'calendar-day--selectable': isCalendarDaySelectable.value,
-  'calendar-day--not-current': !props.isCurrentMonth,
-  'calendar-day--today': props.isToday,
-  'calendar-day--selected': props.isShowSelectedDay && props.day.date === props.selectedDay,
-  [`calendar-day--variant-${props.variant}`]: true
-}))
+  "calendar-day d-flex flex-column": true,
+  "calendar-day--selectable": isCalendarDaySelectable.value,
+  "calendar-day--not-current": !props.isCurrentMonth,
+  "calendar-day--today": props.isToday,
+  "calendar-day--selected":
+    props.isShowSelectedDay && props.day.date === props.selectedDay,
+  [`calendar-day--variant-${props.variant}`]: true,
+}));
 
-const isDatasetExists = computed(() => !!props.dataset)
+const isDatasetExists = computed(() => !!props.dataset);
 
 const minDatasetItems = computed(() => {
-  return props.dataset?.slice(0, 2)
-})
+  return props.dataset?.slice(0, 2);
+});
 
-const moreDatasetItemsText = computed(() => `${datasetItemsCount.value - 2} items more...` || 'Loading...')
+const moreDatasetItemsText = computed(
+  () => `${datasetItemsCount.value - 2} items more...` || "Loading...",
+);
 
-const isLessThenMinDatasetItems = computed(() => datasetItemsCount.value < 4)
+const isLessThenMinDatasetItems = computed(() => datasetItemsCount.value < 4);
 
 const isCalendarDaySelectable = computed(() =>
   Boolean(
-    props.isCurrentMonth && (
-      props.variant === TypeCalendarVariant.Compact && props.isDaySelectable ||
-      datasetItemsCount.value > 0
-    )
-  )
-)
+    props.isCurrentMonth &&
+      ((props.variant === TypeCalendarVariant.Compact &&
+        props.isDaySelectable) ||
+        datasetItemsCount.value > 0),
+  ),
+);
 
 const formatDatasetItem = (datasetItem: TypeDatasetItemPerDay) => {
-  return !props.formatDatasetItemElement || typeof datasetItem === 'string' ?
-    datasetItem :
-    props.formatDatasetItemElement.replace(/{(\w+)}/g, (_, key) => datasetItem[key]);
-}
+  return !props.formatDatasetItemElement || typeof datasetItem === "string"
+    ? datasetItem
+    : props.formatDatasetItemElement.replace(
+        /{(\w+)}/g,
+        (_, key) => datasetItem[key],
+      );
+};
 
 const onSelectDay = () => {
-  if (isCalendarDaySelectable.value && props.isCurrentMonth) emit('select-day')
-}
+  if (isCalendarDaySelectable.value && props.isCurrentMonth) emit("select-day");
+};
 </script>
 
 <template>
@@ -98,7 +107,9 @@ const onSelectDay = () => {
           v-for="datasetItem in dataset"
           class="calendar-day-dataset-item d-flex"
         >
-          <div class="dataset-item-text">{{ formatDatasetItem(datasetItem) }}</div>
+          <div class="dataset-item-text">
+            {{ formatDatasetItem(datasetItem) }}
+          </div>
         </div>
       </template>
       <template v-else-if="isDatasetExists">
@@ -106,9 +117,13 @@ const onSelectDay = () => {
           v-for="datasetItem in minDatasetItems"
           class="calendar-day-dataset-item d-flex"
         >
-          <div class="dataset-item-text">{{ formatDatasetItem(datasetItem) }}</div>
+          <div class="dataset-item-text">
+            {{ formatDatasetItem(datasetItem) }}
+          </div>
         </div>
-        <div class="calendar-day-dataset-item calendar-day-dataset-item--more d-flex">
+        <div
+          class="calendar-day-dataset-item calendar-day-dataset-item--more d-flex"
+        >
           <div class="dataset-item-text">{{ moreDatasetItemsText }}</div>
         </div>
       </template>
@@ -121,7 +136,7 @@ const onSelectDay = () => {
   position: relative;
   display: flex;
   border: 1px solid #e6e6e6;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
   will-change: background-color;
 
   &-label {
@@ -162,7 +177,7 @@ const onSelectDay = () => {
   &--selectable {
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       background-color: #f4f4f4;
     }
   }

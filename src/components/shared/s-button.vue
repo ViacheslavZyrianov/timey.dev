@@ -1,99 +1,103 @@
 <script setup lang="ts">
-import {computed, ComputedRef, PropType} from 'vue'
-import {RouteLocationRaw} from "vue-router";
+import { computed, ComputedRef, PropType } from "vue";
+import { RouteLocationRaw } from "vue-router";
 
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: "",
   },
   variant: {
-    type: String as PropType<'default' | 'outlined' | 'text'>,
-    default: 'default'
+    type: String as PropType<"default" | "outlined" | "text">,
+    default: "default",
   },
   type: {
-    type: String as PropType<'button' | 'reset' | 'submit'>,
-    default: 'button'
+    type: String as PropType<"button" | "reset" | "submit">,
+    default: "button",
   },
   color: {
-    type: String as PropType<'primary' | 'support-1' | 'success' | 'info' | 'warning' | 'error'>,
-    default: 'primary'
+    type: String as PropType<
+      "primary" | "support-1" | "success" | "info" | "warning" | "error"
+    >,
+    default: "primary",
   },
   isOnlyIcon: {
     type: Boolean,
-    default: false
+    default: false,
   },
   icon: {
     type: String,
-    default: null
+    default: null,
   },
   iconSize: {
     type: Number,
-    default: 18
+    default: 18,
   },
   block: {
     type: Boolean,
-    default: false
+    default: false,
   },
   size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    default: 'medium'
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
   },
   width: {
     type: String,
-    default: null
+    default: null,
   },
   height: {
     type: String,
-    default: null
+    default: null,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   to: {
     type: Object as PropType<RouteLocationRaw>,
-    default: null
+    default: null,
   },
   href: {
     type: String,
-    default:  null
+    default: null,
   },
   target: {
-    type: String as PropType<'_blank' | '_self'>,
-    default: null
+    type: String as PropType<"_blank" | "_self">,
+    default: null,
   },
-})
+});
 
-const classList = computed(() => ([
+const classList = computed(() => [
   `variant-${props.variant}`,
   `color-${props.color}`,
   `size-${props.size}`,
-  props.disabled && 'disabled',
-  props.loading && 'loading',
-]))
+  props.disabled && "disabled",
+  props.loading && "loading",
+]);
 
 const style = computed(() => ({
   height: props.height,
-  width: props.width
-}))
+  width: props.width,
+}));
 
 const iconClassList = computed(() => ({
-  'icon-prepended': true,
-  'mr-4': !props.isOnlyIcon
-}))
+  "icon-prepended": true,
+  "mr-4": !props.isOnlyIcon,
+}));
 
-const icon = computed(() => props.icon || null)
+const icon = computed(() => props.icon || null);
 
-const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(() => {
-  if (props.to) return 'router-link'
-  else if (props.href) return 'a'
-  return 'button'
-})
+const buttonComponent: ComputedRef<"button" | "router-link" | "a"> = computed(
+  () => {
+    if (props.to) return "router-link";
+    else if (props.href) return "a";
+    return "button";
+  },
+);
 </script>
 
 <template>
@@ -106,12 +110,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
     :class="classList"
     :style="style"
   >
-    <s-icon
-      v-if="loading"
-      type="mdi"
-      icon="mdiLoading"
-      class="icon-loading"
-    />
+    <s-icon v-if="loading" type="mdi" icon="mdiLoading" class="icon-loading" />
     <s-icon
       v-if="icon"
       type="mdi"
@@ -134,7 +133,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
   cursor: pointer;
   font-size: 14px;
   user-select: none;
-  transition: background .2s;
+  transition: background 0.2s;
   will-change: background;
 
   &:focus {
@@ -201,7 +200,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
       info: $c-info,
       success: $c-success,
       warning: $c-warning,
-      error: $c-error
+      error: $c-error,
     );
 
     @each $color, $colorVariable in $colors {
@@ -228,7 +227,7 @@ const buttonComponent: ComputedRef<'button' | 'router-link' | 'a'> = computed(()
             }
 
             &:hover {
-              background-color: rgba($colorVariable, 0.15)
+              background-color: rgba($colorVariable, 0.15);
             }
           }
 

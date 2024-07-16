@@ -1,8 +1,8 @@
 export type TypeTableHeader = {
-  key: string
-  label?: string
-  width?: string
-}
+  key: string;
+  label?: string;
+  width?: string;
+};
 
 export type TypeTableRow = {
   id?: string;

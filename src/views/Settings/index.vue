@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import useAuthStore from '@/store/auth'
+import useAuthStore from "@/store/auth";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -15,6 +15,4 @@ const authStore = useAuthStore()
   </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

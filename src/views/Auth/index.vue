@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import useAuthStore from '@/store/auth'
-import { useRouter } from 'vue-router'
+import useAuthStore from "@/store/auth";
+import { useRouter } from "vue-router";
 
-const authStore = useAuthStore()
-const router = useRouter()
+const authStore = useAuthStore();
+const router = useRouter();
 
 async function onAuthClick() {
-  await authStore.googleAuth()
-  router.push('dashboard')
+  await authStore.googleAuth();
+  router.push("dashboard");
 }
 </script>
 
@@ -16,11 +16,7 @@ async function onAuthClick() {
     <s-card width="300px">
       <template #title>Authorize</template>
       <template #content>
-        <s-button
-          icon="mdiGoogle"
-          width="100%"
-          @click="onAuthClick"
-        >
+        <s-button icon="mdiGoogle" width="100%" @click="onAuthClick">
           Sign in with Google
         </s-button>
       </template>

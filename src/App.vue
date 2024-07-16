@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import appNav from '@/components/app-nav.vue'
-import appBar from '@/components/app-bar.vue'
-import useAuthStore from '@/store/auth'
-import {computed, ComputedRef} from "vue";
-import {RouteLocationRaw} from "vue-router";
+import appNav from "@/components/app-nav.vue";
+import appBar from "@/components/app-bar.vue";
+import useAuthStore from "@/store/auth";
+import { computed, ComputedRef } from "vue";
+import { RouteLocationRaw } from "vue-router";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 const backLink: ComputedRef<RouteLocationRaw> = computed(() => {
   return {
-    path: window.history.state.back
-  }
-})
+    path: window.history.state.back,
+  };
+});
 </script>
 
 <template>
-  <div
-    v-if="authStore.isUserLoggedIn"
-    class="grid-container pa-8"
-  >
+  <div v-if="authStore.isUserLoggedIn" class="grid-container pa-8">
     <app-bar />
     <app-nav />
     <main>

@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import useAuthStore from '@/store/auth'
-import { useRouter } from 'vue-router'
+import useAuthStore from "@/store/auth";
+import { useRouter } from "vue-router";
 import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
 
-const authStore = useAuthStore()
-const router = useRouter()
+const authStore = useAuthStore();
+const router = useRouter();
 
 const navList = [
   {
-    title: 'Dashboard',
-    to: '/dashboard',
-    icon: 'mdiViewDashboardOutline'
+    title: "Dashboard",
+    to: "/dashboard",
+    icon: "mdiViewDashboardOutline",
   },
   {
-    title: 'Time Tracking',
-    to: '/time-tracking',
-    icon: `mdiClockTime${getCurrentHourInWords()}Outline`
+    title: "Time Tracking",
+    to: "/time-tracking",
+    icon: `mdiClockTime${getCurrentHourInWords()}Outline`,
   },
   {
-    title: 'Teams',
-    to: '/teams',
-    icon: 'mdiAccountGroupOutline'
+    title: "Teams",
+    to: "/teams",
+    icon: "mdiAccountGroupOutline",
   },
   {
-    title: 'Settings',
-    to: '/settings',
-    icon: 'mdiCogOutline'
-  }
-]
+    title: "Settings",
+    to: "/settings",
+    icon: "mdiCogOutline",
+  },
+];
 
 async function onLogout() {
-  await authStore.logout()
-  await router.push('/auth')
+  await authStore.logout();
+  await router.push("/auth");
 }
 </script>
 
@@ -44,11 +44,7 @@ async function onLogout() {
       block
       class="nav-button d-flex align-center"
     >
-      <s-icon
-        :icon="icon"
-        :size="24"
-        class="nav-icon"
-      />
+      <s-icon :icon="icon" :size="24" class="nav-icon" />
       <span class="nav-title">{{ title }}</span>
     </router-link>
     <s-button
@@ -77,7 +73,9 @@ async function onLogout() {
     padding: 16px;
     margin-bottom: 8px;
     color: #898f9b;
-    transition: color .2s, background .2s;
+    transition:
+      color 0.2s,
+      background 0.2s;
     will-change: color, background;
     border-radius: 8px;
 

@@ -1,13 +1,13 @@
 export default {
-  path: '/settings',
+  path: "/settings",
   meta: {
-    name: 'Settings'
+    name: "Settings",
   },
   children: [
     {
-      path: '',
-      name: 'settings',
-      component: () => import('@/views/Settings/index.vue'),
+      path: "",
+      name: "settings",
+      component: () => import("@/views/Settings/index.vue"),
     },
-  ]
-}
+  ],
+};

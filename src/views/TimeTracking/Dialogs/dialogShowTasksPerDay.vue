@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import {defineModel, PropType, ref, Ref, watch} from "vue";
-import {TypeTaskInDayData} from "@/views/TimeTracking/types";
+import { defineModel, PropType, ref, Ref, watch } from "vue";
+import { TypeTaskInDayData } from "@/views/TimeTracking/types";
 import useTimeTrackingStore from "@/store/timeTracking";
 
-const timeTrackingStore = useTimeTrackingStore()
+const timeTrackingStore = useTimeTrackingStore();
 
 const props = defineProps({
   day: {
     type: String,
-    default: ''
+    default: "",
   },
   tasks: {
     type: Array as PropType<TypeTaskInDayData[]>,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(["submit"]);
 
-const isOpen = defineModel()
+const isOpen = defineModel();
 
 const currentlyEditingElementIndex: Ref<number | null> = ref(null);
 const tasksToMutate: Ref<TypeTaskInDayData[]> = ref([]);
@@ -28,70 +28,79 @@ const isButtonSaveLoading: Ref<Boolean> = ref(false);
 const isButtonDeleteDisabled: Ref<Boolean> = ref(false);
 const isButtonDeleteLoading: Ref<Boolean> = ref(false);
 
-const isInputDisabled = (index: number) => currentlyEditingElementIndex.value !== index
+const isInputDisabled = (index: number) =>
+  currentlyEditingElementIndex.value !== index;
 
-const isInEditMode = (index: number | null) => currentlyEditingElementIndex.value === index
+const isInEditMode = (index: number | null) =>
+  currentlyEditingElementIndex.value === index;
 
 const onEdit = (index: number) => {
-  currentlyEditingElementIndex.value = index
-  isInEditMode(index)
-}
+  currentlyEditingElementIndex.value = index;
+  isInEditMode(index);
+};
 
 const onSave = async (index: number) => {
-  currentlyEditingElementIndex.value = index
-  const { id, ...payload } = tasksToMutate.value[index]
+  currentlyEditingElementIndex.value = index;
+  const { id, ...payload } = tasksToMutate.value[index];
   try {
-    isButtonSaveDisabled.value = true
-    isButtonSaveLoading.value = true
-    await timeTrackingStore.updateTimeTracking(tasksToMutate.value[index].id, payload)
-    currentlyEditingElementIndex.value = null
-    isInEditMode(index)
-    emit('submit')
+    isButtonSaveDisabled.value = true;
+    isButtonSaveLoading.value = true;
+    await timeTrackingStore.updateTimeTracking(
+      tasksToMutate.value[index].id,
+      payload,
+    );
+    currentlyEditingElementIndex.value = null;
+    isInEditMode(index);
+    emit("submit");
   } catch (e) {
-    console.error(e)
+    console.error(e);
   } finally {
-    isButtonSaveDisabled.value = false
-    isButtonSaveLoading.value = false
+    isButtonSaveDisabled.value = false;
+    isButtonSaveLoading.value = false;
   }
-}
+};
 
 const onDelete = async (index: number) => {
-  currentlyEditingElementIndex.value = index
+  currentlyEditingElementIndex.value = index;
   try {
-    isButtonDeleteDisabled.value = true
-    isButtonDeleteLoading.value = true
-    await timeTrackingStore.deleteTimeTracking(tasksToMutate.value[index].id)
-    currentlyEditingElementIndex.value = null
-    emit('submit')
+    isButtonDeleteDisabled.value = true;
+    isButtonDeleteLoading.value = true;
+    await timeTrackingStore.deleteTimeTracking(tasksToMutate.value[index].id);
+    currentlyEditingElementIndex.value = null;
+    emit("submit");
   } catch (e) {
-    console.error(e)
+    console.error(e);
   } finally {
-    isButtonDeleteDisabled.value = false
-    isButtonDeleteLoading.value = false
+    isButtonDeleteDisabled.value = false;
+    isButtonDeleteLoading.value = false;
   }
-}
+};
 
 const onCancel = (index: number) => {
-  tasksToMutate.value[index] = props.tasks[index]
-  currentlyEditingElementIndex.value = null
-  isInEditMode(null)
-}
+  tasksToMutate.value[index] = props.tasks[index];
+  currentlyEditingElementIndex.value = null;
+  isInEditMode(null);
+};
 
-watch(isOpen, () => {
-  if (isOpen.value) {
-    isInEditMode(null)
-    currentlyEditingElementIndex.value = null
-    tasksToMutate.value = JSON.parse(JSON.stringify(props.tasks))
-  }
-}, {
-  immediate: true,
-})
+watch(
+  isOpen,
+  () => {
+    if (isOpen.value) {
+      isInEditMode(null);
+      currentlyEditingElementIndex.value = null;
+      tasksToMutate.value = JSON.parse(JSON.stringify(props.tasks));
+    }
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
   <s-dialog v-model="isOpen" min-width="600px">
     <template #title>
-      {{ dayjs(day).format('DD MMMM YYYY') }}
+      {{ dayjs(day).format("DD MMMM YYYY") }}
     </template>
     <template #content>
       <div
@@ -128,11 +137,7 @@ watch(isOpen, () => {
           />
         </template>
         <template v-else>
-          <s-button
-            is-only-icon
-            icon="mdiPencil"
-            @click="onEdit(index)"
-          />
+          <s-button is-only-icon icon="mdiPencil" @click="onEdit(index)" />
           <s-button
             is-only-icon
             icon="mdiTrashCanOutline"
@@ -147,6 +152,4 @@ watch(isOpen, () => {
   </s-dialog>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

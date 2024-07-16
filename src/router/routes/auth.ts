@@ -1,8 +1,8 @@
 export default {
-  path: '/auth',
-  name: 'auth',
+  path: "/auth",
+  name: "auth",
   meta: {
-    name: 'Authorization'
+    name: "Authorization",
   },
-  component: () => import('@/views/Auth/index.vue')
-}
+  component: () => import("@/views/Auth/index.vue"),
+};
