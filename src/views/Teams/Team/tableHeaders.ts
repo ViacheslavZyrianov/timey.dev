@@ -9,6 +9,10 @@ export default [
     label: "Name",
   },
   {
+    key: "email",
+    label: "Email",
+  },
+  {
     key: "actions",
     width: "0",
   },
