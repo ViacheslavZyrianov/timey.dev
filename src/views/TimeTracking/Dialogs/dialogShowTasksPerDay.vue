@@ -23,10 +23,10 @@
 
   const currentlyEditingElementIndex: Ref<number | null> = ref(null);
   const tasksToMutate: Ref<TypeTaskInDayData[]> = ref([]);
-  const isButtonSaveDisabled: Ref<Boolean> = ref(false);
-  const isButtonSaveLoading: Ref<Boolean> = ref(false);
-  const isButtonDeleteDisabled: Ref<Boolean> = ref(false);
-  const isButtonDeleteLoading: Ref<Boolean> = ref(false);
+  const isButtonSaveDisabled: Ref<boolean> = ref(false);
+  const isButtonSaveLoading: Ref<boolean> = ref(false);
+  const isButtonDeleteDisabled: Ref<boolean> = ref(false);
+  const isButtonDeleteLoading: Ref<boolean> = ref(false);
 
   const isInputDisabled = (index: number) =>
     currentlyEditingElementIndex.value !== index;
