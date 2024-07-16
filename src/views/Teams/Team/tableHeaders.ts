@@ -1,7 +1,7 @@
 export default [
   {
-    key: "id",
-    label: "ID",
+    key: "photoURL",
+    label: "",
     width: "0",
   },
   {
