@@ -11,6 +11,10 @@ const props = defineProps({
     type: String as PropType<'left' | 'center' | 'right'>,
     default: 'left'
   },
+  labelAlign: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left'
+  },
   isDisabled: {
     type: Boolean,
     default: false
@@ -29,11 +33,16 @@ const sInputClassList: Ref<string[]> = computed(() => [
   `s-input_text-align-${props.textAlign}`,
   {'s-input_disabled': props.isDisabled}
 ])
+
+const sInputLabelClassList: Ref<string[]> = computed(() => [
+  's-input--label',
+  `s-input--label-align-${props.labelAlign}`,
+])
 </script>
 
 <template>
   <div :class="sInputClassList" :style="sInputStyle">
-    <div v-if="$attrs.label" class="s-input__label">{{ $attrs.label }}</div>
+    <div v-if="$attrs.label" :class="sInputLabelClassList">{{ $attrs.label }}</div>
     <input
       v-model="model"
       type="text"
@@ -45,10 +54,24 @@ const sInputClassList: Ref<string[]> = computed(() => [
 
 <style scoped lang="scss">
 .s-input {
-  &__label {
+  &--label {
     font-size: 14px;
     color: #4a4a4a;
     margin-bottom: 4px;
+
+    &-align {
+      &-left {
+        text-align: left;
+      }
+
+      &-center {
+        text-align: center;
+      }
+
+      &-right {
+        text-align: right;
+      }
+    }
   }
 
   &_text-align {
