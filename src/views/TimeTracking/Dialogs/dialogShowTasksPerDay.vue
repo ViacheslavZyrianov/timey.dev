@@ -41,6 +41,7 @@
 
   const onSave = async (index: number) => {
     currentlyEditingElementIndex.value = index;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...payload } = tasksToMutate.value[index];
     try {
       isButtonSaveDisabled.value = true;
