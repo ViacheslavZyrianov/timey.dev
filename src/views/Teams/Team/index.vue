@@ -43,7 +43,7 @@
 <template>
   <div class="d-flex direction-column full-width">
     <h1>{{ team.name }}</h1>
-    <p>{{ team.description }}</p>
+    <p v-if="team.description">{{ team.description }}</p>
     <form
       class="d-flex ml-auto mb-8"
       @submit.prevent="onSubmitAddTeamMember"
