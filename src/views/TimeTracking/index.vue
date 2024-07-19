@@ -19,8 +19,9 @@
   const isDialogShowTaskPerDayVisible: Ref<boolean> = ref(false);
   const selectedDate: Ref<string> = ref("");
   const selectedDay: Ref<string> = ref("");
-
   const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([]);
+  const isButtonExportToExcelDisabled: Ref<boolean> = ref(false);
+  const isButtonExportToExcelLoading: Ref<boolean> = ref(false);
 
   const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(
     () =>
@@ -43,6 +44,24 @@
         },
         {},
       ),
+  );
+
+  const downloadExcelFields = {
+    Date: "date",
+    Hours: "hours",
+    "Task Name": "task",
+  };
+
+  const downloadExcelData = computed(() =>
+    timeTrackingData.value.map((timeTrackingItem) => ({
+      ...timeTrackingItem,
+      date: dayjs(timeTrackingItem.date.seconds * 1000).format("DD.MM.YYYY"),
+    })),
+  );
+
+  const downloadExcelName = computed(
+    () =>
+      `${dayjs(route.params.month.toString()).format("MMMM")} ${route.params.year.toString()}`,
   );
 
   const tasksPerDay: ComputedRef<TypeTaskInDayData[]> = computed(
@@ -68,9 +87,21 @@
     isDialogAddTaskVisible.value = true;
   };
 
+  const onExportToFile = () => {
+    isButtonExportToExcelDisabled.value = true;
+    isButtonExportToExcelLoading.value = true;
+    document.getElementById("downloadExcelButton")?.click();
+  };
+
   const onShowDayWithTimeTracking = (day: string) => {
     selectedDay.value = day;
     isDialogShowTaskPerDayVisible.value = true;
+  };
+
+  const onBeforeFinishDownloadExcel = () => {
+    console.log("onBeforeFinishDownloadExcel");
+    isButtonExportToExcelDisabled.value = false;
+    isButtonExportToExcelLoading.value = false;
   };
 
   watch(
@@ -94,6 +125,15 @@
 </script>
 
 <template>
+  <download-excel
+    :data="downloadExcelData"
+    :fields="downloadExcelFields"
+    :worksheet="downloadExcelName"
+    :name="downloadExcelName"
+    :before-finish="onBeforeFinishDownloadExcel"
+    id="downloadExcelButton"
+    class="download-excel-button"
+  />
   <div class="d-flex full-width mb-6">
     <s-select
       v-if="year"
@@ -110,11 +150,22 @@
       @update:model-value="goToMonth"
     />
     <s-button
-      icon="mdiPlus"
+      icon="mdiMicrosoftExcel"
       class="ml-auto"
-      @click="onAddTask"
-      >Add task</s-button
+      variant="outlined"
+      :disabled="isButtonExportToExcelDisabled"
+      :loading="isButtonExportToExcelLoading"
+      @click="onExportToFile"
     >
+      Export to XLSX
+    </s-button>
+    <s-button
+      icon="mdiPlus"
+      class="ml-8"
+      @click="onAddTask"
+    >
+      Add task
+    </s-button>
   </div>
   <s-calendar
     v-model="selectedDate"
@@ -144,5 +195,9 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(110px, 1fr));
     grid-gap: 16px;
+  }
+
+  .download-excel-button {
+    display: none;
   }
 </style>
