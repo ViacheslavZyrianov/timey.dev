@@ -2,8 +2,15 @@
   import appNav from "@/components/app-nav.vue";
   import appBar from "@/components/app-bar.vue";
   import useAuthStore from "@/store/auth";
+  import useSettingsStore from "@/store/settings";
+  import { onMounted } from "vue";
 
   const authStore = useAuthStore();
+  const settingsStore = useSettingsStore();
+
+  onMounted(() => {
+    settingsStore.setInitialSettings();
+  });
 </script>
 
 <template>

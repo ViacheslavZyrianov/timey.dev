@@ -1,12 +1,34 @@
 <script setup lang="ts">
-  import useAuthStore from "@/store/auth";
+  import { computed } from "vue";
   import { useRouter } from "vue-router";
+  import useAuthStore from "@/store/auth";
+  import useSettingsStore from "@/store/settings";
   import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
 
-  const authStore = useAuthStore();
   const router = useRouter();
 
-  const navList = [
+  const authStore = useAuthStore();
+  const settingsStore = useSettingsStore();
+
+  const navListDefault = [
+    {
+      title: "Dashboard",
+      to: "/dashboard",
+      icon: "mdiViewDashboardOutline",
+    },
+    {
+      title: "Time Tracking",
+      to: "/time-tracking",
+      icon: `mdiClockTime${getCurrentHourInWords()}Outline`,
+    },
+    {
+      title: "Settings",
+      to: "/settings",
+      icon: "mdiCogOutline",
+    },
+  ];
+
+  const navListTeamManager = [
     {
       title: "Dashboard",
       to: "/dashboard",
@@ -28,6 +50,10 @@
       icon: "mdiCogOutline",
     },
   ];
+
+  const navList = computed(() =>
+    settingsStore.settings.isTeamManager ? navListTeamManager : navListDefault,
+  );
 
   async function onLogout() {
     await authStore.logout();
