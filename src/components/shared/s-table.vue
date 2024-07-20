@@ -30,8 +30,6 @@
 </script>
 
 <template>
-  <pre>loading = {{ loading }}</pre>
-  <pre>rows.length = {{ rows.length }}</pre>
   <div class="s-table">
     <table v-if="!isEmpty">
       <thead>
