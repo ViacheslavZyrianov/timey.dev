@@ -1,0 +1,9 @@
+@for $i from 0 through 10 {
+  .width-#{$i * 10}-p {
+    width: $i * 10 * 1%;
+  }
+
+  .height-#{$i * 10}-p {
+    height: $i * 10 * 1%;
+  }
+}
