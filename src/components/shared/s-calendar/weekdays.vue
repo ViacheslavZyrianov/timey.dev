@@ -21,12 +21,17 @@
   });
 
   const weekdays: ComputedRef<string[]> = computed(() => {
-    if (props.weekdaysFormat === TypeWeekdaysFormat.Short)
-      return dayjs().localeData().weekdaysShort();
-    else if (props.weekdaysFormat === TypeWeekdaysFormat.Min)
-      return dayjs().localeData().weekdaysMin();
+    let days: string[];
 
-    return dayjs().localeData().weekdays();
+    if (props.weekdaysFormat === TypeWeekdaysFormat.Short)
+      days = dayjs().localeData().weekdaysShort();
+    else if (props.weekdaysFormat === TypeWeekdaysFormat.Min)
+      days = dayjs().localeData().weekdaysMin();
+    else days = dayjs().localeData().weekdays();
+
+    days.push(days.shift() as string);
+
+    return days;
   });
 </script>
 
