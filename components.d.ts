@@ -24,7 +24,7 @@ declare module 'vue' {
     SInput: typeof import('./src/components/shared/s-input.vue')['default']
     SSelect: typeof import('./src/components/shared/s-select.vue')['default']
     SSwitch: typeof import('./src/components/shared/s-switch.vue')['default']
-    STable: typeof import('./src/components/shared/s-table/index.vue')['default']
+    STable: typeof import('./src/components/shared/s-table.vue')['default']
     SToast: typeof import('./src/components/shared/s-toast.vue')['default']
     Weekdays: typeof import('./src/components/shared/s-calendar/weekdays.vue')['default']
   }

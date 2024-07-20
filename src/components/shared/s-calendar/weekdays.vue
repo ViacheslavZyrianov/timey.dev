@@ -3,7 +3,7 @@
   import {
     TypeCalendarVariant,
     TypeWeekdaysFormat,
-  } from "@/components/shared/s-calendar/types";
+  } from "@/components/shared/types/calendar";
   import dayjs from "dayjs";
   import localeData from "dayjs/plugin/localeData";
 

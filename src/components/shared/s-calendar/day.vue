@@ -4,7 +4,7 @@
   import {
     TypeCalendarVariant,
     TypeDatasetItemPerDay,
-  } from "@/components/shared/s-calendar/types";
+  } from "@/components/shared/types/calendar";
 
   const props = defineProps({
     day: {

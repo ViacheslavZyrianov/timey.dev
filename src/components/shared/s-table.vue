@@ -3,7 +3,7 @@
   import {
     TypeTableHeader,
     TypeTableRow,
-  } from "@/components/shared/s-table/types";
+  } from "@/components/shared/types/table";
 
   defineProps({
     headers: {

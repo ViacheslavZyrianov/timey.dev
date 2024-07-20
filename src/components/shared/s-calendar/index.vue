@@ -10,7 +10,7 @@
     TypeCalendarVariant,
     TypePreviousMonthDays,
     TypeWeekdaysFormat,
-  } from "@/components/shared/s-calendar/types";
+  } from "@/components/shared/types/calendar";
 
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);

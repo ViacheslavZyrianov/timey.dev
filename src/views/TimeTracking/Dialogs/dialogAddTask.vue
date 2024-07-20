@@ -7,7 +7,7 @@
   import {
     TypeCalendarVariant,
     TypeWeekdaysFormat,
-  } from "@/components/shared/s-calendar/types";
+  } from "@/components/shared/types/calendar";
   import { months, years } from "@/views/TimeTracking/dates";
 
   dayjs.extend(customParseFormat);
