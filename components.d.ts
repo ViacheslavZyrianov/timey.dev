@@ -23,6 +23,7 @@ declare module 'vue' {
     SEmpty: typeof import('./src/components/shared/s-empty.vue')['default']
     SIcon: typeof import('./src/components/shared/s-icon.vue')['default']
     SInput: typeof import('./src/components/shared/s-input.vue')['default']
+    SLoader: typeof import('./src/components/shared/s-loader.vue')['default']
     SSelect: typeof import('./src/components/shared/s-select.vue')['default']
     SSwitch: typeof import('./src/components/shared/s-switch.vue')['default']
     STable: typeof import('./src/components/shared/s-table.vue')['default']
