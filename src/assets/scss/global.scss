@@ -1,6 +1,7 @@
 @import "./flex.scss";
 @import "./spacings/margins.scss";
 @import "./spacings/paddings.scss";
+@import "./typography";
 @import "./opacity";
 
 * {
@@ -10,9 +11,6 @@
 body {
   height: 100vh;
   margin: 0;
-  font-family: "Manrope", sans-serif;
-  color: #050301;
-  font-size: 16px;
   background-color: #f5f7ff;
 }
 
@@ -20,22 +18,11 @@ body {
   height: 100vh;
 }
 
-@for $i from 1 through 6 {
-  h#{$i} {
-    margin: 0;
-    padding: 0;
-  }
-}
-
 ul,
 ol {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-a {
-  text-decoration: none;
 }
 
 .full-width {
