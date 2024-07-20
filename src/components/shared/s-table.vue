@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { computed } from "vue";
+  import { computed, ComputedRef } from "vue";
   import {
     TypeTableHeader,
     TypeTableRow,
   } from "@/components/shared/types/table";
 
-  defineProps({
+  const props = defineProps({
     headers: {
       type: Array as () => TypeTableHeader[],
       default: () => [],
@@ -14,16 +14,26 @@
       type: Array as () => TypeTableRow[],
       default: () => [],
     },
+    loading: {
+      type: Boolean,
+      default: true,
+    },
   });
 
   const headerStyle = computed(() => (style: Record<string, string>) => ({
     width: style.width,
   }));
+
+  const isEmpty: ComputedRef<boolean> = computed(
+    () => !props.loading && props.rows.length === 0,
+  );
 </script>
 
 <template>
+  <pre>loading = {{ loading }}</pre>
+  <pre>rows.length = {{ rows.length }}</pre>
   <div class="s-table">
-    <table>
+    <table v-if="!isEmpty">
       <thead>
         <tr>
           <th
@@ -57,6 +67,7 @@
         </template>
       </tbody>
     </table>
+    <s-empty v-else />
   </div>
 </template>
 
