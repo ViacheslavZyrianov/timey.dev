@@ -24,7 +24,6 @@
     height: 400px;
 
     img {
-      //width: 30%;
       max-width: 300px;
     }
   }
