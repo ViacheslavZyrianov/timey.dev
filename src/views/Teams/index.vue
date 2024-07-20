@@ -4,7 +4,7 @@
     TypeTableHeader,
     TypeTableRow,
   } from "@/components/shared/s-table/types";
-  import { computed, ComputedRef } from "vue";
+  import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
   import { TypeTeamRead } from "@/types/teams";
   import { useRouter } from "vue-router";
 
@@ -33,8 +33,11 @@
     },
   ];
 
+  const teams: Ref<TypeTeamRead[]> = ref([]);
+  const deletingRowId: Ref<string | null> = ref(null);
+
   const tableRows: ComputedRef<TypeTableRow[]> = computed(() =>
-    teams.map((team: TypeTeamRead) => ({
+    teams.value.map((team: TypeTeamRead) => ({
       id: team.id,
       name: team.name,
       description: team.description,
@@ -42,7 +45,9 @@
     })),
   );
 
-  const teams = await teamsStore.fetchTeams();
+  const fetchTeams = async () => {
+    teams.value = await teamsStore.fetchTeams();
+  };
 
   const onRedirectToTeam = (id: string) => {
     router.push({
@@ -52,6 +57,24 @@
       },
     });
   };
+
+  const onRemoveTeam = async (id: string) => {
+    try {
+      deletingRowId.value = id;
+      await teamsStore.removeTeam(id);
+      await fetchTeams();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      deletingRowId.value = null;
+    }
+  };
+
+  const checkIsDeletingRowById = (id: string) => deletingRowId.value === id;
+
+  onMounted(async () => {
+    await fetchTeams();
+  });
 </script>
 
 <template>
@@ -72,14 +95,26 @@
     :rows="tableRows"
   >
     <template #actions="{ row }">
-      <s-button
-        size="small"
-        icon="mdiEyeOutline"
-        color="info"
-        @click="onRedirectToTeam(row.id)"
-      >
-        View Team
-      </s-button>
+      <div class="d-flex flex-align-center flex-column-gap-8">
+        <s-button
+          size="small"
+          icon="mdiEyeOutline"
+          color="info"
+          @click="onRedirectToTeam(row.id)"
+        >
+          View Team
+        </s-button>
+        <s-button
+          size="small"
+          icon="mdiTrashCanOutline"
+          color="error"
+          :disabled="checkIsDeletingRowById(row.id)"
+          :loading="checkIsDeletingRowById(row.id)"
+          @click="onRemoveTeam(row.id)"
+        >
+          Remove Team
+        </s-button>
+      </div>
     </template>
   </s-table>
 </template>

@@ -11,6 +11,7 @@ import {
   postItem,
   updateItem,
   checkIsItemExists,
+  deleteItem,
 } from "@/utils/firebaseRequestor";
 
 export default defineStore("teams", () => {
@@ -26,6 +27,10 @@ export default defineStore("teams", () => {
 
   async function postTeam(data: TypeTeamCreate): Promise<string> {
     return await postItem<TypeTeamCreate>("teams", data);
+  }
+
+  async function removeTeam(id: string): Promise<void> {
+    await deleteItem("teams", id);
   }
 
   async function fetchTeamMemberById(
@@ -49,6 +54,7 @@ export default defineStore("teams", () => {
     fetchTeams,
     fetchTeam,
     postTeam,
+    removeTeam,
     fetchTeamMemberById,
     postTeamMember,
   };
