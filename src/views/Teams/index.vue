@@ -3,7 +3,7 @@
   import {
     TypeTableHeader,
     TypeTableRow,
-  } from "@/components/shared/s-table/types";
+  } from "@/components/shared/types/table";
   import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
   import { TypeTeamRead } from "@/types/teams";
   import { useRouter } from "vue-router";
@@ -35,6 +35,7 @@
 
   const teams: Ref<TypeTeamRead[]> = ref([]);
   const deletingRowId: Ref<string | null> = ref(null);
+  const isLoading: Ref<boolean> = ref(false);
 
   const tableRows: ComputedRef<TypeTableRow[]> = computed(() =>
     teams.value.map((team: TypeTeamRead) => ({
@@ -46,7 +47,14 @@
   );
 
   const fetchTeams = async () => {
-    teams.value = await teamsStore.fetchTeams();
+    try {
+      isLoading.value = true;
+      teams.value = await teamsStore.fetchTeams();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   const onRedirectToTeam = (id: string) => {
@@ -93,6 +101,7 @@
   <s-table
     :headers="tableHeaders"
     :rows="tableRows"
+    :loading="isLoading"
   >
     <template #actions="{ row }">
       <div class="d-flex flex-align-center flex-column-gap-8">

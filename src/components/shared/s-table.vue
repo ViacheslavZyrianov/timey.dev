@@ -16,7 +16,7 @@
     },
     loading: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   });
 
@@ -24,14 +24,14 @@
     width: style.width,
   }));
 
-  const isEmpty: ComputedRef<boolean> = computed(
-    () => !props.loading && props.rows.length === 0,
+  const isReady: ComputedRef<boolean> = computed(
+    () => !props.loading && props.rows.length > 0,
   );
 </script>
 
 <template>
   <div class="s-table">
-    <table v-if="!isEmpty">
+    <table v-if="isReady">
       <thead>
         <tr>
           <th
@@ -65,12 +65,26 @@
         </template>
       </tbody>
     </table>
-    <s-empty v-else />
+
+    <s-empty v-if="!loading && rows.length === 0" />
+
+    <s-card
+      v-if="loading"
+      height="400px"
+      class="d-flex align-center justify-center width-100-p"
+    >
+      <template #content>
+        <s-loader />
+      </template>
+    </s-card>
   </div>
 </template>
 
 <style scoped lang="scss">
   .s-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 
     table {

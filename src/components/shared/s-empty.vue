@@ -1,7 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <s-card class="s-empty">
+  <s-card
+    height="400px"
+    class="s-empty"
+  >
     <template #content>
       <div class="d-flex flex-column align-center width-100">
         <img
@@ -9,7 +12,7 @@
           alt="Empty data"
           class="mb-16"
         />
-        <div class="page-title opacity-70">No data available</div>
+        <div class="opacity-70">No data available</div>
       </div>
     </template>
   </s-card>

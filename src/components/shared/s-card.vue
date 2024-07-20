@@ -14,6 +14,10 @@
       type: String,
       default: "",
     },
+    height: {
+      type: String,
+      default: "auto",
+    },
     padding: {
       type: String,
       default: "16px",
@@ -35,6 +39,7 @@
 
   const style = computed(() => [
     { width: props.width },
+    { height: props.height },
     { padding: props.padding },
   ]);
 </script>
