@@ -15,6 +15,7 @@
   const deletingButtonId: Ref<string | null> = ref(null);
   const isButtonAddTeamMemberDisabled: Ref<boolean> = ref(false);
   const isButtonAddTeamMemberLoading: Ref<boolean> = ref(false);
+  const isLoadingTeamMembers: Ref<boolean> = ref(false);
 
   useTitle(team.value?.name);
 
@@ -68,14 +69,24 @@
   };
 
   const fetchTeamMembers = async () => {
-    const teamMembersRequests = team.value?.members
-      ? team.value.members.map((member) =>
-          teamsStore.fetchTeamMemberById(member),
-        )
-      : null;
-    teamMembers.value = teamMembersRequests
-      ? await Promise.all(teamMembersRequests)
-      : [];
+    try {
+      isLoadingTeamMembers.value = true;
+      const teamMembersRequests = team.value?.members
+        ? team.value.members.map((member) =>
+            teamsStore.fetchTeamMemberById(member),
+          )
+        : null;
+      teamMembers.value = teamMembersRequests
+        ? await Promise.all(teamMembersRequests)
+        : [];
+    } catch (error) {
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
+    } finally {
+      isLoadingTeamMembers.value = false;
+    }
   };
 
   const fetchTeam = async () => {
@@ -127,6 +138,7 @@
     <s-table
       :headers="tableHeaders"
       :rows="teamMembers"
+      :loading="isLoadingTeamMembers"
     >
       <template #photoURL="{ row }">
         <s-avatar
