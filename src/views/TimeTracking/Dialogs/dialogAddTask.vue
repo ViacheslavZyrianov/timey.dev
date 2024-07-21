@@ -9,12 +9,15 @@
     TypeWeekdaysFormat,
   } from "@/components/shared/types/calendar";
   import { months, years } from "@/views/TimeTracking/dates";
+  import { useEventBus } from "@vueuse/core";
 
   dayjs.extend(customParseFormat);
 
   const emit = defineEmits(["submit"]);
 
   const timeTrackingStore = useTimeTrackingStore();
+
+  const eventBus = useEventBus<string>("toast");
 
   const isOpen = defineModel();
 
@@ -55,7 +58,10 @@
       emit("submit");
       isOpen.value = false;
     } catch (error) {
-      console.error(error);
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
     } finally {
       isButtonSubmitDisabled.value = false;
     }

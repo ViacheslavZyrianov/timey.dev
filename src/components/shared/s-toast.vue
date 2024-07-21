@@ -50,11 +50,11 @@
   watch(
     () => isToastVisible.value,
     () => {
-      // if (isToastVisible.value) {
-      //   setTimeout(() => {
-      //     isToastVisible.value = false;
-      //   }, props.timeout);
-      // }
+      if (isToastVisible.value) {
+        setTimeout(() => {
+          isToastVisible.value = false;
+        }, props.timeout);
+      }
     },
   );
 </script>

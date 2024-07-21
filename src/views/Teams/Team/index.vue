@@ -3,7 +3,7 @@
   import { RouteLocationRaw, useRoute } from "vue-router";
   import useTeamsStore from "@/store/teams";
   import tableHeaders from "./tableHeaders";
-  import { useTitle } from "@vueuse/core";
+  import { useEventBus, useTitle } from "@vueuse/core";
   import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
 
   const route = useRoute();
@@ -17,6 +17,8 @@
   const isButtonAddTeamMemberLoading: Ref<boolean> = ref(false);
 
   useTitle(team.value?.name);
+
+  const eventBus = useEventBus<string>("toast");
 
   const teamId: ComputedRef<string> = computed(() =>
     route.params.team_id.toString(),
@@ -40,7 +42,10 @@
       await fetchTeam();
       uid.value = "";
     } catch (error) {
-      console.error(error);
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
     } finally {
       isButtonAddTeamMemberDisabled.value = false;
       isButtonAddTeamMemberLoading.value = false;
@@ -53,7 +58,10 @@
       await teamsStore.removeTeamMember(teamId.value, id);
       await fetchTeam();
     } catch (error) {
-      console.error(error);
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
     } finally {
       deletingButtonId.value = null;
     }
@@ -75,7 +83,10 @@
       team.value = await teamsStore.fetchTeam(teamId.value);
       await fetchTeamMembers();
     } catch (error) {
-      console.error(error);
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
     }
   };
 

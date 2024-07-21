@@ -7,10 +7,13 @@
   import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
   import { TypeTeamRead } from "@/types/teams";
   import { useRouter } from "vue-router";
+  import { useEventBus } from "@vueuse/core";
 
   const router = useRouter();
 
   const teamsStore = useTeamsStore();
+
+  const eventBus = useEventBus<string>("toast");
 
   const tableHeaders: TypeTableHeader[] = [
     {
@@ -72,7 +75,10 @@
       await teamsStore.removeTeam(id);
       await fetchTeams();
     } catch (error) {
-      console.error(error);
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
     } finally {
       deletingRowId.value = null;
     }
