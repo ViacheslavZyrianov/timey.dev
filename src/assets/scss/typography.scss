@@ -1,6 +1,6 @@
 #app {
   font-family: "Manrope", sans-serif;
-  color: #050301;
+  color: $c-dark-1;
   font-size: 16px;
 }
 
@@ -8,6 +8,16 @@
   h#{$i} {
     margin: 0;
     padding: 0;
+    font-size: calc((32 - ($i * 2)) * 1px);
+    color: $c-dark-2;
+  }
+}
+
+@for $i from 3 through 6 {
+  .subheader-#{$i} {
+    font-size: calc((28 - ($i * 2)) * 1px);
+    font-weight: 400;
+    color: $c-dark-3;
   }
 }
 
@@ -15,7 +25,10 @@ a {
   text-decoration: none;
 }
 
-.page-title {
-  font-size: 32px;
-  margin-bottom: 24px;
+$textTransforms: capitalize, uppercase, lowercase, none;
+
+@each $property in $textTransforms {
+  .text-transform--#{$property} {
+    text-transform: $property;
+  }
 }
