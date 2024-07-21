@@ -49,6 +49,17 @@ export default defineStore("teams", () => {
     else throw new Error(`${teamMemberId} does not exist`);
   }
 
+  async function removeTeamMember(
+    teamId: string,
+    teamMemberIdToRemove: string,
+  ): Promise<void> {
+    const team: TypeTeamRead = await fetchTeam(teamId);
+    team.members = team.members.filter(
+      (teamMemberId: string): boolean => teamMemberId !== teamMemberIdToRemove,
+    );
+    await updateItem.updateDoc("teams", teamId, team);
+  }
+
   return {
     teams,
     fetchTeams,
@@ -57,5 +68,6 @@ export default defineStore("teams", () => {
     removeTeam,
     fetchTeamMemberById,
     postTeamMember,
+    removeTeamMember,
   };
 });

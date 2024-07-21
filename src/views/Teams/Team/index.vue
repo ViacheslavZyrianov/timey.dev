@@ -1,14 +1,20 @@
 <script setup lang="ts">
-  import { computed, ComputedRef, ref, Ref } from "vue";
+  import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
   import { RouteLocationRaw, useRoute } from "vue-router";
   import useTeamsStore from "@/store/teams";
   import tableHeaders from "./tableHeaders";
   import { useTitle } from "@vueuse/core";
+  import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
 
   const route = useRoute();
   const teamsStore = useTeamsStore();
 
+  const team: Ref<TypeTeamRead | null> = ref(null);
+  const teamMembers: Ref<TypeTeamMemberRead[]> = ref([]);
   const uid: Ref<string> = ref("");
+  const deletingButtonId: Ref<string | null> = ref(null);
+
+  useTitle(team.value?.name);
 
   const teamId: ComputedRef<string> = computed(() =>
     route.params.team_id.toString(),
@@ -19,7 +25,7 @@
   ): RouteLocationRaw => ({
     name: "team-member",
     params: {
-      team_id: team.id,
+      team_id: team.value?.id,
       member_id,
     },
   });
@@ -28,20 +34,47 @@
     await teamsStore.postTeamMember(teamId.value, uid.value);
   };
 
-  const team = await teamsStore.fetchTeam(teamId.value);
+  const onRemoveTeamMember = async (id: string) => {
+    try {
+      deletingButtonId.value = id;
+      await teamsStore.removeTeamMember(teamId.value, id);
+      await fetchTeam();
+      await fetchTeamMembers();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      deletingButtonId.value = null;
+    }
+  };
 
-  useTitle(team.name);
+  const fetchTeam = async () => {
+    team.value = await teamsStore.fetchTeam(teamId.value);
+  };
 
-  const teamMembersRequests = team.members
-    ? team.members.map((member) => teamsStore.fetchTeamMemberById(member))
-    : null;
-  const teamMembers = teamMembersRequests
-    ? await Promise.all(teamMembersRequests)
-    : [];
+  const fetchTeamMembers = async () => {
+    const teamMembersRequests = team.value?.members
+      ? team.value.members.map((member) =>
+          teamsStore.fetchTeamMemberById(member),
+        )
+      : null;
+    teamMembers.value = teamMembersRequests
+      ? await Promise.all(teamMembersRequests)
+      : [];
+  };
+
+  const isDeleting = (id: string) => deletingButtonId.value === id;
+
+  onMounted(async () => {
+    await fetchTeam();
+    await fetchTeamMembers();
+  });
 </script>
 
 <template>
-  <div class="d-flex direction-column full-width">
+  <div
+    v-if="team"
+    class="d-flex direction-column full-width"
+  >
     <h1>{{ team.name }}</h1>
     <p v-if="team.description">{{ team.description }}</p>
     <form
@@ -74,13 +107,26 @@
         />
       </template>
       <template #actions="{ row }">
-        <s-button
-          :to="generateTeamMemberDetailsLink(row.id)"
-          size="small"
-          icon="mdiEyeOutline"
-        >
-          View Member
-        </s-button>
+        <div class="d-flex flex-column-gap-4">
+          <s-button
+            :to="generateTeamMemberDetailsLink(row.id)"
+            size="small"
+            icon="mdiEyeOutline"
+            color="info"
+          >
+            View
+          </s-button>
+          <s-button
+            size="small"
+            icon="mdiTrashCanOutline"
+            color="error"
+            :disabled="isDeleting(row.id)"
+            :loading="isDeleting(row.id)"
+            @click="onRemoveTeamMember(row.id)"
+          >
+            Remove
+          </s-button>
+        </div>
       </template>
     </s-table>
   </div>
