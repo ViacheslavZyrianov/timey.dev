@@ -13,6 +13,8 @@
   const teamMembers: Ref<TypeTeamMemberRead[]> = ref([]);
   const uid: Ref<string> = ref("");
   const deletingButtonId: Ref<string | null> = ref(null);
+  const isButtonAddTeamMemberDisabled: Ref<boolean> = ref(false);
+  const isButtonAddTeamMemberLoading: Ref<boolean> = ref(false);
 
   useTitle(team.value?.name);
 
@@ -31,7 +33,18 @@
   });
 
   const onSubmitAddTeamMember = async () => {
-    await teamsStore.postTeamMember(teamId.value, uid.value);
+    try {
+      isButtonAddTeamMemberDisabled.value = true;
+      isButtonAddTeamMemberLoading.value = true;
+      await teamsStore.postTeamMember(teamId.value, uid.value);
+      await fetchTeam();
+      uid.value = "";
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isButtonAddTeamMemberDisabled.value = false;
+      isButtonAddTeamMemberLoading.value = false;
+    }
   };
 
   const onRemoveTeamMember = async (id: string) => {
@@ -39,16 +52,11 @@
       deletingButtonId.value = id;
       await teamsStore.removeTeamMember(teamId.value, id);
       await fetchTeam();
-      await fetchTeamMembers();
     } catch (error) {
       console.error(error);
     } finally {
       deletingButtonId.value = null;
     }
-  };
-
-  const fetchTeam = async () => {
-    team.value = await teamsStore.fetchTeam(teamId.value);
   };
 
   const fetchTeamMembers = async () => {
@@ -62,11 +70,19 @@
       : [];
   };
 
+  const fetchTeam = async () => {
+    try {
+      team.value = await teamsStore.fetchTeam(teamId.value);
+      await fetchTeamMembers();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const isDeleting = (id: string) => deletingButtonId.value === id;
 
   onMounted(async () => {
     await fetchTeam();
-    await fetchTeamMembers();
   });
 </script>
 
@@ -91,6 +107,8 @@
         icon="mdiAccountPlusOutline"
         color="success"
         class="ml-8"
+        :disabled="isButtonAddTeamMemberDisabled"
+        :loading="isButtonAddTeamMemberLoading"
       >
         Add team member
       </s-button>
