@@ -18,4 +18,9 @@ export default [
   teams,
   settings,
   errors,
+  {
+    name: "Components",
+    path: "/components",
+    component: () => import("@/views/Components/index.vue"),
+  },
 ];
