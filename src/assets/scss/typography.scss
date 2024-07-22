@@ -32,3 +32,23 @@ $textTransforms: capitalize, uppercase, lowercase, none;
     text-transform: $property;
   }
 }
+
+@for $i from 2 through 8 {
+  .font-weight-#{$i*100} {
+    font-weight: $i*100;
+  }
+}
+
+@for $fontSize from 14 through 64 {
+  .font-size-#{$fontSize} {
+    font-size: #{$fontSize}px;
+  }
+}
+
+$textAligns: left, center, right;
+
+@each $textAlign in $textAligns {
+  .text-align-#{$textAlign} {
+    text-align: $textAlign;
+  }
+}
