@@ -13,6 +13,6 @@ export type TypeTeamCreate = {
 export type TypeTeamMemberRead = {
   id: string;
   photoURL: string;
-  display_name: string;
+  displayName: string;
   email: string;
 };
