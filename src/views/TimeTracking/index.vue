@@ -99,7 +99,6 @@
   };
 
   const onBeforeFinishDownloadExcel = () => {
-    console.log("onBeforeFinishDownloadExcel");
     isButtonExportToExcelDisabled.value = false;
     isButtonExportToExcelLoading.value = false;
   };
