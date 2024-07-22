@@ -114,7 +114,12 @@
     class="d-flex direction-column full-width"
   >
     <h1>{{ team.name }}</h1>
-    <p v-if="team.description">{{ team.description }}</p>
+    <h4
+      v-if="team?.description"
+      class="subheader-4"
+    >
+      {{ team.description }}
+    </h4>
     <form
       class="d-flex ml-auto mb-8"
       @submit.prevent="onSubmitAddTeamMember"
