@@ -13,18 +13,26 @@
 
 <template>
   <div class="page-auth">
-    <s-card width="300px">
-      <template #title>Authorize</template>
-      <template #content>
-        <s-button
-          icon="mdiGoogle"
-          width="100%"
-          @click="onAuthClick"
-        >
-          Sign in with Google
-        </s-button>
-      </template>
-    </s-card>
+    <div
+      class="d-flex align-center justify-center flex-column width-50-vw height-100-vh"
+    >
+      <s-card padding="64px">
+        <template #content>
+          <img
+            src="@/assets/img/auth.svg"
+            alt="Auth"
+            class="mb-32"
+          />
+          <s-button
+            icon="mdiGoogle"
+            width="100%"
+            @click="onAuthClick"
+          >
+            Sign in with Google
+          </s-button>
+        </template>
+      </s-card>
+    </div>
   </div>
 </template>
 
