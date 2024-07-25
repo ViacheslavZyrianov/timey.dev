@@ -6,4 +6,11 @@
   .height-#{$i * 10}-p {
     height: $i * 10 * 1%;
   }
+  .width-#{$i * 10}-vw {
+    width: $i * 10 * 1vw;
+  }
+
+  .height-#{$i * 10}-vh {
+    height: $i * 10 * 1vh;
+  }
 }
