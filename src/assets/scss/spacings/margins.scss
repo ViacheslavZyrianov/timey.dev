@@ -1,20 +1,20 @@
 $coefficient: 2px;
-$iterations: 32;
+$iterations: 64;
 
 @for $i from 1 through $iterations {
   $value: $coefficient * $i;
 
-  .mt-n#{$i} {
-    margin-top: $value;
+  .mt-#{$i}-n {
+    margin-top: -$value;
   }
-  .mb-n#{$i} {
-    margin-bottom: $value;
+  .mb-#{$i}-n {
+    margin-bottom: -$value;
   }
-  .mr-n#{$i} {
-    margin-right: $value;
+  .mr-#{$i}-n {
+    margin-right: -$value;
   }
-  .ml-n#{$i} {
-    margin-left: $value;
+  .ml-#{$i}-n {
+    margin-left: -$value;
   }
 
   .mt-#{$i} {
