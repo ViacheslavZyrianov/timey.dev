@@ -16,7 +16,7 @@
 <template>
   <div
     v-if="authStore.isUserLoggedIn"
-    class="grid-container pa-8"
+    class="common-container pa-8"
   >
     <app-bar />
     <app-nav />
@@ -33,7 +33,7 @@
 </template>
 
 <style lang="scss">
-  .grid-container {
+  .common-container {
     display: grid;
     grid-template-columns: 256px 16px auto;
     grid-template-rows: auto 16px 1fr;
