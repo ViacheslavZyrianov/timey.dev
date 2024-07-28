@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ComputedRef, onMounted, PropType } from "vue";
+  import { computed, ComputedRef, PropType } from "vue";
   import {
     TypeCalendarVariant,
     TypeWeekdaysFormat,
