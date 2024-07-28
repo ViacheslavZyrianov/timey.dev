@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ComputedRef, PropType } from "vue";
+  import { computed, ComputedRef, onMounted, PropType } from "vue";
   import {
     TypeCalendarVariant,
     TypeWeekdaysFormat,
@@ -29,9 +29,7 @@
       days = dayjs().localeData().weekdaysMin();
     else days = dayjs().localeData().weekdays();
 
-    days.push(days.shift() as string);
-
-    return days;
+    return [...days.slice(1), days[0]];
   });
 </script>
 
@@ -58,6 +56,7 @@
       text-align: center;
       color: #ffffff;
       font-weight: 600;
+      user-select: none;
     }
   }
 </style>
