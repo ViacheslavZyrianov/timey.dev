@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType, ref, Ref } from "vue";
   import { TypeDropdownItem } from "@/components/shared/types/dropdown";
-  import { Color } from "@/types/common";
+  import { ClassList, Color } from "@/types/common";
   import { onClickOutside } from "@vueuse/core";
 
-  const props = defineProps({
+  defineProps({
     items: {
       type: Array as PropType<TypeDropdownItem[]>,
       default: () => [],
@@ -14,9 +14,9 @@
   const isItemsVisible: Ref<boolean> = ref(false);
   const target = ref(null);
 
-  const sDropdownItemsClassList: ComputedRef<string[]> = computed(() => [
+  const sDropdownItemsClassList: ComputedRef<ClassList> = computed(() => [
     "s-dropdown--items",
-    isItemsVisible.value && "s-dropdown--items-visible",
+    { ["s-dropdown--items-visible"]: isItemsVisible.value },
   ]);
 
   const sDropdownItemClassList: ComputedRef<(color: Color) => string[]> =
