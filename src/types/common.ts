@@ -1,4 +1,5 @@
 export enum Color {
+  Default = "default",
   Primary = "primary",
   Support1 = "support-1",
   Success = "success",
