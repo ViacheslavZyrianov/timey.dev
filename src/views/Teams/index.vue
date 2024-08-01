@@ -9,6 +9,7 @@
   import { useRouter } from "vue-router";
   import { useEventBus } from "@vueuse/core";
   import { Color } from "@/types/common";
+  import { TypeDropdownItem } from "@/components/shared/types/dropdown";
 
   const router = useRouter();
 
@@ -50,6 +51,27 @@
     })),
   );
 
+  const dropdownItems: ComputedRef<(id: string) => TypeDropdownItem[]> =
+    computed(() => (id: string) => [
+      {
+        label: "View",
+        onClick: () => {
+          onRedirectToTeam(id);
+        },
+      },
+      {
+        label: "Delete",
+        color: Color.Error,
+        onClick: () => {
+          onRemoveTeam(id);
+        },
+      },
+    ]);
+
+  const isDeleting: ComputedRef<(id: string) => boolean> = computed(
+    () => (id: string) => deletingRowId.value === id,
+  );
+
   const fetchTeams = async () => {
     try {
       isLoading.value = true;
@@ -85,8 +107,6 @@
     }
   };
 
-  const checkIsDeletingRowById = (id: string) => deletingRowId.value === id;
-
   onMounted(async () => {
     await fetchTeams();
   });
@@ -111,26 +131,11 @@
     :loading="isLoading"
   >
     <template #actions="{ row }">
-      <div class="d-flex flex-align-center flex-column-gap-8">
-        <s-button
-          size="small"
-          icon="mdiEyeOutline"
-          :color="Color.Info"
-          @click="onRedirectToTeam(row.id)"
-        >
-          View Team
-        </s-button>
-        <s-button
-          size="small"
-          icon="mdiTrashCanOutline"
-          :color="Color.Error"
-          :disabled="checkIsDeletingRowById(row.id)"
-          :loading="checkIsDeletingRowById(row.id)"
-          @click="onRemoveTeam(row.id)"
-        >
-          Remove Team
-        </s-button>
-      </div>
+      <s-dropdown
+        :items="dropdownItems(row.id)"
+        :disabled="isDeleting(row.id)"
+        :loading="isDeleting(row.id)"
+      />
     </template>
   </s-table>
 </template>
