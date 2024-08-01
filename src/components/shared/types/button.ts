@@ -10,3 +10,8 @@ export enum ButtonVariant {
   Text = "text",
   Elevated = "elevated",
 }
+
+export enum LinkTarget {
+  Blank = "_blank",
+  Target = "_target",
+}
