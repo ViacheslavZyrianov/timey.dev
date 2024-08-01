@@ -8,4 +8,10 @@ export enum Color {
   Error = "error",
 }
 
+export enum Size {
+  Small = "small",
+  Medium = "medium",
+  Large = "large",
+}
+
 export type ClassList = (string | Record<string, boolean>)[];
