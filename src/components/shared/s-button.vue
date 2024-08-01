@@ -74,6 +74,7 @@
     `variant-${props.variant}`,
     `color-${props.color}`,
     `size-${props.size}`,
+    props.isOnlyIcon && "is-only-icon",
     props.disabled && "disabled",
     props.loading && "loading",
   ]);
@@ -252,6 +253,22 @@
               }
             }
           }
+        }
+      }
+    }
+
+    &.is-only-icon {
+      &.size {
+        &-small {
+          padding: 8px;
+        }
+
+        &-medium {
+          padding: 12px;
+        }
+
+        &-large {
+          padding: 16px;
         }
       }
     }
