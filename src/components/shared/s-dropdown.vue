@@ -9,6 +9,14 @@
       type: Array as PropType<TypeDropdownItem[]>,
       default: () => [],
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   });
 
   const isItemsVisible: Ref<boolean> = ref(false);
@@ -30,6 +38,11 @@
     isItemsVisible.value = !isItemsVisible.value;
   };
 
+  const onItemClick = (onClick?: () => void) => {
+    onClick && onClick();
+    isItemsVisible.value = false;
+  };
+
   onClickOutside(targetRef, () => (isItemsVisible.value = false), {
     ignore: [targetRefIgnore],
   });
@@ -47,6 +60,8 @@
           variant="outlined"
           is-only-icon
           icon="mdiDotsVertical"
+          :disabled="disabled"
+          :loading="loading"
         />
       </div>
     </slot>
@@ -58,7 +73,7 @@
         v-for="(item, index) in items"
         :key="index"
         :class="sDropdownItemClassList(item.color || Color.Default)"
-        @click="item.onClick"
+        @click="onItemClick(item.onClick)"
       >
         {{ item.label }}
       </li>
