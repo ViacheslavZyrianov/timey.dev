@@ -52,12 +52,12 @@
     :class="classList"
     :style="style"
   >
-    <div
+    <h3
+      class="font-weight-800 mb-4"
       v-if="slots.title"
-      class="title"
     >
       <slot name="title" />
-    </div>
+    </h3>
     <slot name="content" />
     <slot name="footer" />
   </component>
