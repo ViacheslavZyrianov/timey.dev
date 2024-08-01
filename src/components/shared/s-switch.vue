@@ -64,7 +64,7 @@
 
     &--false {
       .switcher {
-        background-color: lighten($c-error, 20%);
+        background-color: lighten($c-error, 25%);
 
         &-dot {
           background-color: $c-error;
