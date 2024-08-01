@@ -12,7 +12,8 @@
   });
 
   const isItemsVisible: Ref<boolean> = ref(false);
-  const target = ref(null);
+  const targetRef = ref(null);
+  const targetRefIgnore = ref(null);
 
   const sDropdownItemsClassList: ComputedRef<ClassList> = computed(() => [
     "s-dropdown--items",
@@ -29,7 +30,9 @@
     isItemsVisible.value = !isItemsVisible.value;
   };
 
-  onClickOutside(target, () => (isItemsVisible.value = false));
+  onClickOutside(targetRef, () => (isItemsVisible.value = false), {
+    ignore: [targetRefIgnore],
+  });
 </script>
 
 <template>
@@ -37,6 +40,7 @@
     <slot name="activator">
       <div
         class="s-dropdown--activator"
+        ref="targetRefIgnore"
         @click="onActivatorClick"
       >
         <s-button
@@ -48,7 +52,7 @@
     </slot>
     <ul
       :class="sDropdownItemsClassList"
-      ref="target"
+      ref="targetRef"
     >
       <li
         v-for="(item, index) in items"
@@ -74,6 +78,7 @@
       transform: translateY(calc(100% + 16px));
       box-shadow: 0 0 16px 0 #d9d9d9;
       border-radius: 8px;
+      z-index: 1;
       opacity: 0;
       visibility: hidden;
       transition:
