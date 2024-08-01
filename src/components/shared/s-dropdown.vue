@@ -112,7 +112,6 @@
     }
 
     &--item {
-      font-size: 14px;
       padding: 12px 18px;
       cursor: pointer;
       transition: background-color 0.3s;

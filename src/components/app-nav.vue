@@ -77,7 +77,7 @@
         :size="24"
         class="nav-icon"
       />
-      <span class="nav-title">{{ title }}</span>
+      {{ title }}
     </router-link>
     <s-button
       class="nav-logout"
@@ -124,10 +124,6 @@
         color: $c-primary;
         background-color: lighten($c-primary, 45%);
       }
-    }
-
-    .nav-title {
-      font-size: 14px;
     }
 
     .nav-icon {

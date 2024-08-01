@@ -148,7 +148,6 @@
     border-radius: 8px;
     color: #fff;
     cursor: pointer;
-    font-size: 14px;
     user-select: none;
     transition: background 0.2s;
     will-change: background;

@@ -77,7 +77,6 @@
 <style scoped lang="scss">
   .s-input {
     &--label {
-      font-size: 14px;
       color: #4a4a4a;
       margin-bottom: 4px;
 
@@ -127,7 +126,6 @@
       border: 1px solid #b3b3b3;
       border-radius: 8px;
       padding: 16px;
-      font-size: 14px;
       transition: border-color 0.2s;
       will-change: border-color;
 
