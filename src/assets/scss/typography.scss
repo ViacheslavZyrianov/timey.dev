@@ -1,6 +1,6 @@
 #app {
   font-family: "Manrope", sans-serif;
-  color: $c-dark-1;
+  color: $c-text;
   font-size: 16px;
 }
 
@@ -8,16 +8,28 @@
   h#{$i} {
     margin: 0;
     padding: 0;
-    font-size: calc((32 - ($i * 2)) * 1px);
-    color: $c-dark-2;
   }
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 400;
 }
 
 @for $i from 3 through 6 {
   .subheader-#{$i} {
     font-size: calc((28 - ($i * 2)) * 1px);
     font-weight: 400;
-    color: $c-dark-3;
   }
 }
 

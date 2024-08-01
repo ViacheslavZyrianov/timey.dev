@@ -119,12 +119,12 @@
           class="mr-8"
         />
         <div class="d-flex flex-column">
-          <div class="subheader-3 font-weight-800">
+          <h2>
             {{ teamMember?.displayName }}
-          </div>
-          <div class="subheader-6">
+          </h2>
+          <h3>
             {{ teamMember?.email }}
-          </div>
+          </h3>
         </div>
       </div>
     </template>
