@@ -10,6 +10,7 @@
   } from "@/components/shared/types/calendar";
   import { months, years } from "@/views/TimeTracking/dates";
   import { useEventBus } from "@vueuse/core";
+  import { Color } from "@/types/common";
 
   dayjs.extend(customParseFormat);
 
@@ -137,7 +138,7 @@
         />
         <s-button
           type="submit"
-          color="success"
+          :color="Color.Success"
           :disabled="isButtonSubmitDisabled"
         >
           Add task

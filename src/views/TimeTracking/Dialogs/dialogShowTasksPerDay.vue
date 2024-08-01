@@ -3,6 +3,7 @@
   import { defineModel, PropType, ref, Ref, watch } from "vue";
   import { TypeTaskInDayData } from "@/views/TimeTracking/types";
   import useTimeTrackingStore from "@/store/timeTracking";
+  import { Color } from "@/types/common";
 
   const timeTrackingStore = useTimeTrackingStore();
 
@@ -139,14 +140,14 @@
           <s-button
             is-only-icon
             icon="mdiContentSave"
-            color="success"
+            :color="Color.Success"
             :disabled="isButtonSaveDisabled"
             :loading="isButtonSaveLoading"
             @click="onSave(index)"
           />
           <s-button
             is-only-icon
-            color="error"
+            :color="Color.Error"
             variant="outlined"
             icon="mdiCancel"
             @click="onCancel(index)"
@@ -161,7 +162,7 @@
           <s-button
             is-only-icon
             icon="mdiTrashCanOutline"
-            color="error"
+            :color="Color.Error"
             :disabled="isDeleting(index)"
             :loading="isDeleting(index)"
             @click="onDelete(index)"

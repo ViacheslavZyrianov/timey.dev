@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType } from "vue";
   import { RouteLocationRaw } from "vue-router";
+  import { Color } from "@/types/common";
 
   const props = defineProps({
     title: {
@@ -16,10 +17,8 @@
       default: "button",
     },
     color: {
-      type: String as PropType<
-        "primary" | "support-1" | "success" | "info" | "warning" | "error"
-      >,
-      default: "primary",
+      type: String as PropType<Color>,
+      default: Color.Primary,
     },
     isOnlyIcon: {
       type: Boolean,

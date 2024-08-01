@@ -8,6 +8,7 @@
   import { TypeTeamRead } from "@/types/teams";
   import { useRouter } from "vue-router";
   import { useEventBus } from "@vueuse/core";
+  import { Color } from "@/types/common";
 
   const router = useRouter();
 
@@ -95,7 +96,7 @@
   <div class="d-flex mb-8">
     <s-button
       icon="mdiAccountMultiplePlusOutline"
-      color="success"
+      :color="Color.Success"
       class="ml-auto"
       :to="{
         name: 'team-new',
@@ -114,7 +115,7 @@
         <s-button
           size="small"
           icon="mdiEyeOutline"
-          color="info"
+          :color="Color.Info"
           @click="onRedirectToTeam(row.id)"
         >
           View Team
@@ -122,7 +123,7 @@
         <s-button
           size="small"
           icon="mdiTrashCanOutline"
-          color="error"
+          :color="Color.Error"
           :disabled="checkIsDeletingRowById(row.id)"
           :loading="checkIsDeletingRowById(row.id)"
           @click="onRemoveTeam(row.id)"

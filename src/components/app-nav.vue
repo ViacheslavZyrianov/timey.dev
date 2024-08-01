@@ -4,6 +4,7 @@
   import useAuthStore from "@/store/auth";
   import useSettingsStore from "@/store/settings";
   import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
+  import { Color } from "@/types/common";
 
   const router = useRouter();
 
@@ -79,7 +80,7 @@
     </router-link>
     <s-button
       class="nav-logout"
-      color="error"
+      :color="Color.Error"
       icon="mdiLogout"
       size="small"
       variant="outlined"

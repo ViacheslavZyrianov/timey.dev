@@ -5,6 +5,7 @@
   import tableHeaders from "./tableHeaders";
   import { useEventBus, useTitle } from "@vueuse/core";
   import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
+  import { Color } from "@/types/common";
 
   const route = useRoute();
   const teamsStore = useTeamsStore();
@@ -132,7 +133,7 @@
       <s-button
         type="submit"
         icon="mdiAccountPlusOutline"
-        color="success"
+        :color="Color.Success"
         class="ml-8"
         :disabled="isButtonAddTeamMemberDisabled"
         :loading="isButtonAddTeamMemberLoading"
@@ -158,14 +159,14 @@
             :to="generateTeamMemberDetailsLink(row.id)"
             size="small"
             icon="mdiEyeOutline"
-            color="info"
+            :color="Color.Success"
           >
             View
           </s-button>
           <s-button
             size="small"
             icon="mdiTrashCanOutline"
-            color="error"
+            :color="Color.Error"
             :disabled="isDeleting(row.id)"
             :loading="isDeleting(row.id)"
             @click="onRemoveTeamMember(row.id)"
