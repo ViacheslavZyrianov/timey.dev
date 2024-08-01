@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { defineSlots, computed, PropType } from "vue";
+  import { defineSlots, computed, PropType, ComputedRef } from "vue";
+  import { ClassList } from "@/types/common";
 
   const props = defineProps({
     hover: {
@@ -32,10 +33,12 @@
 
   const tag = props.to ? "router-link" : "div";
 
-  const classList = computed(() => [
-    { hover: props.hover },
-    `s-card--variant-${props.variant}`,
-  ]);
+  const sCardClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      { hover: props.hover },
+      `s-card--variant-${props.variant}`,
+    ],
+  );
 
   const style = computed(() => [
     { width: props.width },
@@ -49,7 +52,7 @@
     :is="tag"
     :to="props.to"
     class="s-card"
-    :class="classList"
+    :class="sCardClassList"
     :style="style"
   >
     <h3

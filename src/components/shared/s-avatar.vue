@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, Ref } from "vue";
-  import { Size } from "@/types/common";
+  import { computed, ComputedRef, ref, Ref } from "vue";
+  import { ClassList, Size } from "@/types/common";
 
   const props = defineProps({
     src: {
@@ -25,10 +25,12 @@
     height: `${props.size}px`,
   }));
 
-  const classList = computed(() => ({
-    [`s-avatar s-avatar--${loadingState.value}`]: true,
-    rounded: props.rounded,
-  }));
+  const sAvatarClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      `s-avatar s-avatar--${loadingState.value}`,
+      { rounded: props.rounded },
+    ],
+  );
 
   const isLoading = computed(() => loadingState.value === "loading");
 
@@ -48,7 +50,7 @@
 <template>
   <div
     :style="style"
-    :class="classList"
+    :class="sAvatarClassList"
   >
     <s-loader
       v-show="isLoading"
