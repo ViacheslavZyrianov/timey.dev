@@ -7,3 +7,5 @@ export enum Color {
   Warning = "warning",
   Error = "error",
 }
+
+export type ClassList = (string | Record<string, boolean>)[];
