@@ -82,7 +82,6 @@
       class="nav-logout"
       :color="Color.Error"
       icon="mdiLogout"
-      size="small"
       variant="outlined"
       @click="onLogout"
     >

@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType } from "vue";
+  import { Size } from "@/types/common";
 
   const props = defineProps({
     size: {
-      type: String as PropType<"small" | "medium" | "large">,
-      default: "medium",
+      type: String as PropType<Size>,
+      default: Size.Medium,
     },
   });
 

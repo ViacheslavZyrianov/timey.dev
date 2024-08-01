@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed, ref, Ref } from "vue";
+  import { Size } from "@/types/common";
 
   const props = defineProps({
     src: {
@@ -51,7 +52,7 @@
   >
     <s-loader
       v-show="isLoading"
-      size="small"
+      :size="Size.Small"
     />
     <s-icon
       v-show="isError"

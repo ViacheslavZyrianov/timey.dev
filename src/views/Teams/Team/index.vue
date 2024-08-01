@@ -5,7 +5,7 @@
   import tableHeaders from "./tableHeaders";
   import { useEventBus, useTitle } from "@vueuse/core";
   import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
-  import { Color } from "@/types/common";
+  import { Color, Size } from "@/types/common";
 
   const route = useRoute();
   const teamsStore = useTeamsStore();
@@ -154,14 +154,14 @@
         <div class="d-flex flex-column-gap-4">
           <s-button
             :to="generateTeamMemberDetailsLink(row.id)"
-            size="small"
+            :size="Size.Small"
             icon="mdiEyeOutline"
             :color="Color.Success"
           >
             View
           </s-button>
           <s-button
-            size="small"
+            :size="Size.Small"
             icon="mdiTrashCanOutline"
             :color="Color.Error"
             :disabled="isDeleting(row.id)"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType } from "vue";
   import { RouteLocationRaw } from "vue-router";
-  import { Color } from "@/types/common";
+  import { Color, Size } from "@/types/common";
 
   const props = defineProps({
     title: {
@@ -37,8 +37,8 @@
       default: false,
     },
     size: {
-      type: String as PropType<"small" | "medium" | "large">,
-      default: "medium",
+      type: String as PropType<Size>,
+      default: Size.Medium,
     },
     width: {
       type: String,
