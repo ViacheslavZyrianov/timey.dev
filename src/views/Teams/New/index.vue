@@ -3,9 +3,11 @@
   import { useRouter } from "vue-router";
   import useTeamsStore from "@/store/teams";
   import { TypeTeamCreate } from "@/types/teams";
+  import { useEventBus } from "@vueuse/core";
 
   const router = useRouter();
   const teamsStore = useTeamsStore();
+  const eventBus = useEventBus<string>("toast");
 
   const isButtonSubmitDisabled: Ref<boolean> = ref(false);
   const isButtonSubmitLoading: Ref<boolean> = ref(false);
@@ -16,8 +18,21 @@
   });
 
   const onAddNewTeam = async () => {
-    const id = await teamsStore.postTeam(form);
-    await router.push({ name: "team", params: { id } });
+    try {
+      isButtonSubmitDisabled.value = true;
+      isButtonSubmitLoading.value = true;
+
+      const team_id = await teamsStore.postTeam(form);
+      await router.push({ name: "team", params: { team_id } });
+    } catch (error) {
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
+    } finally {
+      isButtonSubmitDisabled.value = false;
+      isButtonSubmitLoading.value = false;
+    }
   };
 </script>
 
