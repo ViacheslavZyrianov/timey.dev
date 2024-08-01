@@ -23,7 +23,7 @@
   const sDropdownItemClassList: ComputedRef<(color: Color) => string[]> =
     computed(() => (color: Color) => [
       "s-dropdown--item",
-      `s-dropdown--item-${color || Color.Default}`,
+      `s-dropdown--item-${color}`,
     ]);
 
   const onActivatorClick = () => {
@@ -57,7 +57,7 @@
       <li
         v-for="(item, index) in items"
         :key="index"
-        :class="sDropdownItemClassList(item.color)"
+        :class="sDropdownItemClassList(item.color || Color.Default)"
         @click="item.onClick"
       >
         {{ item.label }}

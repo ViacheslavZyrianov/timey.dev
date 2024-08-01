@@ -2,6 +2,6 @@ import { Color } from "@/types/common";
 
 export type TypeDropdownItem = {
   label: string;
-  color: Color;
+  color?: Color;
   onClick?: () => void;
 };
