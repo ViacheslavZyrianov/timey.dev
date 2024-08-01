@@ -26,14 +26,17 @@
 
   const sDropdownItemsClassList: ComputedRef<ClassList> = computed(() => [
     "s-dropdown--items",
-    { ["s-dropdown--items-visible"]: isItemsVisible.value },
+    { "s-dropdown--items-visible": isItemsVisible.value },
   ]);
 
-  const sDropdownItemClassList: ComputedRef<(color: Color) => string[]> =
-    computed(() => (color: Color) => [
-      "s-dropdown--item",
-      `s-dropdown--item-${color}`,
-    ]);
+  const sDropdownItemClassList: ComputedRef<(color: Color) => ClassList> =
+    computed(
+      () =>
+        (color: Color): ClassList => [
+          "s-dropdown--item",
+          `s-dropdown--item-${color}`,
+        ],
+    );
 
   const onActivatorClick = () => {
     isItemsVisible.value = !isItemsVisible.value;

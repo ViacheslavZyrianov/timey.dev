@@ -1,15 +1,17 @@
 <script setup lang="ts">
-  import { computed } from "vue";
+  import { computed, ComputedRef } from "vue";
+  import { ClassList } from "@/types/common";
 
   const model = defineModel({
     type: Boolean,
     default: false,
   });
 
-  const sSwitchClassList = computed(() => [
-    "s-switch d-flex align-center flex-column-gap-4",
-    `s-switch--${model.value}`,
-  ]);
+  const sSwitchClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      `s-switch d-flex align-center flex-column-gap-4 s-switch--${model.value}`,
+    ],
+  );
 
   const onToggleSwitch = () => {
     model.value = !model.value;

@@ -5,6 +5,7 @@
     ToastStatus,
     TypeToastPayload,
   } from "@/components/shared/types/toast";
+  import { ClassList } from "@/types/common";
 
   const eventBus = useEventBus<string>("toast");
 
@@ -26,11 +27,12 @@
     toast.value = payload;
   });
 
-  const sToastClassList: ComputedRef<Record<string, string | boolean>> =
-    computed(() => ({
-      [`s-toast s-toast--${toast.value.status} d-flex align-center `]: true,
-      "s-toast--visible": isToastVisible.value,
-    }));
+  const sToastClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      `s-toast s-toast--${toast.value.status} d-flex align-center `,
+      { "s-toast--visible": isToastVisible.value },
+    ],
+  );
 
   const toastIcon: ComputedRef<string> = computed(() => {
     switch (toast.value.status) {

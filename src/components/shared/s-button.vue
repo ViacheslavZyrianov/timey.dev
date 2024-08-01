@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType } from "vue";
   import { RouteLocationRaw } from "vue-router";
-  import { Color, Size } from "@/types/common";
+  import { ClassList, Color, Size } from "@/types/common";
   import {
     ButtonType,
     ButtonVariant,
@@ -75,24 +75,28 @@
     },
   });
 
-  const classList = computed(() => [
-    `variant-${props.variant}`,
-    `color-${props.color}`,
-    `size-${props.size}`,
-    props.isOnlyIcon && "is-only-icon",
-    props.disabled && "disabled",
-    props.loading && "loading",
-  ]);
+  const sButtonClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      `variant-${props.variant}`,
+      `color-${props.color}`,
+      `size-${props.size}`,
+      { ["is-only-icon"]: props.isOnlyIcon },
+      { ["disabled"]: props.disabled },
+      { ["loading"]: props.loading },
+    ],
+  );
 
   const style = computed(() => ({
     height: props.height,
     width: props.width,
   }));
 
-  const iconClassList = computed(() => ({
-    "icon-prepended": true,
-    "mr-4": !props.isOnlyIcon,
-  }));
+  const iconClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      { "icon-prepended": true },
+      { "mr-4": !props.isOnlyIcon },
+    ],
+  );
 
   const icon = computed(() => props.icon || null);
 
@@ -112,7 +116,7 @@
     :href="href"
     :target="target"
     class="s-button d-flex align-center justify-center"
-    :class="classList"
+    :class="sButtonClassList"
     :style="style"
   >
     <s-icon

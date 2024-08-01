@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed, ComputedRef, PropType } from "vue";
-  import { Size } from "@/types/common";
+  import { ClassList, Size } from "@/types/common";
 
   const props = defineProps({
     size: {
@@ -9,10 +9,9 @@
     },
   });
 
-  const sLoaderClassList: ComputedRef<string[]> = computed(() => [
-    "s-loader",
-    `s-loader--${props.size}`,
-  ]);
+  const sLoaderClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [`s-loader s-loader--${props.size}`],
+  );
 </script>
 
 <template>

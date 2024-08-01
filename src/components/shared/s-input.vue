@@ -7,6 +7,7 @@
     StyleValue,
     PropType,
   } from "vue";
+  import { ClassList } from "@/types/common";
 
   const $attrs = useAttrs();
   const props = defineProps({
@@ -37,16 +38,20 @@
     width: props.width,
   }));
 
-  const sInputClassList: Ref<string[]> = computed(() => [
-    "s-input",
-    `s-input_text-align-${props.textAlign}`,
-    { "s-input_disabled": props.isDisabled },
-  ]);
+  const sInputClassList: Ref<ClassList> = computed(
+    (): ClassList => [
+      "s-input",
+      `s-input_text-align-${props.textAlign}`,
+      { "s-input_disabled": props.isDisabled },
+    ],
+  );
 
-  const sInputLabelClassList: Ref<string[]> = computed(() => [
-    "s-input--label",
-    `s-input--label-align-${props.labelAlign}`,
-  ]);
+  const sInputLabelClassList: Ref<ClassList> = computed(
+    (): ClassList => [
+      "s-input--label",
+      `s-input--label-align-${props.labelAlign}`,
+    ],
+  );
 </script>
 
 <template>

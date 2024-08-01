@@ -11,6 +11,7 @@
     TypePreviousMonthDays,
     TypeWeekdaysFormat,
   } from "@/components/shared/types/calendar";
+  import { ClassList } from "@/types/common";
 
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
@@ -140,7 +141,7 @@
 
   const getWeekday = computed(() => (date: string) => dayjs(date).weekday());
 
-  const sCalendarClassList = computed(() => {
+  const sCalendarClassList: ComputedRef<ClassList> = computed((): ClassList => {
     const classList = [];
 
     if (props.variant === TypeCalendarVariant.Default)

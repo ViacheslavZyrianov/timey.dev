@@ -2,6 +2,7 @@
   import { computed, ComputedRef, defineModel, PropType, ref } from "vue";
   import { onClickOutside } from "@vueuse/core";
   import { TypeSelectItem } from "@/components/shared/types/select";
+  import { ClassList } from "@/types/common";
 
   const props = defineProps({
     items: {
@@ -25,19 +26,24 @@
     () => props.items.find((item) => item.value === model.value)?.label || "",
   );
 
-  const selectItemsClassList = computed(() => [
-    "s-select-items",
-    isOpen.value && "s-select-items--opened",
-  ]);
+  const selectItemsClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      "s-select-items",
+      { "s-select-items--opened": isOpen.value },
+    ],
+  );
 
   const style = computed(() => ({
     width: props.width,
   }));
 
-  const selectItemClassList = computed(() => (value: string) => [
-    "s-select-item",
-    model.value === value && "s-select-item--current",
-  ]);
+  const selectItemClassList: ComputedRef<ClassList> = computed(
+    () =>
+      (value: string): ClassList => [
+        "s-select-item",
+        { "s-select-item--current": model.value === value },
+      ],
+  );
 
   const closeItems = () => {
     isOpen.value = false;

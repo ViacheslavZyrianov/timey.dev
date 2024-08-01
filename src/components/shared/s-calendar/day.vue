@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import dayjs from "dayjs";
-  import { computed, PropType } from "vue";
+  import { computed, ComputedRef, PropType } from "vue";
   import {
     TypeCalendarVariant,
     TypeDatasetItemPerDay,
   } from "@/components/shared/types/calendar";
+  import { ClassList } from "@/types/common";
 
   const props = defineProps({
     day: {
@@ -51,15 +52,18 @@
 
   const datasetItemsCount = computed(() => props.dataset?.length);
 
-  const calendarDayClassList = computed(() => ({
-    "calendar-day d-flex flex-column": true,
-    "calendar-day--selectable": isCalendarDaySelectable.value,
-    "calendar-day--not-current": !props.isCurrentMonth,
-    "calendar-day--today": props.isToday,
-    "calendar-day--selected":
-      props.isShowSelectedDay && props.day.date === props.selectedDay,
-    [`calendar-day--variant-${props.variant}`]: true,
-  }));
+  const calendarDayClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      `calendar-day d-flex flex-column calendar-day--variant-${props.variant}`,
+      { "calendar-day--selectable": isCalendarDaySelectable.value },
+      { "calendar-day--not-current": !props.isCurrentMonth },
+      { "calendar-day--today": props.isToday },
+      {
+        "calendar-day--selected":
+          props.isShowSelectedDay && props.day.date === props.selectedDay,
+      },
+    ],
+  );
 
   const isDatasetExists = computed(() => !!props.dataset);
 
