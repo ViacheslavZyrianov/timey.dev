@@ -2,7 +2,11 @@
   import { computed, ComputedRef, PropType } from "vue";
   import { RouteLocationRaw } from "vue-router";
   import { Color, Size } from "@/types/common";
-  import { ButtonType, ButtonVariant } from "@/components/shared/types/button";
+  import {
+    ButtonType,
+    ButtonVariant,
+    LinkTarget,
+  } from "@/components/shared/types/button";
 
   const props = defineProps({
     title: {
@@ -66,7 +70,7 @@
       default: null,
     },
     target: {
-      type: String as PropType<"_blank" | "_self">,
+      type: String as PropType<LinkTarget>,
       default: null,
     },
   });
