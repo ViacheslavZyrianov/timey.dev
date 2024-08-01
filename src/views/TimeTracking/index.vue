@@ -8,6 +8,7 @@
   import DialogAddTask from "./Dialogs/dialogAddTask.vue";
   import DialogShowTasksPerDay from "./Dialogs/dialogShowTasksPerDay.vue";
   import { TypeTaskInDayData } from "@/views/TimeTracking/types";
+  import { ButtonVariant } from "@/components/shared/types/button";
 
   const route = useRoute();
   const router = useRouter();
@@ -151,7 +152,7 @@
     <s-button
       icon="mdiMicrosoftExcel"
       class="ml-auto"
-      variant="outlined"
+      :variant="ButtonVariant.Outlined"
       :disabled="isButtonExportToExcelDisabled"
       :loading="isButtonExportToExcelLoading"
       @click="onExportToFile"

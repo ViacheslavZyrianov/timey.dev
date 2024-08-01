@@ -5,6 +5,7 @@
   import useSettingsStore from "@/store/settings";
   import getCurrentHourInWords from "@/utils/getCurrentHourInWords";
   import { Color } from "@/types/common";
+  import { ButtonVariant } from "@/components/shared/types/button";
 
   const router = useRouter();
 
@@ -82,7 +83,7 @@
       class="nav-logout"
       :color="Color.Error"
       icon="mdiLogout"
-      variant="outlined"
+      :variant="ButtonVariant.Outlined"
       @click="onLogout"
     >
       Logout

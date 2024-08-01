@@ -3,6 +3,7 @@
   import { TypeDropdownItem } from "@/components/shared/types/dropdown";
   import { ClassList, Color } from "@/types/common";
   import { onClickOutside } from "@vueuse/core";
+  import { ButtonVariant } from "@/components/shared/types/button";
 
   defineProps({
     items: {
@@ -57,7 +58,7 @@
         @click="onActivatorClick"
       >
         <s-button
-          variant="outlined"
+          :variant="ButtonVariant.Outlined"
           is-only-icon
           icon="mdiDotsVertical"
           :disabled="disabled"

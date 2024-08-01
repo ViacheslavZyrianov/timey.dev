@@ -4,6 +4,7 @@
   import { TypeTaskInDayData } from "@/views/TimeTracking/types";
   import useTimeTrackingStore from "@/store/timeTracking";
   import { Color } from "@/types/common";
+  import { ButtonVariant } from "@/components/shared/types/button";
 
   const timeTrackingStore = useTimeTrackingStore();
 
@@ -148,7 +149,7 @@
           <s-button
             is-only-icon
             :color="Color.Error"
-            variant="outlined"
+            :variant="ButtonVariant.Outlined"
             icon="mdiCancel"
             @click="onCancel(index)"
           />
