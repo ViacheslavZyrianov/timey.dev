@@ -6,6 +6,7 @@
   import { useEventBus, useTitle } from "@vueuse/core";
   import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
   import { Color, Size } from "@/types/common";
+  import { ButtonType } from "@/components/shared/types/button";
 
   const route = useRoute();
   const teamsStore = useTeamsStore();
@@ -128,7 +129,7 @@
         width="300px"
       />
       <s-button
-        type="submit"
+        :type="ButtonType.Submit"
         icon="mdiAccountPlusOutline"
         :color="Color.Success"
         class="ml-8"

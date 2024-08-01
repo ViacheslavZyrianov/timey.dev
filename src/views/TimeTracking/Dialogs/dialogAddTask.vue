@@ -11,6 +11,7 @@
   import { months, years } from "@/views/TimeTracking/dates";
   import { useEventBus } from "@vueuse/core";
   import { Color } from "@/types/common";
+  import { ButtonType } from "@/components/shared/types/button";
 
   dayjs.extend(customParseFormat);
 
@@ -137,7 +138,7 @@
           @select-day="onSelectDay"
         />
         <s-button
-          type="submit"
+          :type="ButtonType.Submit"
           :color="Color.Success"
           :disabled="isButtonSubmitDisabled"
         >

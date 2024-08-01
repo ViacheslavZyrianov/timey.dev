@@ -2,6 +2,7 @@
   import { computed, ComputedRef, PropType } from "vue";
   import { RouteLocationRaw } from "vue-router";
   import { Color, Size } from "@/types/common";
+  import { ButtonType } from "@/components/shared/types/button";
 
   const props = defineProps({
     title: {
@@ -13,8 +14,8 @@
       default: "default",
     },
     type: {
-      type: String as PropType<"button" | "reset" | "submit">,
-      default: "button",
+      type: String as PropType<ButtonType>,
+      default: ButtonType.Button,
     },
     color: {
       type: String as PropType<Color>,
