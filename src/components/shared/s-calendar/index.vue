@@ -179,18 +179,18 @@
       />
       <ol class="days-grid">
         <day
-          v-for="day in days"
-          :key="day.date"
-          :day="day"
-          :is-today="isToday(day.date)"
-          :is-current-month="day.isCurrentMonth"
+          v-for="dayItem in days"
+          :key="dayItem.date"
+          :day="dayItem"
+          :is-today="isToday(dayItem.date)"
+          :is-current-month="dayItem.isCurrentMonth"
           :is-day-selectable="isDaySelectable"
           :is-show-selected-day="isShowSelectedDay"
           :selected-day="model"
-          :dataset="generateDatasetPerDay(day.date)"
+          :dataset="generateDatasetPerDay(dayItem.date)"
           :variant="variant"
           :format-dataset-item-element="formatDatasetItemElement"
-          @select-day="onSelectDay(day.date)"
+          @select-day="onSelectDay(dayItem.date)"
         />
       </ol>
     </template>
