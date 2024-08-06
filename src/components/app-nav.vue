@@ -75,7 +75,7 @@
 
 <template>
   <nav class="app-nav d-flex flex-column flex-grow-1 pa-8">
-    <div class="logo d-flex align-baseline mb-8">
+    <div class="logo d-flex align-baseline mb-8 px-8">
       <img
         src="@/assets/img/logo.svg"
         alt="Logo"
