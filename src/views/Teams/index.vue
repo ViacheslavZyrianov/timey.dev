@@ -10,6 +10,7 @@
   import { useEventBus } from "@vueuse/core";
   import { Color } from "@/types/common";
   import { TypeDropdownItem } from "@/components/shared/types/dropdown";
+  import DialogAddEditTeam from "@/views/Teams/Dialogs/dialog-add-edit-team.vue";
 
   const router = useRouter();
 
@@ -41,6 +42,7 @@
   const teams: Ref<TypeTeamRead[]> = ref([]);
   const deletingRowId: Ref<string | null> = ref(null);
   const isLoading: Ref<boolean> = ref(false);
+  const isDialogAddEditTeamOpened: Ref<boolean> = ref(false);
 
   const tableRows: ComputedRef<TypeTableRow[]> = computed(() =>
     teams.value.map((team: TypeTeamRead) => ({
@@ -71,6 +73,10 @@
   const isDeleting: ComputedRef<(id: string) => boolean> = computed(
     () => (id: string) => deletingRowId.value === id,
   );
+
+  const onAddTeam = () => {
+    isDialogAddEditTeamOpened.value = true;
+  };
 
   const fetchTeams = async () => {
     try {
@@ -118,9 +124,7 @@
       icon="mdiAccountMultiplePlusOutline"
       :color="Color.Success"
       class="ml-auto"
-      :to="{
-        name: 'team-new',
-      }"
+      @click="onAddTeam"
     >
       Add Team
     </s-button>
@@ -138,6 +142,10 @@
       />
     </template>
   </s-table>
+  <dialog-add-edit-team
+    v-model="isDialogAddEditTeamOpened"
+    @submit="fetchTeams"
+  />
 </template>
 
 <style lang="scss" scoped>
