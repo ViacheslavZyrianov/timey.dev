@@ -5,6 +5,10 @@
     align-items: center;
   }
 
+  &.align-baseline {
+    align-items: baseline;
+  }
+
   &.justify-space-between {
     justify-content: space-between;
   }

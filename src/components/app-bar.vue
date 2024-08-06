@@ -6,24 +6,11 @@
 
 <template>
   <div class="app-bar d-flex justify-end align-items-center pa-8">
-    <img
-      src="@/assets/img/logo.svg"
-      alt="Logo"
-      class="mr-auto"
+    <s-avatar
+      :src="authStore.user.photoURL"
+      :size="48"
+      class="avatar"
     />
-    <router-link
-      to="/profile"
-      class="profile d-flex align-center"
-    >
-      <div class="display-name mr-8">
-        {{ authStore.user.displayName }}
-      </div>
-      <s-avatar
-        :src="authStore.user.photoURL"
-        :size="48"
-        class="avatar"
-      />
-    </router-link>
   </div>
 </template>
 

@@ -4,9 +4,11 @@
   import useAuthStore from "@/store/auth";
   import useSettingsStore from "@/store/settings";
   import { onMounted } from "vue";
+  import { useRoute } from "vue-router";
 
   const authStore = useAuthStore();
   const settingsStore = useSettingsStore();
+  const route = useRoute();
 
   onMounted(() => {
     settingsStore.setInitialSettings();
@@ -18,11 +20,12 @@
     v-if="authStore.isUserLoggedIn"
     class="common-container pa-8"
   >
-    <app-bar />
+    <app-bar class="mr-8 ml-16" />
     <app-nav />
-    <main>
+    <main class="py-16 pl-16 pr-8">
       <Suspense>
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column flex-row-gap-8">
+          <h1 class="mb-16">{{ route.meta.name }}</h1>
           <router-view />
         </div>
       </Suspense>
@@ -35,11 +38,11 @@
 <style lang="scss">
   .common-container {
     display: grid;
-    grid-template-columns: 256px 16px auto;
-    grid-template-rows: auto 16px 1fr;
+    grid-template-columns: 256px auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-areas:
-      "app-bar app-bar app-bar"
-      ". . ."
+      "app-nav . app-bar"
+      "app-nav . main"
       "app-nav . main";
     height: 100%;
   }

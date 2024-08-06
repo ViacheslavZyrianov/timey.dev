@@ -14,6 +14,11 @@
 
   const navListDefault = [
     {
+      title: "Profile",
+      to: "/profile",
+      icon: "mdiAccountOutline",
+    },
+    {
       title: "Dashboard",
       to: "/dashboard",
       icon: "mdiViewDashboardOutline",
@@ -31,6 +36,11 @@
   ];
 
   const navListTeamManager = [
+    {
+      title: "Profile",
+      to: "/profile",
+      icon: "mdiAccountOutline",
+    },
     {
       title: "Dashboard",
       to: "/dashboard",
@@ -64,13 +74,21 @@
 </script>
 
 <template>
-  <nav class="app-nav d-flex flex-column flex-grow-1">
+  <nav class="app-nav d-flex flex-column flex-grow-1 pa-8">
+    <div class="logo d-flex align-baseline mb-8">
+      <img
+        src="@/assets/img/logo.svg"
+        alt="Logo"
+        class="mr-2"
+      />
+      imey
+    </div>
     <router-link
       v-for="{ title, icon, to } in navList"
       :key="to"
       :to="to"
       block
-      class="nav-button d-flex align-center"
+      class="nav-button pa-8 mb8 d-flex align-center mb-8"
     >
       <s-icon
         :icon="icon"
@@ -94,15 +112,12 @@
 <style lang="scss" scoped>
   .app-nav {
     grid-area: app-nav;
-    padding: 16px;
     width: 256px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 0 16px 0 #d9d9d9;
 
     .nav-button {
-      padding: 16px;
-      margin-bottom: 8px;
       color: #898f9b;
       transition:
         color 0.2s,
@@ -132,6 +147,15 @@
 
     .nav-logout {
       margin-top: auto;
+    }
+  }
+
+  .logo {
+    font-size: 32px;
+    user-select: none;
+
+    img {
+      height: 48px;
     }
   }
 </style>

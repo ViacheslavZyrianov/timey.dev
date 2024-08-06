@@ -60,7 +60,7 @@
       v-show="isError"
       :size="24"
       color="#f37973"
-      icon="mdiImageBroken"
+      icon="mdiAccountOffOutline"
     />
     <img
       v-show="isLoaded"
