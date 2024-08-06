@@ -25,7 +25,12 @@
     <main class="py-16 pl-16 pr-8">
       <Suspense>
         <div class="d-flex flex-column flex-row-gap-8">
-          <h1 class="mb-16">{{ route.meta.name }}</h1>
+          <h1
+            v-if="route.meta.name"
+            class="mb-16"
+          >
+            {{ route.meta.name }}
+          </h1>
           <router-view />
         </div>
       </Suspense>
