@@ -13,16 +13,16 @@
   const settingsStore = useSettingsStore();
 
   const navListDefault = [
-    {
-      title: "Profile",
-      to: "/profile",
-      icon: "mdiAccountOutline",
-    },
-    {
-      title: "Dashboard",
-      to: "/dashboard",
-      icon: "mdiViewDashboardOutline",
-    },
+    // {
+    //   title: "Profile",
+    //   to: "/profile",
+    //   icon: "mdiAccountOutline",
+    // },
+    // {
+    //   title: "Dashboard",
+    //   to: "/dashboard",
+    //   icon: "mdiViewDashboardOutline",
+    // },
     {
       title: "Time Tracking",
       to: "/time-tracking",
@@ -36,16 +36,16 @@
   ];
 
   const navListTeamManager = [
-    {
-      title: "Profile",
-      to: "/profile",
-      icon: "mdiAccountOutline",
-    },
-    {
-      title: "Dashboard",
-      to: "/dashboard",
-      icon: "mdiViewDashboardOutline",
-    },
+    // {
+    //   title: "Profile",
+    //   to: "/profile",
+    //   icon: "mdiAccountOutline",
+    // },
+    // {
+    //   title: "Dashboard",
+    //   to: "/dashboard",
+    //   icon: "mdiViewDashboardOutline",
+    // },
     {
       title: "Time Tracking",
       to: "/time-tracking",
@@ -75,13 +75,15 @@
 
 <template>
   <nav class="app-nav d-flex flex-column flex-grow-1 pa-8">
-    <div class="logo d-flex align-baseline mb-8 px-8">
-      <img
-        src="@/assets/img/logo.svg"
-        alt="Logo"
-        class="mr-2"
+    <div class="d-flex align-center mb-8">
+      <s-avatar
+        :src="authStore.user.photoURL"
+        :size="54"
+        class="avatar mr-8"
       />
-      imey
+      <div class="text-ellipsis font-weight-700 subheader-6">
+        {{ authStore.user.displayName }}
+      </div>
     </div>
     <router-link
       v-for="{ title, icon, to } in navList"

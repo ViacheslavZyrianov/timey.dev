@@ -1,16 +1,29 @@
 <script setup lang="ts">
-  import useAuthStore from "@/store/auth";
+  import { useEventBus } from "@vueuse/core";
 
-  const authStore = useAuthStore();
+  const eventBus = useEventBus<string>("dialogAddTask");
+
+  const onOpenDialogAddTask = () => {
+    eventBus.emit("dialogAddTask");
+  };
 </script>
 
 <template>
-  <div class="app-bar d-flex justify-end align-items-center pa-8">
-    <s-avatar
-      :src="authStore.user.photoURL"
-      :size="48"
-      class="avatar"
-    />
+  <div class="app-bar d-flex align-items-center flex-column-gap-8 pa-8">
+    <div class="logo d-flex align-baseline">
+      <img
+        src="@/assets/img/logo-text.svg"
+        alt="Logo"
+        height="100%"
+      />
+    </div>
+    <s-button
+      icon="mdiPlus"
+      class="ml-auto"
+      @click="onOpenDialogAddTask"
+    >
+      Add task
+    </s-button>
   </div>
 </template>
 

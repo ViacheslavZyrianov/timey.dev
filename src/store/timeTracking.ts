@@ -11,18 +11,22 @@ import {
   TypeTimeTrackingItemRead,
 } from "@/types/time-tracking";
 import { TypeTaskInDayData } from "@/views/TimeTracking/types";
-
-const authStore = useAuthStore();
+import { reactive } from "vue";
 
 export default defineStore("timeTracking", () => {
-  async function fetchTimeTracking(
-    month: number,
-    year: number,
-  ): Promise<TypeTimeTrackingItemRead[]> {
-    return await fetchTimeTrackingByMonth<TypeTimeTrackingItemRead>(
-      month,
-      year,
-    );
+  const authStore = useAuthStore();
+
+  type State = {
+    timeTrackingData: TypeTimeTrackingItemRead[];
+  };
+
+  const state: State = reactive({
+    timeTrackingData: [],
+  });
+
+  async function fetchTimeTracking(month: number, year: number): Promise<void> {
+    state.timeTrackingData =
+      await fetchTimeTrackingByMonth<TypeTimeTrackingItemRead>(month, year);
   }
 
   async function postTimeTracking(
@@ -50,6 +54,7 @@ export default defineStore("timeTracking", () => {
   }
 
   return {
+    state,
     fetchTimeTracking,
     postTimeTracking,
     updateTimeTracking,

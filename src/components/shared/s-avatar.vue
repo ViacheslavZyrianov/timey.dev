@@ -27,7 +27,7 @@
 
   const sAvatarClassList: ComputedRef<ClassList> = computed(
     (): ClassList => [
-      `s-avatar s-avatar--${loadingState.value}`,
+      `s-avatar s-avatar--${loadingState.value} flex-shrink-0`,
       { rounded: props.rounded },
     ],
   );

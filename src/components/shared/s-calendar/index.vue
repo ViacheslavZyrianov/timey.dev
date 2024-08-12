@@ -170,29 +170,32 @@
     v-if="isReady"
     :class="sCalendarClassList"
     padding="0"
+    height="100%"
   >
     <template #content>
-      <weekdays
-        v-if="isWeekdaysVisible"
-        :variant="variant"
-        :weekdays-format="weekdaysFormat"
-      />
-      <ol class="days-grid">
-        <day
-          v-for="dayItem in days"
-          :key="dayItem.date"
-          :day="dayItem"
-          :is-today="isToday(dayItem.date)"
-          :is-current-month="dayItem.isCurrentMonth"
-          :is-day-selectable="isDaySelectable"
-          :is-show-selected-day="isShowSelectedDay"
-          :selected-day="model"
-          :dataset="generateDatasetPerDay(dayItem.date)"
+      <div class="d-flex flex-column height-100-p">
+        <weekdays
+          v-if="isWeekdaysVisible"
           :variant="variant"
-          :format-dataset-item-element="formatDatasetItemElement"
-          @select-day="onSelectDay(dayItem.date)"
+          :weekdays-format="weekdaysFormat"
         />
-      </ol>
+        <ol class="days-grid flex-grow-1">
+          <day
+            v-for="dayItem in days"
+            :key="dayItem.date"
+            :day="dayItem"
+            :is-today="isToday(dayItem.date)"
+            :is-current-month="dayItem.isCurrentMonth"
+            :is-day-selectable="isDaySelectable"
+            :is-show-selected-day="isShowSelectedDay"
+            :selected-day="model"
+            :dataset="generateDatasetPerDay(dayItem.date)"
+            :variant="variant"
+            :format-dataset-item-element="formatDatasetItemElement"
+            @select-day="onSelectDay(dayItem.date)"
+          />
+        </ol>
+      </div>
     </template>
   </s-card>
 </template>

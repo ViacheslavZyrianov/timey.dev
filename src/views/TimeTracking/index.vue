@@ -5,7 +5,6 @@
   import { months, years } from "./dates";
   import { TypeTimeTrackingItemRead } from "@/types/time-tracking";
   import useTimeTrackingStore from "@/store/timeTracking";
-  import DialogAddTask from "./Dialogs/dialogAddTask.vue";
   import DialogShowTasksPerDay from "./Dialogs/dialogShowTasksPerDay.vue";
   import { TypeTaskInDayData } from "@/views/TimeTracking/types";
   import { ButtonVariant } from "@/components/shared/types/button";
@@ -16,17 +15,15 @@
 
   const month: Ref<string> = ref("");
   const year: Ref<string> = ref("");
-  const isDialogAddTaskVisible: Ref<boolean> = ref(false);
   const isDialogShowTaskPerDayVisible: Ref<boolean> = ref(false);
   const selectedDate: Ref<string> = ref("");
   const selectedDay: Ref<string> = ref("");
-  const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([]);
   const isButtonExportToExcelDisabled: Ref<boolean> = ref(false);
   const isButtonExportToExcelLoading: Ref<boolean> = ref(false);
 
   const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(
     () =>
-      timeTrackingData.value.reduce(
+      timeTrackingStore.state.timeTrackingData.reduce(
         (
           acc: { [key: string]: TypeTaskInDayData[] },
           val: TypeTimeTrackingItemRead,
@@ -54,7 +51,7 @@
   };
 
   const downloadExcelData = computed(() =>
-    timeTrackingData.value.map((timeTrackingItem) => ({
+    timeTrackingStore.state.timeTrackingData.map((timeTrackingItem) => ({
       ...timeTrackingItem,
       date: dayjs(timeTrackingItem.date.seconds * 1000).format("DD.MM.YYYY"),
     })),
@@ -78,14 +75,10 @@
   };
 
   const fetchTimeTrackingForCurrentMonthAndYear = async () => {
-    timeTrackingData.value = await timeTrackingStore.fetchTimeTracking(
+    await timeTrackingStore.fetchTimeTracking(
       Number(route.params.month),
       Number(route.params.year),
     );
-  };
-
-  const onAddTask = () => {
-    isDialogAddTaskVisible.value = true;
   };
 
   const onExportToFile = () => {
@@ -159,13 +152,6 @@
     >
       Export to XLSX
     </s-button>
-    <s-button
-      icon="mdiPlus"
-      class="ml-8"
-      @click="onAddTask"
-    >
-      Add task
-    </s-button>
   </div>
   <s-calendar
     v-model="selectedDate"
@@ -175,10 +161,6 @@
     @select-day="onShowDayWithTimeTracking"
   />
 
-  <dialog-add-task
-    v-model="isDialogAddTaskVisible"
-    @submit="fetchTimeTrackingForCurrentMonthAndYear"
-  />
   <dialog-show-tasks-per-day
     v-model="isDialogShowTaskPerDayVisible"
     :day="selectedDay"

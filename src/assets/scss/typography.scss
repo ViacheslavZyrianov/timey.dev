@@ -12,19 +12,24 @@
   }
 }
 
+$lineHeightKoeff: 1.6875;
+
 h1 {
   font-size: 32px;
   font-weight: 800;
+  line-height: calc(32px * $lineHeightKoeff);
 }
 
 h2 {
   font-size: 24px;
   font-weight: 600;
+  line-height: calc(24px * $lineHeightKoeff);
 }
 
 h3 {
   font-size: 18px;
   font-weight: 400;
+  line-height: calc(18px * $lineHeightKoeff);
 }
 
 @for $i from 3 through 6 {
@@ -64,4 +69,11 @@ $textAligns: left, center, right;
   .text-align-#{$textAlign} {
     text-align: $textAlign;
   }
+}
+
+.text-ellipsis {
+  width: calc(100% - 1px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

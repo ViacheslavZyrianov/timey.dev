@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { defineModel, onMounted, reactive, ref, Ref, watch } from "vue";
+  import { onMounted, reactive, ref, Ref, watch } from "vue";
   import { TypeTimeTrackingItemAdd } from "@/types/time-tracking";
   import useTimeTrackingStore from "@/store/timeTracking";
   import dayjs from "dayjs";
@@ -19,10 +19,10 @@
 
   const timeTrackingStore = useTimeTrackingStore();
 
-  const eventBus = useEventBus<string>("toast");
+  const eventBusToast = useEventBus<string>("toast");
+  const eventBusDialogAddTask = useEventBus<string>("dialogAddTask");
 
-  const isOpen = defineModel();
-
+  const isOpen: Ref<boolean> = ref(false);
   const form: TypeTimeTrackingItemAdd = reactive({
     task: "",
     hours: null,
@@ -32,6 +32,10 @@
   const selectedDate: Ref<string> = ref("");
   const month: Ref<string> = ref("");
   const year: Ref<string> = ref("");
+
+  eventBusDialogAddTask.on(() => {
+    isOpen.value = true;
+  });
 
   const onSelectDay = (date: string) => {
     selectedDate.value = date;
@@ -60,7 +64,7 @@
       emit("submit");
       isOpen.value = false;
     } catch (error) {
-      eventBus.emit("toast", {
+      eventBusToast.emit("toast", {
         text: error,
         status: "error",
       });

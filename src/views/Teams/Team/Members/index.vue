@@ -20,7 +20,6 @@
   const team: Ref<TypeTeamRead | null> = ref(null);
   const teamMember: Ref<TypeTeamMemberRead | null> = ref(null);
   const selectedDate: Ref<string> = ref("");
-  const timeTrackingData: Ref<TypeTimeTrackingItemRead[]> = ref([]);
   const selectedDay: Ref<string> = ref("");
   const month: Ref<string> = ref(dayjs().format("M"));
   const year: Ref<string> = ref(dayjs().format("YYYY"));
@@ -32,7 +31,7 @@
 
   const tasks: ComputedRef<{ [key: string]: TypeTaskInDayData[] }> = computed(
     () =>
-      timeTrackingData.value.reduce(
+      timeTrackingStore.state.timeTrackingData.reduce(
         (
           acc: { [key: string]: TypeTaskInDayData[] },
           val: TypeTimeTrackingItemRead,
@@ -54,7 +53,7 @@
   );
 
   const fetchTimeTrackingForCurrentMonthAndYear = async () => {
-    timeTrackingData.value = await timeTrackingStore.fetchTimeTracking(
+    await timeTrackingStore.fetchTimeTracking(
       Number(month.value),
       Number(year.value),
     );

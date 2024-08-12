@@ -3,12 +3,24 @@
   import appBar from "@/components/app-bar.vue";
   import useAuthStore from "@/store/auth";
   import useSettingsStore from "@/store/settings";
+  import useTimeTrackingStore from "@/store/timeTracking";
   import { onMounted } from "vue";
   import { useRoute } from "vue-router";
+  import DialogAddTask from "@/common/dialogs/dialogAddTask.vue";
 
+  const route = useRoute();
   const authStore = useAuthStore();
   const settingsStore = useSettingsStore();
-  const route = useRoute();
+  const timeTrackingStore = useTimeTrackingStore();
+
+  const fetchTimeTrackingForCurrentMonthAndYear = async () => {
+    if (route.name === "timeTrackingYearMonth") {
+      await timeTrackingStore.fetchTimeTracking(
+        Number(route.params.month),
+        Number(route.params.year),
+      );
+    }
+  };
 
   onMounted(() => {
     settingsStore.setInitialSettings();
@@ -20,14 +32,14 @@
     v-if="authStore.isUserLoggedIn"
     class="common-container pa-8"
   >
-    <app-bar class="mr-8 ml-16" />
+    <app-bar class="mb-8" />
     <app-nav />
-    <main class="py-16 pl-16 pr-8">
+    <main class="pt-8 pr-0 pb-0 pl-8">
       <Suspense>
-        <div class="d-flex flex-column flex-row-gap-8">
+        <div class="d-flex flex-column height-100-p">
           <h1
             v-if="route.meta.name"
-            class="mb-16"
+            class="mb-8"
           >
             {{ route.meta.name }}
           </h1>
@@ -35,6 +47,9 @@
         </div>
       </Suspense>
     </main>
+
+    <dialog-add-task @submit="fetchTimeTrackingForCurrentMonthAndYear" />
+
     <s-toast />
   </div>
   <router-view v-else />
@@ -46,7 +61,7 @@
     grid-template-columns: 256px auto 1fr;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
-      "app-nav . app-bar"
+      "app-bar app-bar app-bar"
       "app-nav . main"
       "app-nav . main";
     height: 100%;
