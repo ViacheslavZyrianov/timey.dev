@@ -10,13 +10,13 @@
 
 <template>
   <div class="app-bar d-flex align-items-center flex-column-gap-8 pa-8">
-    <div class="d-flex align-baseline">
+    <div class="d-flex align-baseline position-relative">
       <img
         src="@/assets/img/logo-text.svg"
         alt="Logo"
         height="100%"
       />
-      <div class="version">α</div>
+      <div class="version">alpha</div>
     </div>
     <s-button
       icon="mdiPlus"
@@ -74,5 +74,22 @@
     &:hover {
       background-color: lighten($c-primary, 45%);
     }
+  }
+
+  .version {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(calc(100% + 8px));
+    background-color: lighten($c-primary, 45%);
+    color: $c-primary;
+    border: 1px solid $c-primary;
+    font-size: 12px;
+    line-height: 16px;
+    height: 24px;
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 4px;
+    user-select: none;
   }
 </style>
