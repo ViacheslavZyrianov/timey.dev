@@ -64,7 +64,9 @@
   ];
 
   const navList = computed(() =>
-    settingsStore.settings.isTeamManager ? navListTeamManager : navListDefault,
+    settingsStore.settings.teamManager.isTeamManager
+      ? navListTeamManager
+      : navListDefault,
   );
 
   async function onLogout() {

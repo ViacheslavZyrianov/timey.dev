@@ -1,3 +1,8 @@
 export type TypeSettings = {
-  isTeamManager: boolean;
+  teamManager: {
+    isTeamManager: boolean;
+  };
+  calendar: {
+    isShowWeekends: boolean;
+  };
 };

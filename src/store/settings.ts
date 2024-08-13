@@ -1,24 +1,30 @@
 import { defineStore } from "pinia";
-import { ref, Ref } from "vue";
+import { reactive } from "vue";
 import { TypeSettings } from "@/store/types/types";
 
 export default defineStore("settings", () => {
-  const settings: Ref<TypeSettings> = ref({
-    isTeamManager: false,
+  const settings: TypeSettings = reactive({
+    teamManager: {
+      isTeamManager: false,
+    },
+    calendar: {
+      isShowWeekends: true,
+    },
   });
 
   function setInitialSettings(): void {
     const settingsLS = localStorage.getItem("settings");
-    if (settingsLS) settings.value = JSON.parse(settingsLS);
-    else localStorage.setItem("settings", JSON.stringify(settings.value));
+    if (settingsLS) Object.assign(settings, JSON.parse(settingsLS));
+    else localStorage.setItem("settings", JSON.stringify(settings));
   }
 
-  function setSetting<K extends keyof TypeSettings>(
-    key: K,
-    value: TypeSettings[K],
-  ): void {
-    settings.value[key] = value;
-    localStorage.setItem("settings", JSON.stringify(settings.value));
+  function setSetting<
+    C extends keyof TypeSettings,
+    S extends keyof TypeSettings[C],
+    V extends TypeSettings[C][S],
+  >(category: C, setting: S, value: V): void {
+    settings[category][setting] = value;
+    localStorage.setItem("settings", JSON.stringify(settings));
   }
 
   return { settings, setSetting, setInitialSettings };

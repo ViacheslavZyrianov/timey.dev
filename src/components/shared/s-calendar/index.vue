@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref, computed, PropType, Ref, ComputedRef } from "vue";
   import dayjs from "dayjs";
+  import dayjsBusinessDays from "dayjs-business-days/index.min";
   import customParseFormat from "dayjs/plugin/customParseFormat";
   import weekday from "dayjs/plugin/weekday";
   import weekOfYear from "dayjs/plugin/weekOfYear";
@@ -12,10 +13,12 @@
     TypeWeekdaysFormat,
   } from "@/components/shared/types/calendar";
   import { ClassList } from "@/types/common";
+  import useSettingsStore from "@/store/settings";
 
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
   dayjs.extend(customParseFormat);
+  dayjs.extend(dayjsBusinessDays);
 
   const props = defineProps({
     dataset: {
@@ -55,15 +58,22 @@
 
   const emit = defineEmits(["select-day"]);
 
+  const settingsStore = useSettingsStore();
+
   const today: Ref<string> = ref(dayjs().format("YYYY-M-D"));
 
   const month: ComputedRef<string> = computed(() => model.value.split("-")[1]);
 
   const year: ComputedRef<string> = computed(() => model.value.split("-")[0]);
 
-  const numberOfDaysInMonth: ComputedRef<number | null> = computed(() =>
-    model.value ? dayjs(model.value, "YYYY-M-D").daysInMonth() : null,
-  );
+  const numberOfDaysInMonth: ComputedRef<number | null> = computed(() => {
+    if (model.value) {
+      if (settingsStore.settings.calendar.isShowWeekends)
+        return dayjs(model.value, "YYYY-M-D").daysInMonth();
+      return dayjs().businessDaysInMonth().length;
+    }
+    return null;
+  });
 
   const previousMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() => {
     const firstDayOfTheMonthWeekday = getWeekday.value(
@@ -103,7 +113,8 @@
     const nextMonth = dayjs(`${year.value}-${month.value}-01`).add(1, "month");
 
     const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday
-      ? 7 - lastDayOfTheMonthWeekday
+      ? (settingsStore.settings.calendar.isShowWeekends ? 7 : 4) -
+        lastDayOfTheMonthWeekday
       : lastDayOfTheMonthWeekday;
 
     return [...Array(visibleNumberOfDaysFromNextMonth || 0)].map(
@@ -154,6 +165,19 @@
     Boolean(numberOfDaysInMonth.value),
   );
 
+  const daysClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      {
+        ["days-grid--has-weekends"]:
+          settingsStore.settings.calendar.isShowWeekends,
+      },
+      {
+        ["days-grid--no-weekends"]:
+          !settingsStore.settings.calendar.isShowWeekends,
+      },
+    ],
+  );
+
   const generateDatasetPerDay = (date: string) =>
     props.dataset && props.dataset[date] ? props.dataset[date] : null;
 
@@ -177,7 +201,10 @@
           :variant="variant"
           :weekdays-format="weekdaysFormat"
         />
-        <ol class="days-grid flex-grow-1">
+        <ol
+          :class="daysClassList"
+          class="days-grid flex-grow-1"
+        >
           <day
             v-for="dayItem in days"
             :key="dayItem.date"
@@ -201,7 +228,14 @@
 <style scoped lang="scss">
   .days-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
     user-select: none;
+
+    &--has-weekends {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    &--no-weekends {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 </style>

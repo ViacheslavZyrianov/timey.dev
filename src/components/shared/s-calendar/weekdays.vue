@@ -6,6 +6,8 @@
   } from "@/components/shared/types/calendar";
   import dayjs from "dayjs";
   import localeData from "dayjs/plugin/localeData";
+  import { ClassList } from "@/types/common";
+  import useSettingsStore from "@/store/settings";
 
   dayjs.extend(localeData);
 
@@ -20,6 +22,8 @@
     },
   });
 
+  const settingsStore = useSettingsStore();
+
   const weekdays: ComputedRef<string[]> = computed(() => {
     let days: string[];
 
@@ -29,12 +33,32 @@
       days = dayjs().localeData().weekdaysMin();
     else days = dayjs().localeData().weekdays();
 
-    return [...days.slice(1), days[0]];
+    days = [...days.slice(1), days[0]];
+
+    return settingsStore.settings.calendar.isShowWeekends
+      ? days
+      : days.slice(0, 5);
   });
+
+  const weekdaysClassList: ComputedRef<ClassList> = computed(
+    (): ClassList => [
+      {
+        ["weekdays--has-weekends"]:
+          settingsStore.settings.calendar.isShowWeekends,
+      },
+      {
+        ["weekdays--no-weekends"]:
+          !settingsStore.settings.calendar.isShowWeekends,
+      },
+    ],
+  );
 </script>
 
 <template>
-  <ol class="weekdays">
+  <ol
+    class="weekdays"
+    :class="weekdaysClassList"
+  >
     <li
       v-for="weekday in weekdays"
       :key="weekday"
@@ -57,6 +81,14 @@
       color: #ffffff;
       font-weight: 600;
       user-select: none;
+    }
+
+    &--has-weekends {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    &--no-weekends {
+      grid-template-columns: repeat(5, 1fr);
     }
   }
 </style>
