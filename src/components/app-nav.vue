@@ -153,13 +153,4 @@
       margin-top: auto;
     }
   }
-
-  .logo {
-    font-size: 32px;
-    user-select: none;
-
-    img {
-      height: 48px;
-    }
-  }
 </style>

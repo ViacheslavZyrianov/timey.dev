@@ -10,7 +10,7 @@
 
 <template>
   <div class="app-bar d-flex align-items-center flex-column-gap-8 pa-8">
-    <div class="logo d-flex align-baseline">
+    <div class="d-flex align-baseline">
       <img
         src="@/assets/img/logo-text.svg"
         alt="Logo"
