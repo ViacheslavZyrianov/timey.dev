@@ -85,16 +85,14 @@
       .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
       .date();
 
-    return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((_, index) => {
-      return {
-        date: dayjs(
-          `${previousMonth.year()}-${
-            previousMonth.month() + 1
-          }-${previousMonthLastMondayDayOfMonth + index}`,
-        ).format("YYYY-M-D"),
-        isCurrentMonth: false,
-      };
-    });
+    return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((_, index) => ({
+      date: dayjs(
+        `${previousMonth.year()}-${
+          previousMonth.month() + 1
+        }-${previousMonthLastMondayDayOfMonth + index}`,
+      ).format("YYYY-M-D"),
+      isCurrentMonth: false,
+    }));
   });
 
   const nextMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() => {
@@ -108,14 +106,14 @@
       ? 7 - lastDayOfTheMonthWeekday
       : lastDayOfTheMonthWeekday;
 
-    return [...Array(visibleNumberOfDaysFromNextMonth || 0)].map((_, index) => {
-      return {
+    return [...Array(visibleNumberOfDaysFromNextMonth || 0)].map(
+      (_, index) => ({
         date: dayjs(
           `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`,
         ).format("YYYY-M-D"),
         isCurrentMonth: false,
-      };
-    });
+      }),
+    );
   });
 
   const currentMonthDays: ComputedRef<TypePreviousMonthDays> = computed(() =>
