@@ -12,6 +12,7 @@
     "@mdi/js": "^7.4.47",
     "@vueuse/core": "^10.9.0",
     "dayjs": "^1.11.11",
+    "dayjs-business-days": "^1.0.4",
     "eslint": "^8.57.0",
     "firebase": "^10.11.0",
     "pinia": "^2.1.7",
