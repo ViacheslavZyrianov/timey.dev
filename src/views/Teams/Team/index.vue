@@ -1,20 +1,22 @@
 <script setup lang="ts">
   import { computed, ComputedRef, onMounted, ref, Ref } from "vue";
-  import { RouteLocationRaw, useRoute } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
   import useTeamsStore from "@/store/teams";
   import tableHeaders from "./tableHeaders";
   import { useEventBus, useTitle } from "@vueuse/core";
   import { TypeTeamMemberRead, TypeTeamRead } from "@/types/teams";
-  import { Color, Size } from "@/types/common";
+  import { Color } from "@/types/common";
   import { ButtonType } from "@/components/shared/types/button";
+  import { TypeDropdownItem } from "@/components/shared/types/dropdown";
 
+  const router = useRouter();
   const route = useRoute();
   const teamsStore = useTeamsStore();
 
   const team: Ref<TypeTeamRead | null> = ref(null);
   const teamMembers: Ref<TypeTeamMemberRead[]> = ref([]);
   const uid: Ref<string> = ref("");
-  const deletingButtonId: Ref<string | null> = ref(null);
+  const deletingRowId: Ref<string | null> = ref(null);
   const isButtonAddTeamMemberDisabled: Ref<boolean> = ref(false);
   const isButtonAddTeamMemberLoading: Ref<boolean> = ref(false);
   const isLoadingTeamMembers: Ref<boolean> = ref(false);
@@ -27,15 +29,51 @@
     route.params.team_id.toString(),
   );
 
-  const generateTeamMemberDetailsLink = (
-    member_id: string,
-  ): RouteLocationRaw => ({
-    name: "team-member",
-    params: {
-      team_id: team.value?.id,
-      member_id,
-    },
-  });
+  const dropdownItems: ComputedRef<(id: string) => TypeDropdownItem[]> =
+    computed(() => (id: string) => [
+      {
+        label: "View",
+        onClick: () => {
+          onRedirectToTeamMember(id);
+        },
+      },
+      {
+        label: "Delete",
+        color: Color.Error,
+        onClick: () => {
+          onRemoveMemberFromTeam(id);
+        },
+      },
+    ]);
+
+  const isDeleting: ComputedRef<(id: string) => boolean> = computed(
+    () => (id: string) => deletingRowId.value === id,
+  );
+
+  const onRedirectToTeamMember = (member_id: string) => {
+    router.push({
+      name: "team-member",
+      params: {
+        team_id: team.value?.id,
+        member_id,
+      },
+    });
+  };
+
+  const onRemoveMemberFromTeam = async (id: string) => {
+    try {
+      deletingRowId.value = id;
+      await teamsStore.removeTeamMember(teamId.value, id);
+      await fetchTeam();
+    } catch (error) {
+      eventBus.emit("toast", {
+        text: error,
+        status: "error",
+      });
+    } finally {
+      deletingRowId.value = null;
+    }
+  };
 
   const onSubmitAddTeamMember = async () => {
     try {
@@ -52,21 +90,6 @@
     } finally {
       isButtonAddTeamMemberDisabled.value = false;
       isButtonAddTeamMemberLoading.value = false;
-    }
-  };
-
-  const onRemoveTeamMember = async (id: string) => {
-    try {
-      deletingButtonId.value = id;
-      await teamsStore.removeTeamMember(teamId.value, id);
-      await fetchTeam();
-    } catch (error) {
-      eventBus.emit("toast", {
-        text: error,
-        status: "error",
-      });
-    } finally {
-      deletingButtonId.value = null;
     }
   };
 
@@ -102,8 +125,6 @@
       });
     }
   };
-
-  const isDeleting = (id: string) => deletingButtonId.value === id;
 
   onMounted(async () => {
     await fetchTeam();
@@ -151,27 +172,13 @@
           class="avatar"
         />
       </template>
+
       <template #actions="{ row }">
-        <div class="d-flex flex-column-gap-4">
-          <s-button
-            :to="generateTeamMemberDetailsLink(row.id)"
-            :size="Size.Small"
-            icon="mdiEyeOutline"
-            :color="Color.Success"
-          >
-            View
-          </s-button>
-          <s-button
-            :size="Size.Small"
-            icon="mdiTrashCanOutline"
-            :color="Color.Error"
-            :disabled="isDeleting(row.id)"
-            :loading="isDeleting(row.id)"
-            @click="onRemoveTeamMember(row.id)"
-          >
-            Remove
-          </s-button>
-        </div>
+        <s-dropdown
+          :items="dropdownItems(row.id)"
+          :disabled="isDeleting(row.id)"
+          :loading="isDeleting(row.id)"
+        />
       </template>
     </s-table>
   </div>
