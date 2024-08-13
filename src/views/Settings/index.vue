@@ -22,13 +22,13 @@
 
 <template>
   <div class="d-flex flex-column flex-grow-1 flex-row-gap-8">
-    <s-card class="full-width height-fit-content">
+    <s-card class="width-100-p height-fit-content">
       <template #title>User ID</template>
       <template #content>
         {{ authStore.user.uid }}
       </template>
     </s-card>
-    <s-card class="full-width height-fit-content">
+    <s-card class="width-100-p height-fit-content">
       <template #title>Team Manager Mode</template>
       <template #content>
         <div class="d-flex justify-space-between">
@@ -43,7 +43,7 @@
         </div>
       </template>
     </s-card>
-    <s-card class="full-width height-fit-content">
+    <s-card class="width-100-p height-fit-content">
       <template #title>Calendar</template>
       <template #content>
         <div class="d-flex justify-space-between">

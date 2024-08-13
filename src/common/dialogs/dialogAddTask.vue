@@ -118,7 +118,7 @@
             class="flex-grow-1"
           />
         </div>
-        <div class="d-flex flex-column-gap-4 full-width">
+        <div class="d-flex flex-column-gap-4 width-100-p">
           <s-select
             v-model="year"
             :items="years"

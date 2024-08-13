@@ -154,7 +154,7 @@
     const classList = [];
 
     if (props.variant === TypeCalendarVariant.Default)
-      classList.push("full-width");
+      classList.push("width-100-p");
     if (props.variant === TypeCalendarVariant.Compact)
       classList.push("width-fit-content");
 

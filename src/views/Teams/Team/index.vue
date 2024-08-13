@@ -134,7 +134,7 @@
 <template>
   <div
     v-if="team"
-    class="d-flex direction-column full-width"
+    class="d-flex direction-column width-100-p"
   >
     <h1>{{ team.name }}</h1>
     <h3 v-if="team?.description">

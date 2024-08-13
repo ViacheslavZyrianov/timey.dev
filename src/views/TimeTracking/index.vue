@@ -127,7 +127,7 @@
     id="downloadExcelButton"
     class="download-excel-button"
   />
-  <div class="d-flex full-width mb-6">
+  <div class="d-flex width-100-p mb-6">
     <s-select
       v-if="year"
       v-model="year"

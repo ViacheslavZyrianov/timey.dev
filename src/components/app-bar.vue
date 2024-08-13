@@ -16,6 +16,7 @@
         alt="Logo"
         height="100%"
       />
+      <div class="version">α</div>
     </div>
     <s-button
       icon="mdiPlus"
