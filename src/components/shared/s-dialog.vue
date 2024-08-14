@@ -31,21 +31,23 @@
     class="s-dialog"
   >
     <div
-      class="s-dialog-body"
+      class="s-dialog--body"
       :style="style"
       ref="target"
     >
-      <div class="s-dialog-title d-flex justify-space-between">
-        <slot name="title" />
+      <div class="s-dialog--header">
+        <div class="s-dialog--title d-flex justify-space-between">
+          <slot name="title" />
+        </div>
         <s-icon
           icon="mdiClose"
           color="#ffffff"
           :size="24"
-          class="s-dialog-close-icon"
+          class="s-dialog--close-icon"
           @click="close"
         />
       </div>
-      <div class="s-dialog-content">
+      <div class="s-dialog--content">
         <slot name="content" />
       </div>
     </div>
@@ -65,27 +67,34 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
 
-    &-body {
+    &--body {
       position: relative;
       background-color: #ffffff;
       border-radius: 8px;
       user-select: text;
     }
 
-    &-title {
-      padding: 16px;
-      margin-bottom: 0;
+    &--header {
+      display: flex;
+      align-items: center;
+      width: 100%;
       background-color: $c-primary;
-      color: #ffffff;
-      font-weight: 600;
+      padding: 16px;
       border-radius: 8px 8px 0 0;
     }
 
-    &-content {
+    &--title {
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: auto;
+    }
+
+    &--content {
       padding: 16px;
     }
 
-    &-close-icon {
+    &--close-icon {
       cursor: pointer;
       z-index: 9999;
     }
