@@ -107,6 +107,7 @@
         <div class="d-flex flex-column-gap-4">
           <s-input
             v-model="form.hours"
+            placeholder="0"
             label="Hours"
             width="50px"
             label-align="center"
