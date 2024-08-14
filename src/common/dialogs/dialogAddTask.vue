@@ -111,6 +111,7 @@
             label="Hours"
             width="50px"
             label-align="center"
+            text-align="center"
           />
           <s-input
             v-model="form.task"
