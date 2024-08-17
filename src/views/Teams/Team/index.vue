@@ -8,6 +8,7 @@
   import { Color } from "@/types/common";
   import { ButtonType } from "@/components/shared/types/button";
   import { TypeDropdownItem } from "@/components/shared/types/dropdown";
+  import { Breadcrumb } from "@/components/shared/types/breadcrumbs";
 
   const router = useRouter();
   const route = useRoute();
@@ -49,6 +50,16 @@
   const isDeleting: ComputedRef<(id: string) => boolean> = computed(
     () => (id: string) => deletingRowId.value === id,
   );
+
+  const breadcrumbs: ComputedRef<Breadcrumb[]> = computed(() => [
+    {
+      label: "Teams",
+      to: "/teams",
+    },
+    {
+      label: team.value?.name || "",
+    },
+  ]);
 
   const onRedirectToTeamMember = (member_id: string) => {
     router.push({
@@ -136,6 +147,7 @@
     v-if="team"
     class="d-flex direction-column width-100-p"
   >
+    <s-breadcrumbs :breadcrumbs="breadcrumbs" />
     <h1>{{ team.name }}</h1>
     <h3 v-if="team?.description">
       {{ team.description }}

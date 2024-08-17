@@ -10,6 +10,7 @@
   import useTimeTrackingStore from "@/store/timeTracking";
   import { months, years } from "@/views/TimeTracking/dates";
   import DialogShowTasksPerDay from "./Dialogs/dialogShowTasksPerDay.vue";
+  import { Breadcrumb } from "@/components/shared/types/breadcrumbs";
 
   const route = useRoute();
   const eventBus = useEventBus<string>("toast");
@@ -51,6 +52,20 @@
         {},
       ),
   );
+
+  const breadcrumbs: ComputedRef<Breadcrumb[]> = computed(() => [
+    {
+      label: "Teams",
+      to: "/teams",
+    },
+    {
+      label: team.value?.name || "",
+      to: `/teams/${team.value?.id}`,
+    },
+    {
+      label: teamMember.value?.displayName || "",
+    },
+  ]);
 
   const fetchTimeTrackingForCurrentMonthAndYear = async () => {
     await timeTrackingStore.fetchTimeTracking(
@@ -109,25 +124,7 @@
 </script>
 
 <template>
-  <h1 class="mb-16">{{ team?.name }}</h1>
-  <s-card class="mb-8">
-    <template #content>
-      <div class="d-flex align-center">
-        <s-avatar
-          :src="teamMember?.photoURL"
-          class="mr-8"
-        />
-        <div class="d-flex flex-column">
-          <h2>
-            {{ teamMember?.displayName }}
-          </h2>
-          <h3>
-            {{ teamMember?.email }}
-          </h3>
-        </div>
-      </div>
-    </template>
-  </s-card>
+  <s-breadcrumbs :breadcrumbs="breadcrumbs" />
   <div class="d-flex mb-8">
     <s-select
       v-if="year"
