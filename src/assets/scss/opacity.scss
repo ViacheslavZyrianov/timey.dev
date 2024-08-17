@@ -1,6 +1,0 @@
-@for $i from 0 through 20 {
-  $opacity: $i * 0.05;
-  .opacity-#{$i * 5} {
-    opacity: $opacity;
-  }
-}
