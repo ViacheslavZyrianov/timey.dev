@@ -34,7 +34,7 @@
   >
     <app-bar class="mb-8" />
     <app-nav />
-    <main class="pt-8 pr-0 pb-0 pl-8">
+    <main class="pr-0 pb-0 pl-8">
       <Suspense>
         <div class="d-flex flex-column height-100-p">
           <h1
