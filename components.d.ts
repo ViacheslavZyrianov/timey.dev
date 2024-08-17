@@ -11,6 +11,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SAvatar: typeof import('./src/components/shared/s-avatar.vue')['default']
+    SBreadcrumbs: typeof import('./src/components/shared/s-breadcrumbs.vue')['default']
     SButton: typeof import('./src/components/shared/s-button.vue')['default']
     SCalendar: typeof import('./src/components/shared/s-calendar/index.vue')['default']
     SCalendarDateIndicator: typeof import('./src/components/shared/s-calendar/s-calendar-date-indicator.vue')['default']
