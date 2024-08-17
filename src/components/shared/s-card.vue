@@ -70,7 +70,7 @@
   .s-card {
     background-color: #fff;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
     transition:
       color 0.2s,
       background 0.2s;
