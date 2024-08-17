@@ -167,7 +167,7 @@
       &-default {
         min-height: 112px;
         min-width: 96px;
-        padding: 16px;
+        padding: 8px;
       }
 
       &-compact {
