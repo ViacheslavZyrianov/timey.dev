@@ -75,6 +75,9 @@
     grid-template-columns: repeat(7, 1fr);
     padding: 16px 0;
     background-color: #aeaeae;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     .weekday {
       text-align: center;
