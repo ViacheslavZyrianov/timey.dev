@@ -122,6 +122,7 @@
     setSelectedDate(`${dayjs().month() + 1}`, `${dayjs().year()}`);
     await fetchTeam();
     await fetchTeamMember();
+    await fetchTimeTrackingForCurrentMonthAndYear();
   });
 </script>
 
