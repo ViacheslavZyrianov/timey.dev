@@ -8,9 +8,11 @@
   import DialogShowTasksPerDay from "./Dialogs/dialogShowTasksPerDay.vue";
   import { TypeTaskInDayData } from "@/views/TimeTracking/types";
   import { ButtonVariant } from "@/components/shared/types/button";
+  import useAuthStore from "@/store/auth";
 
   const route = useRoute();
   const router = useRouter();
+  const authStore = useAuthStore();
   const timeTrackingStore = useTimeTrackingStore();
 
   const month: Ref<string> = ref("");
@@ -78,6 +80,7 @@
     await timeTrackingStore.fetchTimeTracking(
       Number(route.params.month),
       Number(route.params.year),
+      authStore.user.uid,
     );
   };
 

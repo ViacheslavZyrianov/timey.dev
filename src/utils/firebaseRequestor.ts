@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import firebase from "@/plugins/firebase";
 import { getAuth } from "firebase/auth";
+import { TimeTrackingPayload } from "@/store/types/types";
 
 const db = getFirestore(firebase);
 const auth = getAuth();
@@ -29,14 +30,13 @@ export const fetchItems = async <T>(collectionName: string): Promise<T[]> => {
   })) as T[];
 };
 
-  month: number,
-  year: number,
 export const fetchTimeTrackingForUserByDate = async <T>(
+  payload: TimeTrackingPayload,
 ): Promise<T[]> => {
-  if (!auth.currentUser?.uid) return [];
+  const { month, year, userId } = payload;
   const lastDay = new Date(new Date(year, month, 1).getTime() - 1).getDate();
   const collectionFunction = query(
-    collection(db, "users", auth.currentUser.uid, "time-tracking"),
+    collection(db, "users", userId, "time-tracking"),
   );
   const whereFromFunction = where("date", ">=", new Date(year, month - 1, 1));
   const whereToFunction = where(

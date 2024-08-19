@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import useAuthStore from "@/store/auth";
 import {
   deleteItem,
-  fetchTimeTrackingByMonth,
+  fetchTimeTrackingForUserByDate,
   postItem,
   updateItem,
 } from "@/utils/firebaseRequestor";
@@ -24,9 +24,17 @@ export default defineStore("timeTracking", () => {
     timeTrackingData: [],
   });
 
-  async function fetchTimeTracking(month: number, year: number): Promise<void> {
+  async function fetchTimeTracking(
+    month: number,
+    year: number,
+    userId: string,
+  ): Promise<void> {
     state.timeTrackingData =
-      await fetchTimeTrackingByMonth<TypeTimeTrackingItemRead>(month, year);
+      await fetchTimeTrackingForUserByDate<TypeTimeTrackingItemRead>({
+        month,
+        year,
+        userId,
+      });
   }
 
   async function postTimeTracking(

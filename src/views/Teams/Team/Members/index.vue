@@ -71,6 +71,7 @@
     await timeTrackingStore.fetchTimeTracking(
       Number(month.value),
       Number(year.value),
+      `${teamMember.value?.id}`,
     );
   };
 

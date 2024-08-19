@@ -18,6 +18,7 @@
       await timeTrackingStore.fetchTimeTracking(
         Number(route.params.month),
         Number(route.params.year),
+        authStore.user.uid,
       );
     }
   };
