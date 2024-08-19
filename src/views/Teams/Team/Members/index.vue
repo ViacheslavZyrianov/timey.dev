@@ -104,21 +104,22 @@
     isDialogShowTaskPerDayVisible.value = true;
   };
 
+  const setSelectedDate = (month: string, year: string) => {
+    selectedDate.value = dayjs(`${year}-${month}-01`, "YYYY-M-D").format(
+      "YYYY-M-D",
+    );
+  };
+
   watch(
     () => [month.value, year.value],
     async () => {
-      selectedDate.value = dayjs(
-        `${year.value}-${month.value}-01`,
-        "YYYY-M-D",
-      ).format("YYYY-M-D");
+      setSelectedDate(month.value, year.value);
       await fetchTimeTrackingForCurrentMonthAndYear();
-    },
-    {
-      immediate: true,
     },
   );
 
   onMounted(async () => {
+    setSelectedDate(`${dayjs().month() + 1}`, `${dayjs().year()}`);
     await fetchTeam();
     await fetchTeamMember();
   });
