@@ -6,3 +6,9 @@ export type TypeSettings = {
     isShowWeekends: boolean;
   };
 };
+
+export type TimeTrackingPayload = {
+  month: number;
+  year: number;
+  userId: string;
+};
