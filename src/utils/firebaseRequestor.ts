@@ -29,9 +29,9 @@ export const fetchItems = async <T>(collectionName: string): Promise<T[]> => {
   })) as T[];
 };
 
-export const fetchTimeTrackingByMonth = async <T>(
   month: number,
   year: number,
+export const fetchTimeTrackingForUserByDate = async <T>(
 ): Promise<T[]> => {
   if (!auth.currentUser?.uid) return [];
   const lastDay = new Date(new Date(year, month, 1).getTime() - 1).getDate();
