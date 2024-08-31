@@ -159,8 +159,16 @@
     }
 
     &--today {
-      color: $c-primary;
-      font-weight: 600;
+      .calendar-day-label {
+        color: #ffffff;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $c-primary;
+        padding: 4px;
+        margin-top: -4px;
+        margin-right: -4px;
+      }
     }
 
     &--variant {
