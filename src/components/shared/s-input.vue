@@ -125,7 +125,7 @@
       width: 100%;
       border: 1px solid #b3b3b3;
       border-radius: 8px;
-      padding: 16px;
+      padding: 12px 16px;
       transition: border-color 0.2s;
       will-change: border-color;
 
