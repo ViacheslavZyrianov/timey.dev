@@ -16,7 +16,7 @@
         alt="Logo"
         height="100%"
       />
-      <div class="version">alpha</div>
+      <div class="version">pre-alpha</div>
     </div>
     <s-button
       icon="mdiPlus"
