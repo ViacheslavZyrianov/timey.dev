@@ -107,7 +107,7 @@
     @click="onSelectDay"
   >
     <div class="calendar-day-label">
-      {{ label }}
+      <span>{{ label }}</span>
     </div>
     <template v-if="dataset">
       <template v-if="isLessThenMinDatasetItems">
@@ -148,27 +148,23 @@
     border: 1px solid #e6e6e6;
     transition: background-color 0.2s;
     will-change: background-color;
+    cursor: pointer;
 
     &-label {
       margin-left: auto;
       margin-bottom: 4px;
     }
 
-    &--not-current {
-      color: #898f9b;
+    &-label {
+      position: relative;
+
+      span {
+        position: relative;
+      }
     }
 
-    &--today {
-      .calendar-day-label {
-        color: #ffffff;
-        font-weight: 600;
-        text-align: center;
-        border-radius: 50%;
-        background-color: $c-primary;
-        padding: 4px;
-        margin-top: -4px;
-        margin-right: -4px;
-      }
+    &--not-current {
+      color: #898f9b;
     }
 
     &--variant {
@@ -176,6 +172,32 @@
         min-height: 112px;
         min-width: 96px;
         padding: 8px;
+
+        .calendar-day {
+          &-label {
+            margin: 0 0 12px auto;
+          }
+        }
+
+        &.calendar-day--today {
+          .calendar-day-label {
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+
+            &:before {
+              content: "";
+              display: block;
+              width: 22px;
+              height: 22px;
+              border-radius: 50%;
+              background-color: $c-primary;
+              position: absolute;
+              top: -4px;
+              right: -4px;
+            }
+          }
+        }
       }
 
       &-compact {
@@ -187,6 +209,26 @@
           &-label {
             text-align: center;
             margin: 0;
+          }
+        }
+
+        &.calendar-day--today {
+          .calendar-day-label {
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+
+            &:before {
+              content: "";
+              display: block;
+              width: 22px;
+              height: 22px;
+              border-radius: 50%;
+              background-color: $c-primary;
+              position: absolute;
+              top: -4px;
+              right: -2px;
+            }
           }
         }
       }
