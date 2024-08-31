@@ -26,6 +26,7 @@
   const form: TypeTimeTrackingItemAdd = reactive({
     task: "",
     hours: null,
+    minutes: null,
     date: new Date(),
   });
   const isButtonSubmitDisabled: Ref<boolean> = ref(false);
@@ -85,6 +86,7 @@
       if (isOpen.value) {
         form.task = "";
         form.hours = null;
+        form.minutes = null;
         form.date = new Date();
         resetDates();
       }

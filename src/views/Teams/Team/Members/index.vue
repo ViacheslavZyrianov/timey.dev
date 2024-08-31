@@ -41,6 +41,7 @@
           const dayData: TypeTaskInDayData = {
             id: val.id,
             hours: val.hours,
+            minutes: val.minutes,
             task: val.task,
           };
 
