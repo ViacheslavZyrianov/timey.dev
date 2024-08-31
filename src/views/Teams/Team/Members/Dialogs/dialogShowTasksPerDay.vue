@@ -15,6 +15,9 @@
   });
 
   const isOpen = defineModel();
+
+  const formatTime = (hours: number, minutes = 0) =>
+    `${hours}`.padStart(2, "0") + ":" + `${minutes || 0}`.padStart(2, "0");
 </script>
 
 <template>
@@ -29,15 +32,13 @@
       <div
         v-for="taskItem in tasks"
         :key="taskItem.id"
-        class="d-flex flex-column-gap-4 mb-4"
+        class="d-flex align-center flex-column-gap-4 flex-row-gap-4"
       >
-        <div class="d-flex align-center">
-          <div class="font-size-16 font-weight-600 mr-4">
-            {{ taskItem.hours }}
-          </div>
-          <div class="font-size-14">
-            {{ taskItem.task }}
-          </div>
+        <div class="font-weight-700">
+          {{ formatTime(taskItem.hours, taskItem.minutes) }}
+        </div>
+        <div class="font-size-14 flex-grow-1">
+          {{ taskItem.task }}
         </div>
       </div>
     </template>

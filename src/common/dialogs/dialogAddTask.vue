@@ -106,20 +106,26 @@
         class="d-flex flex-column flex-row-gap-8"
         @submit.prevent="onSubmit"
       >
-        <div class="d-flex flex-column-gap-4">
+        <div class="d-flex align-end">
           <s-input
             v-model="form.hours"
-            placeholder="0"
-            label="Hours"
+            placeholder="00"
+            label="Time"
             width="50px"
-            label-align="center"
+            text-align="center"
+          />
+          <div class="font-size-16 mb-8 mx-2">:</div>
+          <s-input
+            v-model="form.minutes"
+            placeholder="00"
+            width="50px"
             text-align="center"
           />
           <s-input
             v-model="form.task"
             placeholder="Enter task name"
             label="Task"
-            class="flex-grow-1"
+            class="flex-grow-1 ml-4"
           />
         </div>
         <div class="d-flex flex-column-gap-4 width-100-p">
