@@ -38,12 +38,6 @@
     <main class="pr-0 pb-0 pl-8">
       <Suspense>
         <div class="d-flex flex-column height-100-p">
-          <h1
-            v-if="route.meta.name"
-            class="mb-8"
-          >
-            {{ route.meta.name }}
-          </h1>
           <router-view />
         </div>
       </Suspense>

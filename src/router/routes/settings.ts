@@ -1,8 +1,5 @@
 export default {
   path: "/settings",
-  meta: {
-    name: "Settings",
-  },
   children: [
     {
       path: "",

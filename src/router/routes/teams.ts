@@ -4,9 +4,6 @@ export default {
     {
       path: "",
       name: "teams",
-      meta: {
-        name: "Teams",
-      },
       component: () => import("@/views/Teams/index.vue"),
     },
     {

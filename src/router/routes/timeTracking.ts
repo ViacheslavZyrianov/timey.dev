@@ -14,9 +14,6 @@ export default {
     {
       path: ":year/:month",
       name: "timeTrackingYearMonth",
-      meta: {
-        name: "Time Tracking",
-      },
       component: () => import("@/views/TimeTracking/index.vue"),
     },
   ],
