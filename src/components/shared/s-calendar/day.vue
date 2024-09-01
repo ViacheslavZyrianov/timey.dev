@@ -152,6 +152,13 @@
     &-label {
       margin-left: auto;
       margin-bottom: 4px;
+      width: 18px;
+
+      span {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
     }
 
     &-label {
@@ -193,7 +200,7 @@
               background-color: $c-primary;
               position: absolute;
               top: -4px;
-              right: -4px;
+              right: -2px;
             }
           }
         }
