@@ -147,6 +147,7 @@
   <s-calendar
     v-model="selectedDate"
     is-weekdays-visible
+    :tasks="tasks"
     @select-day="onShowDayWithTimeTracking"
   />
 
