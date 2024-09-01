@@ -148,7 +148,6 @@
     border: 1px solid #e6e6e6;
     transition: background-color 0.2s;
     will-change: background-color;
-    cursor: pointer;
 
     &-label {
       margin-left: auto;
