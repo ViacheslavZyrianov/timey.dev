@@ -141,6 +141,7 @@
 
     &--not-current {
       color: #898f9b;
+      background-color: lighten(#898f9b, 40%);
     }
 
     &--variant {
