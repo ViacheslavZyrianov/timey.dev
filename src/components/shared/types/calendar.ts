@@ -3,8 +3,6 @@ export enum TypeCalendarVariant {
   Compact = "compact",
 }
 
-export type TypeDatasetItemPerDay = { [key: string]: string } | string;
-
 export enum TypeWeekdaysFormat {
   Default = "default",
   Short = "short",

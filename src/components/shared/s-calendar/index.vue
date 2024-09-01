@@ -21,14 +21,6 @@
   dayjs.extend(dayjsBusinessDays);
 
   const props = defineProps({
-    dataset: {
-      type: Object,
-      default: null,
-    },
-    formatDatasetItemElement: {
-      type: String,
-      default: "",
-    },
     variant: {
       type: String as PropType<TypeCalendarVariant>,
       default: TypeCalendarVariant.Default,
@@ -178,9 +170,6 @@
     ],
   );
 
-  const generateDatasetPerDay = (date: string) =>
-    props.dataset && props.dataset[date] ? props.dataset[date] : null;
-
   const onSelectDay = (date: string) => {
     model.value = date;
     emit("select-day", date);
@@ -214,9 +203,7 @@
             :is-day-selectable="isDaySelectable"
             :is-show-selected-day="isShowSelectedDay"
             :selected-day="model"
-            :dataset="generateDatasetPerDay(dayItem.date)"
             :variant="variant"
-            :format-dataset-item-element="formatDatasetItemElement"
             @select-day="onSelectDay(dayItem.date)"
           />
         </ol>

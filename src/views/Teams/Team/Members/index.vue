@@ -146,9 +146,7 @@
 
   <s-calendar
     v-model="selectedDate"
-    :dataset="tasks"
     is-weekdays-visible
-    format-dataset-item-element="{hours}h – {task}"
     @select-day="onShowDayWithTimeTracking"
   />
 
