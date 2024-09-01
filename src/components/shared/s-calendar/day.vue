@@ -3,6 +3,7 @@
   import { computed, ComputedRef, PropType } from "vue";
   import { TypeCalendarVariant } from "@/components/shared/types/calendar";
   import { ClassList } from "@/types/common";
+  import { TypeTaskInDayData } from "@/views/TimeTracking/types";
 
   const props = defineProps({
     day: {
@@ -33,6 +34,10 @@
       type: Boolean,
       default: false,
     },
+    tasks: {
+      type: Array as PropType<TypeTaskInDayData[]>,
+      default: () => [],
+    },
   });
 
   const emit = defineEmits(["select-day"]);
@@ -55,14 +60,35 @@
   const isCalendarDaySelectable = computed(() =>
     Boolean(
       props.isCurrentMonth &&
-        props.variant === TypeCalendarVariant.Compact &&
-        props.isDaySelectable,
+        props.isDaySelectable &&
+        (props.variant === TypeCalendarVariant.Compact || props.tasks.length),
     ),
   );
 
   const onSelectDay = () => {
     if (isCalendarDaySelectable.value && props.isCurrentMonth)
       emit("select-day");
+  };
+
+  const generateTotalTasksLabel = (tasksCount: number) =>
+    tasksCount === 1 ? "task" : "tasks";
+
+  const countTotalTime = (tasks: TypeTaskInDayData[]): string => {
+    const totalMinutes = tasks.reduce(
+      (sum: number, entry: TypeTaskInDayData) => {
+        const hourInMinutes = parseInt(entry.hours, 10) * 60; // Convert hours to minutes
+        const minutes = entry.minutes ? parseInt(entry.minutes, 10) : 0; // Convert minutes or default to 0
+        return sum + hourInMinutes + minutes;
+      },
+      0,
+    );
+
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+
+    return remainingMinutes === 0
+      ? `${totalHours}h`
+      : `${totalHours}h ${String(remainingMinutes).padStart(2, "0")}m`;
   };
 </script>
 
@@ -73,6 +99,14 @@
   >
     <div class="calendar-day-label">
       <span>{{ label }}</span>
+    </div>
+    <div v-if="tasks?.length">
+      <div class="mb-4 text-align-right">
+        {{ tasks.length }} {{ generateTotalTasksLabel(tasks.length) }}
+      </div>
+      <div class="font-weight-700 text-align-right">
+        {{ countTotalTime(tasks) }}
+      </div>
     </div>
   </li>
 </template>
@@ -111,14 +145,12 @@
 
     &--variant {
       &-default {
-        min-height: 112px;
         min-width: 96px;
+        height: 90px;
         padding: 8px;
 
-        .calendar-day {
-          &-label {
-            margin: 0 0 12px auto;
-          }
+        .calendar-day-label {
+          margin: 0 0 12px auto;
         }
 
         &.calendar-day--today {

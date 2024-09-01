@@ -14,6 +14,7 @@
   } from "@/components/shared/types/calendar";
   import { ClassList } from "@/types/common";
   import useSettingsStore from "@/store/settings";
+  import { TypeTaskInDayData } from "@/views/TimeTracking/types";
 
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
@@ -40,6 +41,10 @@
     isShowSelectedDay: {
       type: Boolean,
       default: false,
+    },
+    tasks: {
+      type: Object as PropType<Record<string, TypeTaskInDayData[]>>,
+      default: null,
     },
   });
 
@@ -181,10 +186,9 @@
     v-if="isReady"
     :class="sCalendarClassList"
     padding="0"
-    height="100%"
   >
     <template #content>
-      <div class="d-flex flex-column height-100-p">
+      <div class="d-flex flex-column">
         <weekdays
           v-if="isWeekdaysVisible"
           :variant="variant"
@@ -204,6 +208,7 @@
             :is-show-selected-day="isShowSelectedDay"
             :selected-day="model"
             :variant="variant"
+            :tasks="tasks && tasks[dayItem.date]"
             @select-day="onSelectDay(dayItem.date)"
           />
         </ol>
