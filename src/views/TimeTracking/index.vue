@@ -160,7 +160,6 @@
   <s-calendar
     v-model="selectedDate"
     is-weekdays-visible
-    :is-show-weekends="false"
     @select-day="onShowDayWithTimeTracking"
   />
 
