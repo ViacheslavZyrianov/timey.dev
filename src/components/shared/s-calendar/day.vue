@@ -100,13 +100,16 @@
     <div class="calendar-day-label">
       <span>{{ label }}</span>
     </div>
-    <div v-if="tasks?.length">
-      <div class="mb-4 text-align-right">
+    <div
+      v-if="tasks?.length"
+      class="text-align-right width-100-p mt-4"
+    >
+      <span class="mr-4">
         {{ tasks.length }} {{ generateTotalTasksLabel(tasks.length) }}
-      </div>
-      <div class="font-weight-700 text-align-right">
+      </span>
+      <span class="font-weight-700">
         {{ countTotalTime(tasks) }}
-      </div>
+      </span>
     </div>
   </li>
 </template>
@@ -126,7 +129,7 @@
 
       span {
         display: block;
-        width: 100%;
+        width: 14px;
         text-align: center;
       }
     }
@@ -148,7 +151,7 @@
       &-default {
         min-width: 96px;
         height: 90px;
-        padding: 8px;
+        padding: 18px 14px;
 
         .calendar-day-label {
           margin: 0 0 12px auto;
@@ -163,13 +166,13 @@
             &:before {
               content: "";
               display: block;
-              width: 22px;
-              height: 22px;
+              width: 26px;
+              height: 26px;
               border-radius: 50%;
               background-color: $c-primary;
               position: absolute;
-              top: -4px;
-              right: -2px;
+              top: -7px;
+              left: -7px;
             }
           }
         }
